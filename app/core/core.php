@@ -5,6 +5,8 @@
  * (see README for details)
  */
 
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * core class
@@ -194,12 +196,17 @@ class core {
      * @return mixed
      */
     public function getVT($_url) {
-        $result = null;
+        $routes = null;
 
-        $mvc_items = $this->db->query("SELECT * FROM url WHERE enabled = 1");
-        $result = $mvc_items->fetchAll();
+        try {
+            $yaml = new Parser();
+            $routes = $yaml->parse(file_get_contents('./app/routes.yml'));
 
-        foreach ($result as $item) {
+        } catch (ParseException $e) {
+            printf("Unable to parse the YAML string: %s", $e->getMessage());
+        }
+
+        foreach ($routes as $item) {
             $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $item['url']) . "$/";
             preg_match($regexp, $_url, $match);
 

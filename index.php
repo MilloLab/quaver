@@ -24,6 +24,9 @@ require_once("./app/core/db.php");
 require_once("./app/core/lang.php");
 require_once("./app/core/core.php");
 
+# Load YAML Parser
+require_once('./app/lib/yaml/vendor/autoload.php');
+
 if (defined(MAINTENANCE_MODE) && MAINTENANCE_MODE === true && $_SERVER['REQUEST_URI'] != '/maintenance') {
     header('Location: /maintenance');
     exit;
