@@ -19,7 +19,9 @@ if ( !file_exists("./config.php") ) {
 
 // Set main objects
 require_once("./config.php");
+
 define('P_PATH', ''); //AJAX
+
 require_once("./app/core/db.php");
 require_once("./app/core/lang.php");
 require_once("./app/core/core.php");
