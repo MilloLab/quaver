@@ -1,7 +1,7 @@
 Quaver PHP
 ==========
-* Last stable branch 0.2.X (End of support December 2014)
-* Current dev branch 0.3.X
+* Master branch 0.2 (End of support December 2014)
+* Current dev branch 0.3
 
 Quaver is distributed under MIT license.
 
