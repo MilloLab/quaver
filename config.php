@@ -10,9 +10,6 @@ define('GLOBAL_PATH', dirname( __FILE__ ));
 define('MODEL_PATH', GLOBAL_PATH . '/app/model');
 define('LIB_PATH', GLOBAL_PATH . '/app/lib');
 
-// Main
-define('DOMAIN_NAME', 'yourdomain.com');
-
 // Cookies
 define('COOKIE_NAME', 'yourdomain');
 define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);

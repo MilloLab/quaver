@@ -67,25 +67,21 @@ class lang {
      */
     public function getSiteLanguage() {
 
-        if (strstr($_SERVER['HTTP_HOST'], ".com") !== false) {
-            // .com language selects language from browser
-            $return = $this->getLanguageFromCookie();
-            if (!$return) {
-                $language_slug = $this->getBrowserLanguage();
-                $this->getFromSlug($language_slug, true);
+        $return = $this->getLanguageFromCookie();
+        if (!$return) {
+            $language_slug = $this->getBrowserLanguage();
+            $this->getFromSlug($language_slug, true);
 
-                if (empty($this->slug))
-                    $this->getFromId(LANG);
+            if (empty($this->slug))
+                $this->getFromId(LANG);
 
-                $return = $this;
+            $return = $this;
 
-            }
-        } else {
-            $return = $this->getLanguageFromDomain();
-        }
+        }        
 
         return $return;
     }
+
 
     /**
      * @return string
