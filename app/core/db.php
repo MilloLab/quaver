@@ -5,17 +5,18 @@
  * (see README for details)
  */
 
+
 /**
  * Class DB
  */
-
 class DB {
 
 	public $conn = null;
     public $cipher_key = "";
 
+
     /**
-     *
+     * constructor
      */
     public function __construct() {
 
@@ -56,6 +57,7 @@ class DB {
 
 	}
 
+
     /**
      * @param $query
      * @param null $params
@@ -94,6 +96,7 @@ class DB {
 
     }
 
+
     /**
      * @return int
      */
@@ -110,6 +113,7 @@ class DB {
      * Cypher
      */
 
+
     /**
      * @param $_str
      * @return mixed
@@ -117,6 +121,7 @@ class DB {
     public function encrypt($_str) {
         return $this->conn->mysql_real_escape_string(rc4::encrypt($_str, $this->cipher_key));
     }
+
 
     /**
      * @param $_str
