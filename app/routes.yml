@@ -1,0 +1,11 @@
+home:
+    url: /
+    controller: home
+
+hello_world:
+    url: /hello_world/
+    controller: hello_world
+
+my_page:
+    url: /mypage/([a-zA-Z0-9-_]+)?[/]?
+    controller: pages/mypage

@@ -5,19 +5,45 @@
  * (see README for details)
  */
 
+/**
+ * Class base_object
+ */
 class base_object extends core {
 
     public $id;
 
     /**
-     *
+     * constructor
      */
     public function __construct(){
 
     }
 
     /**
+     * @param $_item
+     */
+    public function setItem($_item) {
+        foreach ($this->_fields as $field) {
+            if (isset($_item[$field])){
+                $this->$field = $_item[$field];
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getItem() {
+        $item = array();
+        foreach ($this->_fields as $field) {
+            $item[$field] = $this->$field;
+        }
+        return $item;
+    }
+
+    /**
      * @param $_id
+     * @return $this
      */
     public function getFromId($_id) {
 
@@ -85,47 +111,28 @@ class base_object extends core {
 
     }
 
-
     /**
      * @return bool
      */
     public function delete() {
-        $db = new DB;
 
-        $_id = (int)$this->id;
+        try {
 
-        $sql = "DELETE FROM " . $this->table . " WHERE id = :id";
-        if ($db->query($sql, array(':id'=>$_id))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+            $db = new DB;
 
+            $_id = (int)$this->id;
 
-    /**
-     * @param $_item
-     */
-    public function setItem($_item) {
-        foreach ($this->_fields as $field) {
-            if (isset($_item[$field])){
-                $this->$field = $_item[$field];
+            $sql = "DELETE FROM " . $this->table . " WHERE id = :id";
+            if ($db->query($sql, array(':id'=>$_id))) {
+                return true;
+            } else {
+                return false;
             }
+        } catch (PDOException $e) {
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
         }
     }
-
-
-    /**
-     * @return array
-     */
-    public function getItem() {
-        $item = array();
-        foreach ($this->_fields as $field) {
-            $item[$field] = $this->$field;
-        }
-        return $item;
-    }
-
 
     /**
      * @return bool
@@ -148,7 +155,6 @@ class base_object extends core {
         return $return;
     }
 
-
     /**
      * @return string
      */
@@ -158,11 +164,7 @@ class base_object extends core {
         return json_encode($return);
     }
 
-
-
-
     /**
-     * format function
      * @param $_format
      * @return $this|bool|string
      */
@@ -181,9 +183,8 @@ class base_object extends core {
     }
 
     /**
-     * cleanString function
-     * @param type $_str 
-     * @return type
+     * @param $_str
+     * @return string
      */
     public static function cleanString($_str)
     {

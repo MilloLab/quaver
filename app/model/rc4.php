@@ -1,6 +1,14 @@
 <?php
 
+/**
+ * Class rc4
+ */
 class rc4 {
+    /**
+     * @param $_string
+     * @param $_key
+     * @return string
+     */
     static function encrypt($_string, $_key ) {
         $s = array();
         for ($i = 0; $i < 256; $i++) {
@@ -27,14 +35,29 @@ class rc4 {
         return $ct;
     }
 
+    /**
+     * @param $_string
+     * @param $_key
+     * @return string
+     */
     static function decrypt($_string, $_key) {
         return self::encrypt($_string, $_key);
     }
 
+    /**
+     * @param $_string
+     * @param $_key
+     * @return string
+     */
     static function d($_string, $_key) {
         return self::decrypt($_string, $_key);
     }
 
+    /**
+     * @param $_string
+     * @param $_key
+     * @return string
+     */
     static function e($_string, $_key) {
         return self::encrypt($_string, $_key);
     }

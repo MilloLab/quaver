@@ -5,13 +5,16 @@
  * (see README for details)
  */
 
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * core class
  */
 class core {
 
-    public $db; //DB object
+    // DB object
+    public $db; 
 
 	// URL management
     public $url_var;
@@ -26,25 +29,22 @@ class core {
 
     // Development
     public $debug = false;
-    public $log = array();
 
 
     /**
-     * _constructor
+     * constructor
      */
     public function __construct() {
 
         // Create new DB object
         $this->db = new DB;
 
-
         // Twig Template System Loader
         require_once(LIB_PATH . '/Twig/Autoloader.php');
         Twig_Autoloader::register();
 
-
         // Getting all directories in /template
-        $path = P_PATH . 'template';
+        $path = VIEW_PATH;
 
         $templatesDir = array($path);
         $dirsToScan = array($path);
@@ -53,8 +53,7 @@ class core {
         while (count($dirsToScan) > $dirKey) {
             $results = scandir($dirsToScan[$dirKey]);
             foreach ($results as $result) {
-                if ($result === '.' or $result === '..'
-                    or $result == 'cache') continue;
+                if ($result === '.' or $result === '..') continue;
 
                 if (is_dir($dirsToScan[$dirKey] . '/' . $result)) {
                     $templatesDir[] = $dirsToScan[$dirKey] . '/' . $result;
@@ -69,7 +68,7 @@ class core {
         $loader = new Twig_Loader_Filesystem($templatesDir);
 
         $twig_options = array();
-        if (defined(TEMPLATE_CACHE) && TEMPLATE_CACHE) $twig_options['cache'] = "./template/cache";
+        if (defined(TEMPLATE_CACHE) && TEMPLATE_CACHE) $twig_options['cache'] = "./cache";
         if (defined(CACHE_AUTO_RELOAD) && CACHE_AUTO_RELOAD) $twig_options['auto_reload'] = true;
         
         $this->twig = new Twig_Environment($loader, $twig_options);
@@ -87,7 +86,6 @@ class core {
 
 
     }
-
 
     /**
      * @param bool $_mvc
@@ -114,9 +112,38 @@ class core {
         if ($_mvc) $this->loadMVC();
     }
 
-    /*
-     * Global functions
+
+    /**
+     * Load architecture
      */
+    public function loadMVC()
+    {
+        $url = $this->getUrl();
+        $this->fixTrailingSlash($url);
+        $mvc = $this->getVT($url);
+        if ($mvc != false) {
+
+            $this->setController($mvc['controller']);
+            
+        } else {
+
+            $msg = "Controller instance not found.";
+            error_log($msg);
+            echo "<h1>{$msg}</h1>";
+            die;
+
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl() {
+        $url = $_SERVER['REQUEST_URI'];
+        if (strstr($url, "?") !== false)
+            $url = substr($url, 0, strpos($url, "?")); // Remove GET vars
+        return $url;
+    }
 
     /**
      * @param $_url
@@ -130,76 +157,21 @@ class core {
     }
 
     /**
-     * @param $_id
-     * @return mixed
-     */
-    public function getUrlFromId($_id) {
-        $_id = (int)$_id;
-        $url = $this->db->query("SELECT url FROM url WHERE id = '$_id'");
-        $regex = "/(\(.*\))/";
-        return preg_replace($regex, "", $url->fetchColumn(0));
-    }
-
-    /**
-     *
-     */
-    public function loadMVC()
-    {
-        $url = $this->getUrl();
-        $this->fixTrailingSlash($url);
-        $mvc = $this->getVT($url);
-        if ($mvc != false) {
-
-            $this->loadController($mvc['controller']);
-            
-        }
-    }
-
-
-    /**
-     * @param $_controllerName
-     */
-    public function loadController($_controllerName) {
-
-        global $_user, $_lang;
-        
-        $controllerPath = GLOBAL_PATH . "/controller/" . $_controllerName . ".php";
-
-        $this->getGlobalTwigVars();
-
-        // Load controller
-        if (file_exists($controllerPath)) {
-            require_once($controllerPath);
-        } else {
-            if (!empty($_controllerName))
-                $this->log("Error loading controller: $_controllerName", "error");
-        }
-    }
-
-
-    /**
-     *
-     */
-    public function getQueryString() {
-        $uri = $_SERVER['REQUEST_URI'];
-        $qs = parse_url($uri, PHP_URL_QUERY);
-        if (!empty($qs)) {
-            parse_str($qs, $this->queryString);
-        }            
-    }
-
-    // Get controller template
-    /**
      * @param $_url
      * @return mixed
      */
     public function getVT($_url) {
-        $result = null;
+        $routes = null;
 
-        $mvc_items = $this->db->query("SELECT * FROM url WHERE enabled = 1");
-        $result = $mvc_items->fetchAll();
+        try {
+            $yaml = new Parser();
+            $routes = $yaml->parse(file_get_contents('./app/routes.yml'));
 
-        foreach ($result as $item) {
+        } catch (ParseException $e) {
+            printf("Unable to parse the YAML string: %s", $e->getMessage());
+        }
+
+        foreach ($routes as $item) {
             $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $item['url']) . "$/";
             preg_match($regexp, $_url, $match);
 
@@ -213,29 +185,53 @@ class core {
         if (@$mvc) {
             $return = $mvc;
         } else {
-            $this->loadController('404');
+            $this->setController('404');
             //die('error 404');
         }
         return $return;
     }
 
+
     /**
-     * @return string
+     * @param $_controllerName
      */
-    public function getUrl() {
-        $url = $_SERVER['REQUEST_URI'];
-        if (strstr($url, "?") !== false)
-            $url = substr($url, 0, strpos($url, "?")); // Remove GET vars
-        return $url;
+    public function setController($_controllerName) {
+
+        global $_user, $_lang;
+        
+        $controllerPath = CONTROLLER_PATH . "/" . $_controllerName . ".php";
+
+        $this->getGlobalTwigVars();
+
+        // Load controller
+        if (file_exists($controllerPath)) {
+            require_once($controllerPath);
+        } else {
+            if (!empty($_controllerName)){
+                $msg = "Error loading controller: $_controllerName";
+                error_log($msg);
+                echo "<h1>{$msg}</h1>";
+                die;
+            }
+
+        }
     }
 
-    /*
-    * Templates
-    */
+
+    /**
+     * URL parser
+     */
+    public function getQueryString() {
+        $uri = $_SERVER['REQUEST_URI'];
+        $qs = parse_url($uri, PHP_URL_QUERY);
+        if (!empty($qs)) {
+            parse_str($qs, $this->queryString);
+        }            
+    }
 
 
     /**
-     *
+     * Set main variables
      */
     public function getGlobalTwigVars() {
         global $_user, $_lang;
