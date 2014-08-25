@@ -27,7 +27,7 @@ CREATE TABLE `lang` (
   `slug` varchar(3) NOT NULL DEFAULT '',
   `locale` varchar(5) NOT NULL DEFAULT '',
   `active` tinyint(1) NOT NULL,
-  `priority` int(11) DEFAULT NULL,
+  `priority` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
