@@ -73,10 +73,15 @@ class lang {
             $strings = $db->query("SELECT *
                 FROM " . $this->table_strings . "
                 WHERE language = '" . $this->id . "'");
+            $resultLang = $strings->fetchAll();
 
-            foreach ($strings as $string) {
-                if (!isset($this->strings[$string['label']]))
-                    $this->strings[$string['label']] = utf8_encode($string['text']);
+            if ($resultLang) {
+                foreach ($resultLang as $string) {
+
+                    if (!isset($this->strings[$string['label']]))
+                        $this->strings[$string['label']] = utf8_encode($string['text']);
+                
+                }
             }
 
             return $this;
