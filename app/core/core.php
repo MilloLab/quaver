@@ -122,16 +122,7 @@ class core {
         $this->fixTrailingSlash($url);
         $mvc = $this->getVT($url);
         if ($mvc != false) {
-
-            $this->setController($mvc['controller']);
-            
-        } else {
-
-            $msg = "Controller instance not found.";
-            error_log($msg);
-            echo "<h1>{$msg}</h1>";
-            die;
-
+            $this->setController($mvc['controller']);   
         }
     }
 
@@ -185,8 +176,8 @@ class core {
         if (@$mvc) {
             $return = $mvc;
         } else {
-            $this->setController('404');
-            //die('error 404');
+            $this->setController('e404');
+            die('error 404');
         }
         return $return;
     }
@@ -248,12 +239,9 @@ class core {
         foreach ($ob_l->getList() as $lang) {
             $item = array(
                 "id" => $lang->id,
-                "domain" => HTTP_MODE . "www." . DOMAIN_NAME . $lang->tld,
                 "name" => utf8_encode($lang->name),
                 "slug" => $lang->slug,
                 "locale" => $lang->locale,
-                "url" => "language/" . $lang->slug . "/",
-                "class" => ($_lang->id == $lang->id) ? 'selected' : ''
             );
             array_push($languageVars, $item);
         }
@@ -263,12 +251,12 @@ class core {
 
         // Config
         $config = array(
-            "baseHref" => HTTP_MODE . DOMAIN_NAME,
-            "thisHref" => HTTP_MODE . DOMAIN_NAME . $this->getUrl(),
-            "randomVar" => RANDOM_VAR
+            "randomVar" => RANDOM_VAR,
+            "css_path" => CSS_PATH,
+            "js_path" => JS_PATH,
         );
 
-        $this->addTwigVars('config', $config);
+        $this->addTwigVars('qv', $config);
 
     }
 
