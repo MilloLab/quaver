@@ -1,7 +1,16 @@
 {%  extends "layout.twig" %}
 
 {% block body %}
-<p>Lang: {{ language.locale|replace('_', '-') }}</p>
-<p>{{ language.l('hello_world') }}</p>
 
-{%  endblock %}
+  <div class="container">
+    <div class="jumbotron centered">
+      <h1>Welcome to Quaver</h1>
+      <p>Lang: {{ language.locale|replace('_', '-') }}</p>
+      <p>String: hello_world = {{ language.l('hello_world') }}</p>
+      <p>
+        <a class="btn btn-lg btn-primary" href="https://github.com/MilloLab/quaver" target="_blank" role="button"> <i class="fa fa-github"></i> GitHub</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}

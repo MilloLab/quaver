@@ -12,6 +12,10 @@ define('VIEW_PATH', GLOBAL_PATH . '/view');
 define('CONTROLLER_PATH', GLOBAL_PATH . '/controller');
 define('LIB_PATH', GLOBAL_PATH . '/lib');
 
+// Resources path
+define('CSS_PATH', '/app/resources/css');
+define('JS_PATH',  '/app/resources/js');
+
 // Cookies
 define('COOKIE_NAME', 'yourdomain');
 define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);

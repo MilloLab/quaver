@@ -83,7 +83,7 @@ class lang {
                 
                 }
             }
-
+            
             return $this;
 
         } catch (PDOException $e) {
@@ -242,8 +242,9 @@ class lang {
         $return = array();
 
         $items = $db->query("SELECT * FROM " . $this->table . " ORDER BY id ASC");
+        $result = $items->fetchAll();
 
-        foreach ($items->fetchAll() as $l) {
+        foreach ($result as $l) {
             $ob_lang = new lang;
             $return[] = $ob_lang->getFromId($l['id']);
         }
