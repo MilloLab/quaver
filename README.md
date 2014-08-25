@@ -4,7 +4,6 @@ Quaver PHP
 
 Quaver is distributed under MIT license.
 
-
 Install version 0.3.X
 ---------------------
 Import quaver.sql and check app/config.php and app/routes.yml

@@ -38,7 +38,7 @@ define('LANG', 1);
 define('DB_HOSTNAME',  'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'root');
-define('DB_DATABASE', 'quaver');
+define('DB_DATABASE', 'qv');
 
 /*
  * Global variables DO NOT TOUCH
