@@ -28,7 +28,7 @@ class core {
     public $twigVars = array();
 
     // Development
-    public $debug = false;
+    //public $debug = false;
 
 
     /**
@@ -177,7 +177,6 @@ class core {
             $return = $mvc;
         } else {
             $this->setController('e404');
-            die('error 404');
         }
         return $return;
     }
