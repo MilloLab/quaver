@@ -14,6 +14,8 @@ class mail extends base_object {
 
     /**
      * constructor
+     * @param type $type 
+     * @return type
      */
     public function __construct($type = ''){
         if ( isset($type) && !empty($type)){
@@ -21,6 +23,17 @@ class mail extends base_object {
         }
     }
 
+    /**
+     * send function
+     * @param type $_subject 
+     * @param type $_template 
+     * @param type $_to 
+     * @param type $_toName 
+     * @param type $_vars 
+     * @param type $_language 
+     * @param type $_subject_variables 
+     * @return type
+     */
     public function send($_subject, $_template, $_to, $_toName = '', $_vars = array(), $_language = '', $_subject_variables = array()) {
         global $_lang;
         
