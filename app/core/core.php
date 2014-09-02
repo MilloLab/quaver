@@ -253,6 +253,7 @@ class core {
             "randomVar" => RANDOM_VAR,
             "css_path" => CSS_PATH,
             "js_path" => JS_PATH,
+            "img_path" => IMG_PATH,
         );
 
         $this->addTwigVars('qv', $config);
