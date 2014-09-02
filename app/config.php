@@ -15,6 +15,7 @@ define('LIB_PATH', GLOBAL_PATH . '/lib');
 // Resources path
 define('CSS_PATH', '/app/resources/css');
 define('JS_PATH',  '/app/resources/js');
+define('IMG_PATH',  '/app/resources/img');
 
 // Cookies
 define('COOKIE_NAME', 'yourdomain');
