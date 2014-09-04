@@ -1,11 +1,11 @@
-Quaver PHP
-==========
+Quaver
+======
 * Current dev branch 0.3.X (September 2014)
 
 Quaver is distributed under MIT license.
 
-Install version 0.3.X
----------------------
+Install
+-------
 * Import quaver.sql and check `app/config.php` and `app/routes.yml`
 * Optional: Customize Mail model with `PHPMailer/Mandrill` functions
 
