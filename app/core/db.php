@@ -25,9 +25,9 @@ class DB {
 
 
         // Connecting to mysql
-        if (defined(DB_USERNAME)
-            || defined(DB_PASSWORD)
-            || defined(DB_DATABASE)
+        if (!defined('DB_USERNAME')
+            || !defined('DB_PASSWORD')
+            || !defined('DB_DATABASE')
         ) {
             die('Database parameters needed.');
 
@@ -41,7 +41,7 @@ class DB {
 
                 $this->conn->exec('SET CHARACTER SET utf8');
 
-                if (defined(DEV_MODE) && DEV_MODE === true) {
+                if (defined('DEV_MODE') && DEV_MODE) {
                     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 }
 

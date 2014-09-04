@@ -5,8 +5,7 @@
  * (see README for details)
  */
 
-ini_set('display_errors','off');
-error_reporting(E_ERROR);
+ini_set('display_errors', 0);
 
 // Check config file
 if ( !file_exists("./app/config.php") ) {
@@ -15,11 +14,21 @@ if ( !file_exists("./app/config.php") ) {
     error_log($msg);
     echo "<h1>{$msg}</h1>";
     die;
-	
+    
 }
 
-// Set main objects
+// Load configuration
 require_once("./app/config.php");
+
+// Check dev mode
+if (defined('DEV_MODE')) {       
+    if (DEV_MODE) {
+        error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+        ini_set('display_errors', 1);
+    }
+}
+
+// Load other main classes
 require_once("./app/core/db.php");
 require_once("./app/core/lang.php");
 require_once("./app/core/core.php");
