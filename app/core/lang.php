@@ -161,8 +161,17 @@ class lang {
 
         $return = $this->getLanguageFromCookie();
         if (!$return) {
-            $language_slug = $this->getBrowserLanguage();
-            $this->getFromSlug($language_slug, true);
+
+            if (defined('LANG_FORCE')) {
+                
+                if (LANG_FORCE) {
+                    $this->getFromId(LANG);
+                }
+                else {
+                    $language_slug = $this->getBrowserLanguage();
+                    $this->getFromSlug($language_slug, true);
+                }
+            }
 
             if (empty($this->slug))
                 $this->getFromId(LANG);

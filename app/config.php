@@ -22,9 +22,6 @@ define('COOKIE_NAME', 'yourdomain');
 define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
 define('COOKIE_PATH', '/');
 
-// _Panel access
-define('_PANEL_PSSWD', 	'yourpass');
-
 // Modes
 define('HTTP_MODE', 'http://');
 define('MAINTENANCE_MODE', false);
@@ -41,6 +38,9 @@ define('CACHE_AUTO_RELOAD', true);
 
 // Default Language
 define('LANG', 1);
+
+// Force language
+define('LANG_FORCE', false);
 
 // Database configuration
 define('DB_HOSTNAME',  'localhost');

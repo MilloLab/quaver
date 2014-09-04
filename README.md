@@ -7,7 +7,7 @@ Quaver is distributed under MIT license.
 Install version 0.3.X
 ---------------------
 * Import quaver.sql and check `app/config.php` and `app/routes.yml`
-* Optional: Customize Mail model with PHPMailer/Mandrill functions
+* Optional: Customize Mail model with `PHPMailer/Mandrill` functions
 
 
 History
@@ -24,7 +24,7 @@ History
 
 External Lib
 ------------
-* Twig by SensioLabs.
-* YAML component of Symfony.
+* [Twig](http://twig.sensiolabs.org/) by SensioLabs.
+* [YAML Component](http://symfony.com/doc/current/components/yaml/introduction.html) of Symfony.
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer).
-* Mandrill PHP API Client.
+* [Mandrill PHP API Client](https://mandrillapp.com/api/docs/).

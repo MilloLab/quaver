@@ -38,7 +38,7 @@ class mail extends base_object {
         global $_lang;
         
         // Check dev mode to block send
-        if (DEV_MODE == false){
+        if (defined('DEV_MODE') && DEV_MODE == false){
             
             $return = false;
 
@@ -72,7 +72,7 @@ class mail extends base_object {
             //Check type         
             if ($this->type == 'mandrill'){
 
-                if (MANDRILL === true){
+                if (defined('MANDRILL') && MANDRILL){
                     require_once(LIB_PATH . '/Mandrill/src/Mandrill.php');
 
                     try {
