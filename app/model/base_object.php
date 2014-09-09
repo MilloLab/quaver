@@ -8,21 +8,24 @@
 /**
  * Class base_object
  */
-class base_object extends core {
+class base_object extends core
+{
 
     public $id;
 
     /**
      * constructor
      */
-    public function __construct(){
+    public function __construct()
+    {
 
     }
 
     /**
      * @param $_item
      */
-    public function setItem($_item) {
+    public function setItem($_item)
+    {
         foreach ($this->_fields as $field) {
             if (isset($_item[$field])){
                 $this->$field = $_item[$field];
@@ -33,7 +36,8 @@ class base_object extends core {
     /**
      * @return array
      */
-    public function getItem() {
+    public function getItem()
+    {
         $item = array();
         foreach ($this->_fields as $field) {
             $item[$field] = $this->$field;
@@ -45,7 +49,8 @@ class base_object extends core {
      * @param $_id
      * @return $this
      */
-    public function getFromId($_id) {
+    public function getFromId($_id)
+    {
 
         try {
 
@@ -72,7 +77,8 @@ class base_object extends core {
     /**
      * @return bool
      */
-    public function save() {
+    public function save()
+    {
 
         try {
 
@@ -114,7 +120,8 @@ class base_object extends core {
     /**
      * @return bool
      */
-    public function delete() {
+    public function delete()
+    {
 
         try {
 
@@ -137,7 +144,8 @@ class base_object extends core {
     /**
      * @return bool
      */
-    public function toArray() {
+    public function toArray()
+    {
         $return = false;
 
         if (!empty($this->_fields)) {
@@ -158,7 +166,8 @@ class base_object extends core {
     /**
      * @return string
      */
-    public function toJson() {
+    public function toJson()
+    {
         $return = $this->toArray();
 
         return json_encode($return);
@@ -168,7 +177,8 @@ class base_object extends core {
      * @param $_format
      * @return $this|bool|string
      */
-    public function format($_format) {
+    public function format($_format)
+    {
         switch ($_format) {
             case('json'):
                 return $this->toJson();

@@ -9,16 +9,17 @@
 /**
  * Class DB
  */
-class DB {
-
-	public $conn = null;
+class DB
+{
+    public $conn = null;
     public $cipher_key = "";
 
 
     /**
      * constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
 
         // Set encryption key
         $this->cipher_key = CIPHER_KEY;
@@ -64,7 +65,8 @@ class DB {
      * @return mixed
      * @throws Exception
      */
-    public function query ($query, $params = null) {
+    public function query ($query, $params = null)
+    {
 
         static $db = null;
 
@@ -100,8 +102,8 @@ class DB {
     /**
      * @return int
      */
-    public static function insertId() {
-
+    public static function insertId()
+    {
         try {
             return self::query("SELECT LAST_INSERT_ID();")->fetchColumn();
         } catch (\Exception $e) {
@@ -118,7 +120,8 @@ class DB {
      * @param $_str
      * @return mixed
      */
-    public function encrypt($_str) {
+    public function encrypt($_str)
+    {
         return $this->conn->mysql_real_escape_string(rc4::encrypt($_str, $this->cipher_key));
     }
 
@@ -127,7 +130,8 @@ class DB {
      * @param $_str
      * @return string
      */
-    public function decrypt($_str) {
+    public function decrypt($_str)
+    {
         return rc4::decrypt($_str, $this->cipher_key);
     }
 

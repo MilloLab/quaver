@@ -1,3 +1,7 @@
+## Changes since 2014-09-09T10:23:13.000Z
+
+ * @albertogonzcat: Added composer.json (fix 3) (#16)
+
 ## Changes since 2014-09-09T10:06:00.000Z
 
  * @albertogonzcat: Added composer.json (fix 2) (#15)

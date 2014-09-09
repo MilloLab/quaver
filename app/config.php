@@ -27,10 +27,10 @@ define('HTTP_MODE', 'http://');
 define('MAINTENANCE_MODE', false);
 define('DEV_MODE', true);
 
-// Random variable to FrontEnd files
+// Random variable to front files
 define('RANDOM_VAR', ''); // format YYYYMMDD
 
-// Template cache (Twig)
+// Template cache, manual clean (Twig)
 define('TEMPLATE_CACHE', false);
 
 // Auto reload cache (Twig)
@@ -38,9 +38,10 @@ define('CACHE_AUTO_RELOAD', true);
 
 // Default Language
 define('LANG', 1);
-
-// Force language
 define('LANG_FORCE', false);
+
+// User default model
+define('LOAD_USER_DEFAULT', false);
 
 // Database configuration
 define('DB_HOSTNAME',  'localhost');
@@ -51,32 +52,27 @@ define('DB_DATABASE', 'qv');
 /*
  * Global variables DO NOT TOUCH
  */
-$_user = '';
 $_language = '';
 
+// Set user_default global
+if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
+	$_user_default = '';
+}
 
 /*
  * External
  */
+
+// Contact mail
+define('CONTACT_EMAIL', '');
+define('CONTACT_NAME', '');
 
 // MANDRILL
 define('MANDRILL', false);
 define('MANDRILL_USERNAME', '');
 define('MANDRILL_APIKEY', '');
 
-// Contact mail
-define('CONTACT_EMAIL', '');
-define('CONTACT_NAME', '');
-
-/*
- * Cypher
- *
- * /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
- * /!\ /!\ /!\ /!\ /!\ WARNING /!\ /!\ /!\ /!\ /!\ /!\ /!\
- * /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
- * PLEASE DON'T CHANGE OR DELETE
- *
- */
+// Cypher if you want use
 define('CIPHER_KEY', 'yourcipherkey'); //RC4
 
 ?>
