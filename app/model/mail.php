@@ -17,7 +17,8 @@ class mail extends base_object {
      * @param type $type 
      * @return type
      */
-    public function __construct($type = ''){
+    public function __construct($type = '')
+    {
         if ( isset($type) && !empty($type)){
             $this->type = $type;
         }
@@ -34,7 +35,8 @@ class mail extends base_object {
      * @param type $_subject_variables 
      * @return type
      */
-    public function send($_subject, $_template, $_to, $_toName = '', $_vars = array(), $_language = '', $_subject_variables = array()) {
+    public function send($_subject, $_template, $_to, $_toName = '', $_vars = array(), $_language = '', $_subject_variables = array())
+    {
         global $_lang;
         
         // Check dev mode to block send

@@ -9,7 +9,8 @@
 /**
  * Class lang
  */
-class lang {
+class lang
+{
 
     public $_fields = array(
         "id",
@@ -34,7 +35,8 @@ class lang {
     /**
      * @param $_item
      */
-    public function setItem($_item) {
+    public function setItem($_item)
+    {
         foreach ($this->_fields as $field) {
             if (isset($_item[$field])){
                 $this->$field = $_item[$field];
@@ -45,7 +47,8 @@ class lang {
     /**
      * @return array
      */
-    public function getItem() {
+    public function getItem()
+    {
         $item = array();
         foreach ($this->_fields as $field) {
             $item[$field] = $this->$field;
@@ -57,7 +60,8 @@ class lang {
      * @param $_id
      * @return $this
      */
-    public function getFromId($_id) {
+    public function getFromId($_id)
+    {
 
         try {
             $db = new DB;
@@ -96,7 +100,8 @@ class lang {
     /**
      * @return bool
      */
-    public function save() {
+    public function save()
+    {
 
         try {
 
@@ -134,7 +139,8 @@ class lang {
     /**
      * @return bool
      */
-    public function delete() {
+    public function delete()
+    {
 
         try {
             $db = new DB;
@@ -157,7 +163,8 @@ class lang {
     /**
      * @return $this|bool|lang
      */
-    public function getSiteLanguage() {
+    public function getSiteLanguage()
+    {
 
         $return = $this->getLanguageFromCookie();
         if (!$return) {
@@ -186,14 +193,16 @@ class lang {
     /**
      * @return string
      */
-    public function getBrowserLanguage() {
+    public function getBrowserLanguage()
+    {
         return substr(@$_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     }
 
     /**
      * @return $this|bool
      */
-    public function getLanguageFromCookie() {
+    public function getLanguageFromCookie()
+    {
         $return = false;
         if (!empty($_COOKIE[COOKIE_NAME . "_lang"])) {
             $language = $_COOKIE[COOKIE_NAME . "_lang"];
@@ -206,7 +215,8 @@ class lang {
     /**
      * Set language cookie
      */
-    public function setCookie() {
+    public function setCookie()
+    {
 
         if (!empty($this->id)) {
             setcookie(COOKIE_NAME . "_lang",
@@ -223,7 +233,8 @@ class lang {
      * @param bool $_short
      * @return int|lang
      */
-    public function getFromSlug($_slug, $_short = false) {
+    public function getFromSlug($_slug, $_short = false)
+    {
 
         $db = new DB;
 
@@ -245,7 +256,8 @@ class lang {
     /**
      * @return array
      */
-    public function getLanguages() {
+    public function getLanguages()
+    {
         $db = new DB;
 
         $return = array();
@@ -266,7 +278,8 @@ class lang {
      * @param bool $_byPriority
      * @return array
      */
-    public function getList($_all = false, $_byPriority = false) {
+    public function getList($_all = false, $_byPriority = false)
+    {
         $db = new DB;
 
         $return = array();
@@ -300,7 +313,8 @@ class lang {
      * @param string $_utf8
      * @return string
      */
-    public function _($_label, $_utf8 = '') {
+    public function _($_label, $_utf8 = '')
+    {
 
         //$return = $this->getString($_label);
         $return = @$this->strings[$_label];
@@ -322,7 +336,8 @@ class lang {
      * @param $_label
      * @return string
      */
-    public function l($_label) {
+    public function l($_label)
+    {
         return $this->_($_label, '');
     }
 

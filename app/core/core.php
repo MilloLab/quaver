@@ -11,8 +11,8 @@ use Symfony\Component\Yaml\Exception\ParseException;
 /**
  * core class
  */
-class core {
-
+class core
+{
     // DB object
     public $db; 
 
@@ -34,8 +34,8 @@ class core {
     /**
      * constructor
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // Create new DB object
         $this->db = new DB;
 
@@ -73,16 +73,27 @@ class core {
         
         $this->twig = new Twig_Environment($loader, $twig_options);
 
-        // Clear cache
-        if (isset($this->queryString['clearCache'])) {
-            $this->twig->clearCacheFiles();
-            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-            header("Location: $url");
-            exit;
+        // Clear Twig cache
+        if (defined(TEMPLATE_CACHE) && TEMPLATE_CACHE) {
+            if (isset($this->queryString['clearCache'])) {
+                $this->twig->clearCacheFiles();
+                $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                header("Location: $url");
+                exit;
+            }
         }
 
-        # Restoring user session
-        
+        // Restoring user_default session sample
+        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT) {
+            if (!empty($this->queryString['PHPSESSID'])) {
+                $sessionHash = $this->queryString['PHPSESSID'];
+                $_userFromSession = new user_default;
+                $_userFromSession->setCookie($sessionHash);
+                $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                header("Location: $url");
+                exit;
+            }
+        }
 
 
     }
@@ -90,13 +101,20 @@ class core {
     /**
      * @param bool $_mvc
      */
-    public function start($_mvc = true) {
-    	
-        global $_lang, $_user;
-        
-        # Check user login
-        
+    public function start($_mvc = true)
+    {	
+        global $_lang;
 
+        // Set user_default global
+        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
+            global $_user_default;
+
+            $_user_default = new user_default;
+            if (!empty($_COOKIE[COOKIE_NAME . "_log"])) {
+                $_user_default->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
+            }
+        }
+       
         // Load language
         $_lang = new lang;
         if (!empty($_GET['lang'])) {
@@ -129,7 +147,8 @@ class core {
     /**
      * @return string
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         $url = $_SERVER['REQUEST_URI'];
         if (strstr($url, "?") !== false)
             $url = substr($url, 0, strpos($url, "?")); // Remove GET vars
@@ -139,8 +158,8 @@ class core {
     /**
      * @param $_url
      */
-    public function fixTrailingSlash($_url) {
-
+    public function fixTrailingSlash($_url)
+    {
         if ($_url{strlen($_url) - 1} != '/' && strstr($_url, "image/") === false) {
             header("Location: " . $_url . "/");
             exit;
@@ -151,7 +170,8 @@ class core {
      * @param $_url
      * @return mixed
      */
-    public function getVT($_url) {
+    public function getVT($_url)
+    {
         $routes = null;
 
         try {
@@ -185,9 +205,14 @@ class core {
     /**
      * @param $_controllerName
      */
-    public function setController($_controllerName) {
+    public function setController($_controllerName)
+    {
+        global $_lang;
 
-        global $_user, $_lang;
+        // Set user_default global
+        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
+            global $_user_default;
+        }
         
         $controllerPath = CONTROLLER_PATH . "/" . $_controllerName . ".php";
 
@@ -211,7 +236,8 @@ class core {
     /**
      * URL parser
      */
-    public function getQueryString() {
+    public function getQueryString()
+    {
         $uri = $_SERVER['REQUEST_URI'];
         $qs = parse_url($uri, PHP_URL_QUERY);
         if (!empty($qs)) {
@@ -223,8 +249,14 @@ class core {
     /**
      * Set main variables
      */
-    public function getGlobalTwigVars() {
-        global $_user, $_lang;
+    public function getGlobalTwigVars()
+    {
+        global $_lang;
+
+        // Set user_default global
+        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
+            global $_user_default;
+        }
 
         // Language
         $this->addTwigVars("language", $_lang);
@@ -246,14 +278,15 @@ class core {
         }
         $this->addTwigVars('languages', $languageVars);
 
-        $this->addTwigVars('actual_url', strip_tags($this->url_var[0]));
+        // Current url
+        $this->addTwigVars('url', strip_tags($this->url_var[0]));
 
-        // Config
+        // Extra parametres
         $config = array(
             "randomVar" => RANDOM_VAR,
-            "css_path" => CSS_PATH,
-            "js_path" => JS_PATH,
-            "img_path" => IMG_PATH,
+            "css" => CSS_PATH,
+            "js" => JS_PATH,
+            "img" => IMG_PATH,
         );
 
         $this->addTwigVars('qv', $config);
@@ -264,10 +297,10 @@ class core {
      * @param $_key
      * @param $_array
      */
-    public function addTwigVars($_key, $_array) {
+    public function addTwigVars($_key, $_array)
+    {
         $this->twigVars[$_key] = $_array;
     }
-
 
 }
 ?>
