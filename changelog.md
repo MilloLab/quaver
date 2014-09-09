@@ -1,3 +1,7 @@
+## Changes since 2014-09-04T17:35:20.000Z
+
+ * @albertogonzcat: Refresh changelog (#12)
+
 ## Changes since 2014-09-04T17:18:30.000Z
 
  * @albertogonzcat: Added changelog and refresh readme (#11)

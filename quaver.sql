@@ -1,5 +1,5 @@
--- Versión del servidor: 5.5.34
--- Versión de PHP: 5.5.10
+-- Server version: 5.5.34
+-- PHP: 5.5.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -11,13 +11,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `quaver`
+-- Database `quaver`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `lang`
+-- Table `lang`
 --
 
 DROP TABLE IF EXISTS `lang`;
@@ -32,7 +32,7 @@ CREATE TABLE `lang` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `lang`
+-- Insert `lang`
 --
 
 INSERT INTO `lang` (`id`, `name`, `slug`, `locale`, `active`, `priority`) VALUES
@@ -42,7 +42,7 @@ INSERT INTO `lang` (`id`, `name`, `slug`, `locale`, `active`, `priority`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `lang_strings`
+-- Table `lang_strings`
 --
 
 DROP TABLE IF EXISTS `lang_strings`;
@@ -55,7 +55,7 @@ CREATE TABLE `lang_strings` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `lang_strings`
+-- Table `lang_strings`
 --
 
 INSERT INTO `lang_strings` (`id`, `language`, `label`, `text`) VALUES
