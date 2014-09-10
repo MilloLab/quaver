@@ -12,7 +12,8 @@ use Quaver\Core\DB;
 /**
  * Class mail
  */
-class Mail extends Base {
+class Mail extends Base
+{
 
     public $type; // "mandril"
 
@@ -39,7 +40,7 @@ class Mail extends Base {
      * @param type $_subject_variables 
      * @return type
      */
-    public function send($_subject, $_template, $_to, $_toName = '', $_vars = array(), $_language = '', $_subject_variables = array())
+    public function send($_subject, $_template = '', $_to, $_toName = '', $_from = '', $_fromName = '', $_vars = array(), $_language = '', $_subject_variables = array())
     {
         global $_lang;
         
@@ -51,9 +52,17 @@ class Mail extends Base {
             // Start array mail
             $_mail = array();
 
-            // Start twig env
-            $loader = new \Twig_Loader_String();
-            $twig = new \Twig_Environment($loader);
+
+            if (!empty($_template)){
+                // Start twig env
+                $loader = new \Twig_Loader_String();
+                $twig = new \Twig_Environment($loader);
+
+                // Render twig template
+                $html = $twig->render($template, $_vars);
+            } else {
+                $html = $_template;
+            }
 
             // Check language
             if (empty($_language)){
@@ -63,16 +72,19 @@ class Mail extends Base {
             // Check subject vars
             if (!empty($_subject_variables)){
                 // Custom subjects by language and vars
-                $subject = sprintf($_lang->l("mail-$subject"), $_subject_variables);        
+                $_subject = sprintf($_lang->l("mail-$subject"), $_subject_variables);        
             }
-
-            // Render twig template
-            $html = $twig->render($template, $_vars);
 
             $_mail['to'] = $_to;
             $_mail['toName'] = $_toName;
+            if (!empty($_from)){
+                $_mail['from'] = $_from;
+            }
+            if (!empty($_fromName)){
+                $_mail['fromName'] = $_fromName;
+            }            
             $_mail['body'] = $html;
-            $_mail['subject'] = $subject;
+            $_mail['subject'] = $_subject;
 
                 
             //Check type         
@@ -86,8 +98,8 @@ class Mail extends Base {
                         $message = array(
                             'html' => $_mail['body'],
                             'subject' => $_mail['subject'],
-                            'from_email' => CONTACT_EMAIL,
-                            'from_name' => CONTACT_NAME,
+                            'from_email' => $_mail['from'],
+                            'from_name' => $_mail['fromName'],
                             'to' => array(
                                 array(
                                     'email' => $_mail['to'],
@@ -115,8 +127,8 @@ class Mail extends Base {
                 
                 $mail = new \PHPMailer;
 
-                $mail->From = CONTACT_EMAIL;
-                $mail->FromName = CONTACT_NAME;
+                $mail->From = $_mail['from'];
+                $mail->FromName = $_mail['fromName'];
                 $mail->addAddress($_mail['to'], $_mail['toName']);     // Add a recipient
 
                 $mail->isHTML(true);                                  // Set email format to HTML
