@@ -1,3 +1,8 @@
+## Changes since 2014-09-09T12:30:05.000Z
+
+ * @albertogonzcat: 0.4 (#18)
+ * @albertogonzcat: Many lines updated, added user_default model (#17)
+
 ## Changes since 2014-09-09T10:23:13.000Z
 
  * @albertogonzcat: Added composer.json (fix 3) (#16)
