@@ -5,12 +5,15 @@
  * (see README for details)
  */
 
+namespace Quaver\Model;
+use Quaver\Core\DB;
+
 /**
  * user_default class.
  * 
  * @extends base_object
  */
-class user_default extends base_object
+class UserDefault extends Base
 {
   public $_fields = array(
       "id",

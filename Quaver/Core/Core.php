@@ -5,13 +5,18 @@
  * (see README for details)
  */
 
+namespace Quaver\Core;
+
+use Quaver\Core\DB;
+use Quaver\Core\PDO;
+use Quaver\Core\Lang;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
- * core class
+ * Core class
  */
-class core
+class Core
 {
     // DB object
     public $db; 
@@ -41,7 +46,7 @@ class core
 
         // Twig Template System Loader
         require_once(LIB_PATH . '/Twig/Autoloader.php');
-        Twig_Autoloader::register();
+        \Twig_Autoloader::register();
 
         // Getting all directories in /template
         $path = VIEW_PATH;
@@ -65,13 +70,13 @@ class core
 
 		//get query string from URL to core var
         $this->getQueryString();
-        $loader = new Twig_Loader_Filesystem($templatesDir);
+        $loader = new \Twig_Loader_Filesystem($templatesDir);
 
         $twig_options = array();
         if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) $twig_options['cache'] = "./cache";
         if (defined('CACHE_AUTO_RELOAD') && CACHE_AUTO_RELOAD) $twig_options['auto_reload'] = true;
         
-        $this->twig = new Twig_Environment($loader, $twig_options);
+        $this->twig = new \Twig_Environment($loader, $twig_options);
 
         // Clear Twig cache
         if (defined(TEMPLATE_CACHE) && TEMPLATE_CACHE) {
@@ -87,7 +92,7 @@ class core
         if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT) {
             if (!empty($this->queryString['PHPSESSID'])) {
                 $sessionHash = $this->queryString['PHPSESSID'];
-                $_userFromSession = new user_default;
+                $_userFromSession = new UserDefault;
                 $_userFromSession->setCookie($sessionHash);
                 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                 header("Location: $url");
@@ -109,14 +114,14 @@ class core
         if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
             global $_user_default;
 
-            $_user_default = new user_default;
+            $_user_default = new UserDefault;
             if (!empty($_COOKIE[COOKIE_NAME . "_log"])) {
                 $_user_default->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
             }
         }
        
         // Load language
-        $_lang = new lang;
+        $_lang = new Lang;
         if (!empty($_GET['lang'])) {
             $lang_slug = substr($_GET['lang'], 0, 3);
             $_lang->getFromSlug($lang_slug);
@@ -176,7 +181,7 @@ class core
 
         try {
             $yaml = new Parser();
-            $routes = $yaml->parse(file_get_contents('./app/routes.yml'));
+            $routes = $yaml->parse(file_get_contents('./Quaver/Routes.yml'));
 
         } catch (ParseException $e) {
             printf("Unable to parse the YAML string: %s", $e->getMessage());
@@ -266,7 +271,7 @@ class core
 
         // Languages
         $languageVars = array();
-        $ob_l = new lang;
+        $ob_l = new Lang;
         foreach ($ob_l->getList() as $lang) {
             $item = array(
                 "id" => $lang->id,

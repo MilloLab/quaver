@@ -7,15 +7,15 @@
 
 // Paths
 define('GLOBAL_PATH', dirname( __FILE__ ));
-define('MODEL_PATH', GLOBAL_PATH . '/model');
-define('VIEW_PATH', GLOBAL_PATH . '/view');
-define('CONTROLLER_PATH', GLOBAL_PATH . '/controller');
-define('LIB_PATH', GLOBAL_PATH . '/lib');
+define('MODEL_PATH', GLOBAL_PATH . '/Model');
+define('VIEW_PATH', GLOBAL_PATH . '/View');
+define('CONTROLLER_PATH', GLOBAL_PATH . '/Controller');
+define('LIB_PATH', GLOBAL_PATH . '/Lib');
 
 // Resources path
-define('CSS_PATH', '/app/resources/css');
-define('JS_PATH',  '/app/resources/js');
-define('IMG_PATH',  '/app/resources/img');
+define('CSS_PATH', '/Quaver/Resources/css');
+define('JS_PATH',  '/Quaver/Resources/js');
+define('IMG_PATH',  '/Quaver/Resources/img');
 
 // Cookies
 define('COOKIE_NAME', 'yourdomain');

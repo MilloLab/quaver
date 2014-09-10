@@ -18,6 +18,8 @@ Requeriments
 
 History
 -------
+* Version 0.4 (September 2014)
+	* Redesign with namespaces and new structure
 * Version 0.3 (September 2014)
 	* Set new core and new internal flow.
 	* New functions and extended models.
@@ -38,6 +40,7 @@ External Lib
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer).
 * [Mandrill PHP API Client](https://mandrillapp.com/api/docs/).
 
-Thanks
-------
-[Felipe (fmartingr)](https://github.com/fmartingr).
+Thanks to
+---------
+* [Felipe (fmartingr)](https://github.com/fmartingr).
+* AwesomezGuy.

@@ -5,6 +5,9 @@
  * (see README for details)
  */
 
+namespace Quaver\Core;
+use \PDO;
+use Quaver\Model\RC4;
 
 /**
  * Class DB
@@ -47,7 +50,7 @@ class DB
                 }
 
 
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 print "Error!: " . $e->getMessage() . "<br/>";
                 die();
             }
@@ -122,7 +125,7 @@ class DB
      */
     public function encrypt($_str)
     {
-        return $this->conn->mysql_real_escape_string(rc4::encrypt($_str, $this->cipher_key));
+        return $this->conn->mysql_real_escape_string(RC4::encrypt($_str, $this->cipher_key));
     }
 
 
@@ -132,7 +135,7 @@ class DB
      */
     public function decrypt($_str)
     {
-        return rc4::decrypt($_str, $this->cipher_key);
+        return RC4::decrypt($_str, $this->cipher_key);
     }
 
 }

@@ -5,10 +5,13 @@
  * (see README for details)
  */
 
+namespace Quaver\Model;
+use Quaver\Core\DB;
+
 /**
- * Class base_object
+ * Class Base
  */
-class base_object extends core
+class Base extends Core
 {
 
     public $id;
