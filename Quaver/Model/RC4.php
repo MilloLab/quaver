@@ -1,9 +1,10 @@
 <?php
 
+namespace Quaver\Model;
 /**
  * Class rc4
  */
-class rc4
+class RC4
 {
     /**
      * @param $_string

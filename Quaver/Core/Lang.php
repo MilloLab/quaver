@@ -5,11 +5,14 @@
  * (see README for details)
  */
 
+namespace Quaver\Core;
+use Quaver\Core\DB;
+
 
 /**
  * Class lang
  */
-class lang
+class Lang
 {
 
     public $_fields = array(
@@ -266,7 +269,7 @@ class lang
         $result = $items->fetchAll();
 
         foreach ($result as $l) {
-            $ob_lang = new lang;
+            $ob_lang = new Lang;
             $return[] = $ob_lang->getFromId($l['id']);
         }
 
@@ -299,7 +302,7 @@ class lang
         if (@$items){
             $result = $items->fetchAll();
             foreach ($result as $item) {
-                $ob_lang = new lang;
+                $ob_lang = new Lang;
                 $return[] = $ob_lang->getFromId($item['id']);
             }
         }

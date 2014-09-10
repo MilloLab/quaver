@@ -5,10 +5,14 @@
  * (see README for details)
  */
 
+namespace Quaver\Model;
+
+use Quaver\Core\DB;
+
 /**
  * Class mail
  */
-class mail extends base_object {
+class Mail extends Base {
 
     public $type; // "mandril"
 
@@ -48,8 +52,8 @@ class mail extends base_object {
             $_mail = array();
 
             // Start twig env
-            $loader = new Twig_Loader_String();
-            $twig = new Twig_Environment($loader);
+            $loader = new \Twig_Loader_String();
+            $twig = new \Twig_Environment($loader);
 
             // Check language
             if (empty($_language)){
@@ -78,7 +82,7 @@ class mail extends base_object {
                     require_once(LIB_PATH . '/Mandrill/src/Mandrill.php');
 
                     try {
-                        $mandrill = new Mandrill(MANDRILL_APIKEY);
+                        $mandrill = new \Mandrill(MANDRILL_APIKEY);
                         $message = array(
                             'html' => $_mail['body'],
                             'subject' => $_mail['subject'],
@@ -109,7 +113,7 @@ class mail extends base_object {
             } else {
                 require_once(LIB_PATH . '/PHPMailer/PHPMailerAutoload.php');
                 
-                $mail = new PHPMailer;
+                $mail = new \PHPMailer;
 
                 $mail->From = CONTACT_EMAIL;
                 $mail->FromName = CONTACT_NAME;
@@ -122,7 +126,7 @@ class mail extends base_object {
                 
                 try {
                     $return = $mail->Send();
-                } catch (phpmailerException $e) {
+                } catch (\phpmailerException $e) {
                     echo $e->errorMessage();
                 } catch (Exception $e) {
                     echo $e->getMessage();

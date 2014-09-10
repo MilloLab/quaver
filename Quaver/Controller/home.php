@@ -5,12 +5,9 @@
  * (see README for details)
  */
 
-$url = $this->getUrl();
+namespace Quaver\Controller;
 
-header("HTTP/1.0 404 Not Found");
-trigger_error("[404] $url", E_USER_WARNING);
-
-$template = $this->twig->loadTemplate("404.twig");
+$template = $this->twig->loadTemplate('home.twig');
 echo $template->render($this->twigVars);
 
 ?>
