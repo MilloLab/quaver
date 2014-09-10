@@ -10,7 +10,7 @@ namespace Quaver;
 ini_set('display_errors', 0);
 
 // Check config file
-if ( !file_exists('./Quaver/Config.php') || !file_exists('./Quaver/Autoloader.php') ) {
+if ( !file_exists('./Quaver/Config.php') || !file_exists('./Quaver/Autoloader.php')) {
 
 	$msg = "This instance of app doesn't seem to be configured, please read the deployment guide, configure and try again.";
     error_log($msg);
@@ -35,7 +35,6 @@ if (defined('DEV_MODE')) {
 
 // Load other main classes
 require_once('./Quaver/Core/DB.php');
-require_once('./Quaver/Core/Lang.php');
 require_once('./Quaver/Core/Core.php');
 
 // Load YAML Parser

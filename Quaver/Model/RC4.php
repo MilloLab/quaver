@@ -27,7 +27,9 @@ class RC4
         $i = 0;
         $j = 0;
         $ct = '';
-        for ($y = 0; $y < strlen($_string); $y++) {
+        $strlenString = strlen($_string);
+
+        for ($y = 0; $y < $strlenString; $y++) {
             $i = ($i + 1) % 256;
             $j = ($j + $s[$i]) % 256;
             $x = $s[$i];
