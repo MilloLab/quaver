@@ -5,14 +5,13 @@
  * (see README for details)
  */
 
-namespace Quaver\Core;
+namespace Quaver\Model;
 use Quaver\Core\DB;
 
-
 /**
- * Class lang
+ * Class Lang
  */
-class Lang
+class Lang extends Base
 {
 
     public $_fields = array(
@@ -33,31 +32,6 @@ class Lang
     public $strings;
     public $table = 'lang';
     public $table_strings = 'lang_strings';
-
-
-    /**
-     * @param $_item
-     */
-    public function setItem($_item)
-    {
-        foreach ($this->_fields as $field) {
-            if (isset($_item[$field])){
-                $this->$field = $_item[$field];
-            }
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getItem()
-    {
-        $item = array();
-        foreach ($this->_fields as $field) {
-            $item[$field] = $this->$field;
-        }
-        return $item;
-    }
 
     /**
      * @param $_id
@@ -98,68 +72,6 @@ class Lang
             die();
         }
 
-    }
-
-    /**
-     * @return bool
-     */
-    public function save()
-    {
-
-        try {
-
-            $db = new DB;
-
-            $set = '';
-            $values = array();
-
-            foreach ($this->_fields as $field) {
-                if ($set != '') $set .= ', ';
-                $set .= "$field = :$field";
-                $values[":$field"] = $this->$field;
-            }
-
-            if(empty($this->id)){
-                $sql = "INSERT INTO " . $this->table . " SET " . $set;
-
-            } else {
-                $values[':id'] = $this->id;
-                $sql = "UPDATE " . $this->table . " SET " . $set . " WHERE id = :id";
-            }
-
-            $db->query($sql, $values);
-
-            return true;
-
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
-
-
-    }
-
-    /**
-     * @return bool
-     */
-    public function delete()
-    {
-
-        try {
-            $db = new DB;
-
-            $_id = (int)$this->id;
-
-            $sql = "DELETE FROM " . $this->table . " WHERE id = :id";
-            if ($db->query($sql, array(':id'=>$_id))) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
     }
 
 
@@ -316,7 +228,7 @@ class Lang
      * @param string $_utf8
      * @return string
      */
-    public function _($_label, $_utf8 = '')
+    public function typeFormat($_label, $_utf8 = '')
     {
 
         //$return = $this->getString($_label);
@@ -341,7 +253,7 @@ class Lang
      */
     public function l($_label)
     {
-        return $this->_($_label, '');
+        return $this->typeFormat($_label, '');
     }
 
 }

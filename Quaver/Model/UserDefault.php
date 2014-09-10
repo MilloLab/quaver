@@ -9,9 +9,7 @@ namespace Quaver\Model;
 use Quaver\Core\DB;
 
 /**
- * user_default class.
- * 
- * @extends base_object
+ * Class UserDefault
  */
 class UserDefault extends Base
 {
