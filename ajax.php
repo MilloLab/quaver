@@ -35,7 +35,6 @@ if (defined('DEV_MODE')) {
 
 // Load other main classes
 require_once('../Quaver/Core/DB.php');
-require_once('../Quaver/Core/Lang.php');
 require_once('../Quaver/Core/Core.php');
 
 // Load YAML Parser

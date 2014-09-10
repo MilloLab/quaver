@@ -137,45 +137,5 @@ class UserDefault extends Base
     }
   }
 
-  /**
-   * @return bool
-   */
-  public function save()
-  {
-    try {
-
-      $db = new DB;
-
-      $set = '';
-      $values = array();
-
-      foreach ($this->_fields as $field) {
-          if ($set != '') $set .= ', ';
-          $set .= "$field = :$field";
-          $values[":$field"] = $this->$field;
-      }
-
-      if(empty($this->id)){
-          $sql = "INSERT INTO " . $this->table . " SET " . $set;
-
-      } else {
-          $values[':id'] = $this->id;
-          $sql = "UPDATE " . $this->table . " SET " . $set . " WHERE id = :id";
-      }
-
-      $db->query($sql, $values);
-
-      if (empty($this->id)){
-          $this->id = $db->insertId();
-      }
-
-      return true;
-
-    } catch (PDOException $e) {
-      print "Error!: " . $e->getMessage() . "<br/>";
-      die();
-    }
-  }
-
 }	
 ?>

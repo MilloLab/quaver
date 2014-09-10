@@ -18,7 +18,9 @@ function load($namespace) {
 	$path = '';
 	$name = '';
 	$firstword = true;
-	for ($i = 0; $i < count($splitpath); $i++) {
+	$countSplitPath = count($splitpath);
+
+	for ($i = 0; $i < $countSplitPath; $i++) {
 		if ($splitpath[$i] && !$firstword) {
 			if ($i == count($splitpath) - 1)
 				$name = $splitpath[$i];

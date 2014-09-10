@@ -8,7 +8,6 @@
 namespace Quaver\Core;
 
 use Quaver\Core\DB;
-use Quaver\Core\PDO;
 use Quaver\Model\Lang;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
