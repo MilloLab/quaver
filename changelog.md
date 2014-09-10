@@ -1,3 +1,8 @@
+## Changes since 2014-09-10T16:55:10.000Z
+
+ * @albertogonzcat: Change composer (#22)
+ * @albertogonzcat: Change readme (#21)
+
 ## Changes since 2014-09-10T16:09:01.000Z
 
  * @albertogonzcat: 0.4 (#20)
