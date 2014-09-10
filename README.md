@@ -4,7 +4,7 @@ It is a framework designed to develop from a basic website to a platform. Lightw
 
 Quaver is developed by [Alberto González](https://github.com/albertogonzcat) & [MilloLab](http://millolab.com), and distributed under MIT license.
 
-[![Latest Stable Version](https://poser.pugx.org/millolab/quaver/v/stable.svg)](https://packagist.org/packages/millolab/quaver) [![Total Downloads](https://poser.pugx.org/millolab/quaver/downloads.svg)](https://packagist.org/packages/millolab/quaver) [![Latest Unstable Version](https://poser.pugx.org/millolab/quaver/v/unstable.svg)](https://packagist.org/packages/millolab/quaver) [![License](https://poser.pugx.org/millolab/quaver/license.svg)](https://packagist.org/packages/millolab/quaver)
+[![Latest Stable Version](https://poser.pugx.org/millolab/quaver/v/stable.svg)](https://packagist.org/packages/millolab/quaver) [![License](https://poser.pugx.org/millolab/quaver/license.svg)](https://packagist.org/packages/millolab/quaver)
 
 Installation
 ------------
