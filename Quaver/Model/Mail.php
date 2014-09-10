@@ -6,11 +6,10 @@
  */
 
 namespace Quaver\Model;
-
 use Quaver\Core\DB;
 
 /**
- * Class mail
+ * Class Mail
  */
 class Mail extends Base
 {

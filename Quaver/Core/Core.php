@@ -9,9 +9,12 @@ namespace Quaver\Core;
 
 use Quaver\Core\DB;
 use Quaver\Core\PDO;
-use Quaver\Core\Lang;
+use Quaver\Model\Lang;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
+
+// Sample User model
+use Quaver\Model\UserDefault;
 
 /**
  * Core class
@@ -31,10 +34,6 @@ class Core
     // Template system
     public $twig = null;
     public $twigVars = array();
-
-    // Development
-    //public $debug = false;
-
 
     /**
      * constructor
@@ -58,7 +57,7 @@ class Core
         while (count($dirsToScan) > $dirKey) {
             $results = scandir($dirsToScan[$dirKey]);
             foreach ($results as $result) {
-                if ($result === '.' or $result === '..') continue;
+                if ($result === '.' || $result === '..') continue;
 
                 if (is_dir($dirsToScan[$dirKey] . '/' . $result)) {
                     $templatesDir[] = $dirsToScan[$dirKey] . '/' . $result;
