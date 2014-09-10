@@ -73,7 +73,7 @@ class Core
         $loader = new \Twig_Loader_Filesystem($templatesDir);
 
         $twig_options = array();
-        if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) $twig_options['cache'] = "./cache";
+        if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) $twig_options['cache'] = "./Cache";
         if (defined('CACHE_AUTO_RELOAD') && CACHE_AUTO_RELOAD) $twig_options['auto_reload'] = true;
         
         $this->twig = new \Twig_Environment($loader, $twig_options);
