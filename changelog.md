@@ -1,3 +1,7 @@
+## Changes since 2014-09-10T09:33:28.000Z
+
+ * @albertogonzcat: Updated changelog (#19)
+
 ## Changes since 2014-09-09T12:30:05.000Z
 
  * @albertogonzcat: 0.4 (#18)
