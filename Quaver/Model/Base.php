@@ -11,7 +11,7 @@ use Quaver\Core\DB;
 /**
  * Class Base
  */
-class Base extends Core
+class Base
 {
 
     public $id;
