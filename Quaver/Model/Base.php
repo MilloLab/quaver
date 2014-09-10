@@ -59,8 +59,9 @@ class Base
 
             $db = new DB;
             $_id = (int)$_id;
+            $_table = $this->table;
 
-            $item = $db->query("SELECT * FROM " . $this->table . " WHERE id = '$_id'");
+            $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
 
             $result = $item->fetchAll();
 
@@ -89,6 +90,7 @@ class Base
 
             $set = '';
             $values = array();
+            $_table = $this->table;
 
             foreach ($this->_fields as $field) {
                 if ($set != '') $set .= ', ';
@@ -97,11 +99,11 @@ class Base
             }
 
             if(empty($this->id)){
-                $sql = "INSERT INTO " . $this->table . " SET " . $set;
+                $sql = "INSERT INTO $_table SET " . $set;
 
             } else {
                 $values[':id'] = $this->id;
-                $sql = "UPDATE " . $this->table . " SET " . $set . " WHERE id = :id";
+                $sql = "UPDATE $_table SET " . $set . " WHERE id = :id";
             }
 
             $db->query($sql, $values);
@@ -131,8 +133,9 @@ class Base
             $db = new DB;
 
             $_id = (int)$this->id;
+            $_table = $this->table;
 
-            $sql = "DELETE FROM " . $this->table . " WHERE id = :id";
+            $sql = "DELETE FROM $_table WHERE id = :id";
             if ($db->query($sql, array(':id'=>$_id))) {
                 return true;
             } else {

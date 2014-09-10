@@ -43,17 +43,19 @@ class Lang extends Base
         try {
             $db = new DB;
             $_id = (int)$_id;
+            $_table = $this->table;
 
-            $item = $db->query("SELECT * FROM " . $this->table . " WHERE id = '$_id'");
+            $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
             $result = $item->fetchAll();
 
             if ($result) {
                 $this->setItem($result[0]);
             }
 
-            $strings = $db->query("SELECT *
-                FROM " . $this->table_strings . "
-                WHERE language = '" . $this->id . "'");
+            $_table_strings = $this->table_strings;
+            $_idSet = $this->id;
+
+            $strings = $db->query("SELECT * FROM $_table_strings WHERE language = '$_idSet'");
             $resultLang = $strings->fetchAll();
 
             if ($resultLang) {
@@ -154,13 +156,14 @@ class Lang extends Base
         $db = new DB;
 
         $return = LANG;
+        $_table = $this->table;
 
         $slug_where = 'slug';
         if ($_short)
             $slug_where = 'SUBSTR(slug, 1, 2)';
 
         $_slug = substr($_slug, 0, 3);
-        $language = $db->query("SELECT id FROM " . $this->table . " WHERE $slug_where = '$_slug' AND active = 1");
+        $language = $db->query("SELECT id FROM $_table WHERE $slug_where = '$_slug' AND active = 1");
         if (@$language) {
             $this->getFromId($language->fetchColumn(0));
             $return = $this;
@@ -176,8 +179,9 @@ class Lang extends Base
         $db = new DB;
 
         $return = array();
+        $_table = $this->table;
 
-        $items = $db->query("SELECT * FROM " . $this->table . " ORDER BY id ASC");
+        $items = $db->query("SELECT * FROM $_table ORDER BY id ASC");
         $result = $items->fetchAll();
 
         foreach ($result as $l) {
@@ -199,6 +203,7 @@ class Lang extends Base
 
         $return = array();
         $result = null;
+        $_table = $this->table;
 
         $where = '';
         $order = '';
@@ -209,7 +214,7 @@ class Lang extends Base
         if ($_all)
             $where = "WHERE active = 1";
 
-        $items = $db->query("SELECT id FROM " . $this->table . " $where $order");
+        $items = $db->query("SELECT id FROM $_table $where $order");
         
         if (@$items){
             $result = $items->fetchAll();
