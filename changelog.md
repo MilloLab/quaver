@@ -1,3 +1,7 @@
+## Changes since 2014-09-10T18:00:58.000Z
+
+ * @albertogonzcat: Fix many bugs (#25)
+
 ## Changes since 2014-09-10T17:44:55.000Z
 
  * @albertogonzcat: Move Lang to models and fix bugs (#24)

@@ -97,11 +97,13 @@ class UserDefault extends Base
     $db = new DB;
 
     $this->cookie = substr($_cookie, 0, 40);
+    $_table = $this->table;
+    $_cookieSet = $this->cookie;
 
     $id = $db->query("
         SELECT id
-        FROM " . $this->table . "
-            WHERE SHA1(CONCAT(email, MD5(id))) = '" . $this->cookie . "'");
+        FROM $_table
+        WHERE SHA1(CONCAT(email, MD5(id))) = '$_cookieSet'");
 
     $result = $id->fetchColumn(0);
 
