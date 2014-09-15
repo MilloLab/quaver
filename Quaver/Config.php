@@ -50,16 +50,6 @@ define('DB_PASSWORD', 'root');
 define('DB_DATABASE', 'qv');
 
 /*
- * Global variables DO NOT TOUCH
- */
-$_language = '';
-
-// Set user_default global
-if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
-	$_user_default = '';
-}
-
-/*
  * External
  */
 
