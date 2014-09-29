@@ -8,10 +8,9 @@ Quaver is developed by [Alberto González](https://github.com/albertogonzcat) & 
 
 Installation
 ------------
-* Import `quaver.sql` and check `app/config.php` and `app/routes.yml`.
+* Import `quaver.sql` and check `Quaver/Config.php` and `Quaver/Routes.yml`.
 * Optional: 
-	* Customize Mail model with `PHPMailer/Mandrill` functions.
-	* If you want use *users* in your project check `model/user_default`.
+	* Customize Mail model with PHPMailer/Mandrill functions.
 
 Requeriments
 ------------
@@ -20,6 +19,8 @@ Requeriments
 
 History
 -------
+* Version 0.5 (October 2014)
+	* Dashboard
 * Version 0.4 (September 2014)
 	* Redesign with namespaces and new structure
 * Version 0.3 (September 2014)
