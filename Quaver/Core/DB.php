@@ -96,7 +96,8 @@ class DB
             return $result;
 
         } catch (\PDOException $e) {
-            throw new \Exception("Error PDO: " . \trace($e));
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
         }
 
     }
