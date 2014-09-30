@@ -5,11 +5,19 @@
   <div class="container">
     <div class="jumbotron centered">
       <h1>Welcome to Quaver</h1>
-      <p>Lang: {{ language.locale|replace('_', '-') }}</p>
-      <p>String: hello_world = {{ language.l('hello_world') }}</p>
+      <p>Local Lang: {{ language.locale|replace('_', '-') }}</p>
+      <p>Sample String: hello_world = {{ language.l('hello_world') }}</p>
       <p>
         <a class="btn btn-lg btn-primary" href="https://github.com/MilloLab/quaver" target="_blank" role="button"> <i class="fa fa-github"></i> GitHub</a>
       </p>
+
+      <h2>Install</h2>
+      <p>Import quaver.sql and check <strong>Quaver/Config.php</strong> and <strong>Quaver/Routes.yml</strong></p>
+      <p><i>Optional: Customize Mail model with PHPMailer/Mandrill functions.</i></p>
+
+      <h2>Quaver Dashboard</h2>
+      <p><a href="/register">Create a user</a> and select "admin" type.</p>
+      <p><a href="/login">Login</a> and go to <a href="/admin">Quaver Dashboard</a></p>
     </div>
   </div>
 

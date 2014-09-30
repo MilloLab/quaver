@@ -5,3 +5,23 @@ home:
 404:
     url: /404/
     controller: e404
+
+admin:
+    url: /admin/
+    controller: admin/main
+
+admin_languages:
+    url: /admin/languages/([a-zA-Z0-9-_]+)?[/]?([a-zA-Z0-9-_]+)?[/]?
+    controller: admin/languages
+
+register:
+    url: /register/
+    controller: register
+
+login:
+    url: /login/
+    controller: login
+
+logout:
+    url: /logout/
+    controller: logout

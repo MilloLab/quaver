@@ -9,11 +9,10 @@ namespace Quaver\Core;
 
 use Quaver\Core\DB;
 use Quaver\Model\Lang;
+use Quaver\Model\User;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 
-// Sample User model
-use Quaver\Model\UserDefault;
 
 /**
  * Core class
@@ -86,16 +85,14 @@ class Core
             }
         }
 
-        // Restoring user_default session sample
-        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT) {
-            if (!empty($this->queryString['PHPSESSID'])) {
-                $sessionHash = $this->queryString['PHPSESSID'];
-                $_userFromSession = new UserDefault;
-                $_userFromSession->setCookie($sessionHash);
-                $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                header("Location: $url");
-                exit;
-            }
+        // Restoring user_default session sample    
+        if (!empty($this->queryString['PHPSESSID'])) {
+            $sessionHash = $this->queryString['PHPSESSID'];
+            $_userFromSession = new User;
+            $_userFromSession->setCookie($sessionHash);
+            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            header("Location: $url");
+            exit;
         }
 
 
@@ -106,16 +103,12 @@ class Core
      */
     public function start($_mvc = true)
     {	
-        global $_lang;
+        global $_lang, $_user;
 
-        // Set user_default global
-        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
-            global $_user_default;
-
-            $_user_default = new UserDefault;
-            if (!empty($_COOKIE[COOKIE_NAME . "_log"])) {
-                $_user_default->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
-            }
+        // Load user
+        $_user = new User;
+        if (!empty($_COOKIE[COOKIE_NAME . "_log"])) {
+            $_user->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
         }
        
         // Load language
@@ -189,14 +182,14 @@ class Core
             $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $item['url']) . "$/";
             preg_match($regexp, $_url, $match);
 
-            if (@$match) {
+            if ($match) {
                 $this->url_var = $match;
                 $mvc = $item;
                 break;
             }
         }
 
-        if (@$mvc) {
+        if ($mvc) {
             $return = $mvc;
         } else {
             $this->setController('e404');
@@ -210,12 +203,7 @@ class Core
      */
     public function setController($_controllerName)
     {
-        global $_lang;
-
-        // Set user_default global
-        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
-            global $_user_default;
-        }
+        global $_lang, $_user;
         
         $controllerPath = CONTROLLER_PATH . "/" . $_controllerName . ".php";
 
@@ -254,12 +242,7 @@ class Core
      */
     public function getGlobalTwigVars()
     {
-        global $_lang;
-
-        // Set user_default global
-        if (defined(LOAD_USER_DEFAULT) && LOAD_USER_DEFAULT){
-            global $_user_default;
-        }
+        global $_lang, $_user;
 
         // Language
         $this->addTwigVars("language", $_lang);
@@ -280,6 +263,22 @@ class Core
             array_push($languageVars, $item);
         }
         $this->addTwigVars('languages', $languageVars);
+
+        // User data
+        $userVars = array(
+            "admin" => $_user->isAdmin(),
+            "logged" => $_user->logged,
+            "sessionHash" => $_user->cookie,
+        );
+        $this->addTwigVars("user", $userVars);
+        $this->addTwigVars("_user", $_user);
+
+        // Login errors
+        if (isset($this->queryString['login-error']))
+            $this->addTwigVars('loginError', true);
+
+        if (isset($this->queryString['user-disabled']))
+            $this->addTwigVars('userDisabled', true);
 
         // Current url
         $this->addTwigVars('url', strip_tags($this->url_var[0]));

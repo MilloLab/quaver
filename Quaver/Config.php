@@ -40,9 +40,6 @@ define('CACHE_AUTO_RELOAD', true);
 define('LANG', 1);
 define('LANG_FORCE', false);
 
-// User default model
-define('LOAD_USER_DEFAULT', false);
-
 // Database configuration
 define('DB_HOSTNAME',  'localhost');
 define('DB_USERNAME', 'root');
