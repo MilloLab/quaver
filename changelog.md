@@ -1,3 +1,9 @@
+## Changes since 2014-09-10T18:36:00.000Z
+
+ * @albertogonzcat: 0.5 (#28)
+ * @albertogonzcat: Fix ajax and del old vars (#27)
+ * @albertogonzcat: 0.4 (#26)
+
 ## Changes since 2014-09-10T18:00:58.000Z
 
  * @albertogonzcat: Fix many bugs (#25)
