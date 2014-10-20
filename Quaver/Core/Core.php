@@ -19,8 +19,11 @@ use Symfony\Component\Yaml\Exception\ParseException;
  */
 class Core
 {
+
+    private $_version = '0.5.1';
+
     // DB object
-    public $db; 
+    public $db;
 
 	// URL management
     public $url_var;
