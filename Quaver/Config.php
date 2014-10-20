@@ -5,17 +5,19 @@
  * (see README for details)
  */
 
-// Paths
+// Core Path
 define('GLOBAL_PATH', dirname( __FILE__ ));
 define('MODEL_PATH', GLOBAL_PATH . '/Model');
 define('VIEW_PATH', GLOBAL_PATH . '/View');
 define('CONTROLLER_PATH', GLOBAL_PATH . '/Controller');
 define('LIB_PATH', GLOBAL_PATH . '/Lib');
 
-// Resources path
-define('CSS_PATH', '/Quaver/Resources/css');
-define('JS_PATH',  '/Quaver/Resources/js');
-define('IMG_PATH',  '/Quaver/Resources/img');
+// Resource Path
+define('FILES_PATH', GLOBAL_PATH . '/Files');
+define('RES_PATH', GLOBAL_PATH . '/Resources'); #Master
+define('CSS_PATH', RES_PATH . '/css');
+define('JS_PATH',  RES_PATH . '/js');
+define('IMG_PATH', RES_PATH . '/img');
 
 // Cookies
 define('COOKIE_NAME', 'yourdomain');
