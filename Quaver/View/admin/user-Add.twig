@@ -1,0 +1,60 @@
+{% extends "aLayout.twig" %}
+
+{% block title %}Users - Quaver Dashboard{% endblock %}
+
+   
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<form id="formCreator" action="" method="post" enctype="multipart/form-data" name="formCreator">
+    <div class="btn-group pull-right">
+        <button class="btn btn-success" name="{{ typePOST }}" type="submit"> Save</button>
+    </div>
+    
+    <h1 class="page-header">User: <a><b>{{ item.id }}</b></a> </h1>
+    
+    <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" id="email" name="email" value="{{ item.email }}">
+        </div>
+
+    <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" value="">
+        </div>
+
+    <div class="form-group">
+            <label for="level">Privileges</label>
+
+            <select class="form-control" name="level">
+              <option value="user" {% if item.level == 'user' %}selected{% endif %}>User</option>
+              <option value="admin" {% if item.level == 'admin' %}selected{% endif %}>Admin</option>
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <label for="active">¿Do you want active user?</label>
+
+            <select class="form-control" name="active">
+              <option value="1" {% if item.active == '1' %}selected{% endif %}>Yes</option>
+              <option value="0" {% if item.active == '0' %}selected{% endif %}>No</option>
+            </select>
+
+        </div>
+
+
+        {% if item.id %}
+        <input type="hidden" name="id" id="id" value="{{ item.id }}" />
+        {% endif %}
+
+        </form>
+        
+        </div>
+
+
+{% endblock %}
+
+
+

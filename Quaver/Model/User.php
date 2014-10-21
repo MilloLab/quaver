@@ -28,6 +28,42 @@ class User extends Base
   
   public $table = 'user'; // sql table
 
+
+  /**
+   * getList function.
+   * 
+   * @access public
+   * @return void
+   */
+  public function getList()
+  {
+    try {
+
+        $db = new DB;
+        $_id = (int)$_id;
+        $_table = $this->table;
+        $return = NULL;
+
+        $item = $db->query("SELECT id FROM $_table");
+
+        $result = $item->fetchAll();
+
+        if ($result) {
+            foreach ($result as $item) {
+                $user = new User;
+                $return[] = $user->getFromId($item['id']);
+            }
+        }
+
+        return $return;
+
+    } catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+
+  }
+
   /**
    * isActive function.
    * 

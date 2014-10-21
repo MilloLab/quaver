@@ -1,0 +1,97 @@
+<?php
+/*
+ * Copyright (c) 2014 Alberto González
+ * Distributed under MIT License
+ * (see README for details)
+ */
+
+namespace Quaver\Controller;
+use Quaver\Model\User;
+
+// Check privileges
+if (!$_user->logged || !$_user->isAdmin()) {
+    header("Location: /");
+    exit;
+} 
+
+// Set up menu action
+$this->addTwigVars('section', 'users');
+
+// Add or edit users strings
+if (isset($_POST['edit']) || isset($_POST['add'])) {
+	$added = false;
+
+    $user = new User;
+
+    if ($_POST['id']){
+        $item['id'] = $_POST['id'];
+    }
+
+    $item['level'] = $_POST['level'];
+    $item['active'] = $_POST['active'];
+    $item['password'] = $user->hashPassword($_POST['password']);
+    $item['email'] = $_POST['email'];
+
+    if (isset($_POST['add'])){
+        $item['dateRegister'] = date('Y-m-d H:i:s', time());
+        $item['dateLastLogin'] = date('Y-m-d H:i:s', time());    
+    }
+    
+    $user->setItem($item);
+
+    if ($user->save()) {
+        header("Location: /admin/users");
+        exit;
+    } else {
+        $added = false;
+    }
+    
+}
+
+// Selector
+switch ($this->url_var[1]) {
+
+    case('add'):
+    	$this->addTwigVars('typePOST', 'add');
+    	if ($added){
+	    	header("Location: /admin/users");
+	    	exit;
+    	} else {
+            // Load template with data
+	    	$template = $this->twig->loadTemplate('admin/user-Add.twig');
+    	}
+    	echo $template->render($this->twigVars);
+    	break;
+    case('edit'):
+   	 	$this->addTwigVars('typePOST', 'edit');
+        $user = new User;
+    	$item = $user->getFromId($this->url_var[2]);
+    	$this->addTwigVars('item', $item);
+
+        // Load template with data
+	    $template = $this->twig->loadTemplate('admin/user-Add.twig');
+    	echo $template->render($this->twigVars);
+    	break;
+    case('del'):
+        $user = new User;
+	    $item = $user->getFromId($this->url_var[2]);
+        
+        if ($item->delete()){
+            header("Location: /admin/users");
+            exit;
+        }
+        break;
+    default:
+        $user = new User;
+    	$item = $user->getList();
+		$this->addTwigVars('items', $item);
+
+        // Load template with data
+		$template = $this->twig->loadTemplate('admin/user-List.twig');
+		echo $template->render($this->twigVars);
+        break;
+}
+
+
+
+

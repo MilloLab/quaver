@@ -14,7 +14,7 @@ define('LIB_PATH', GLOBAL_PATH . '/Lib');
 
 // Resource Path
 define('FILES_PATH', GLOBAL_PATH . '/Files');
-define('RES_PATH', GLOBAL_PATH . '/Resources'); #Master
+define('RES_PATH', '/Quaver/Resources'); #Master
 define('CSS_PATH', RES_PATH . '/css');
 define('JS_PATH',  RES_PATH . '/js');
 define('IMG_PATH', RES_PATH . '/img');

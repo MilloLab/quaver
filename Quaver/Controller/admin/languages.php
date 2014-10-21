@@ -18,7 +18,7 @@ if (!$_user->logged || !$_user->isAdmin()) {
 $this->addTwigVars('section', 'languages');
 
 // Add or edit language strings
-if (@isset($_POST['edit']) || @isset($_POST['add'])) {
+if (isset($_POST['edit']) || isset($_POST['add'])) {
 	$added = false;
 
     $item = new LangStrings;
@@ -84,6 +84,7 @@ switch ($this->url_var[1]) {
             $item->delete();
         }
         header("Location: /admin/languages");
+        exit;
 		break;
     default:
         $lang = new LangStrings;
