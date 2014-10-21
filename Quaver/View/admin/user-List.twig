@@ -12,8 +12,8 @@
     <style>
     
     .table tbody tr:hover td, .table tbody tr:hover th {
-    background: rgb(197, 232, 255);
-}
+      background: rgb(197, 232, 255);
+    }
     </style>
 
 <script type="text/javascript">
@@ -21,6 +21,10 @@
                 
                 table = $('#items').dataTable({
                     "aoColumns": [
+                        {},
+                        {},
+                        {},
+                        {},
                         {},
                         {},
                         {},
@@ -40,7 +44,7 @@
                     var nRow = $(this).parents('tr')[0];
                     aData = table.fnGetData(nRow);
                                      
-                    $("#delBtnOK").attr("href", "/admin/languages/del/" + aData[1]);
+                    $("#delBtnOK").attr("href", "/admin/users/del/" + aData[0]);
                     $(".registerN").text(aData[0]);
                     
                 })
@@ -56,7 +60,7 @@
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
  <div class="btn-group pull-right">
-        <a class="btn btn-info" href="/admin/languages/add"> New </a></div>
+        <a class="btn btn-info" href="/admin/users/add"> New </a></div>
           <h1 class="page-header">Users</h1>
            
           <div class="table-responsive">
@@ -84,7 +88,7 @@
                 <td class="center">{{ item.dateRegister }}</td>
                 <td class="center">{{ item.dateLastLogin }}</td>
                 <td class="center options">
-                <a class="btn btn-success" href="/admin/users/edit/{{ item.label }}"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-success" href="/admin/users/edit/{{ item.id }}"><i class="fa fa-pencil"></i></a>
                 <a data-toggle="modal" data-target="#delModal" href="#" class="btn btn-danger delBtn" id="delete-{{ item.id }}"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>

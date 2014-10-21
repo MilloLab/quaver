@@ -17,40 +17,35 @@ if (!$_user->logged || !$_user->isAdmin()) {
 // Set up menu action
 $this->addTwigVars('section', 'users');
 
-// Add or edit language strings
-if (@isset($_POST['edit']) || @isset($_POST['add'])) {
+// Add or edit users strings
+if (isset($_POST['edit']) || isset($_POST['add'])) {
 	$added = false;
 
-    $item = new User;
+    $user = new User;
 
-    foreach ($_POST['language'] as $k => $v) {
-        
-        $new_lang = new LangStrings;
-        
-        if ($_POST['idL'][$k]){
-            $_l['id'] = $_POST['idL'][$k];
-        } else {
-            $_l['id'] = null;
-        }
-        
-        $_l['language'] = $_POST['language'][$k];
-        $_l['label'] = $_POST['label'];
-        $_l['text'] = $_POST['text'][$k];
-        
-        $new_lang->setItem($_l);
+    if ($_POST['id']){
+        $item['id'] = $_POST['id'];
+    }
 
-        $_item['_languages'][] = $new_lang;  
-    
+    $item['level'] = $_POST['level'];
+    $item['active'] = $_POST['active'];
+    $item['password'] = $user->hashPassword($_POST['password']);
+    $item['email'] = $_POST['email'];
+
+    if (isset($_POST['add'])){
+        $item['dateRegister'] = date('Y-m-d H:i:s', time());
+        $item['dateLastLogin'] = date('Y-m-d H:i:s', time());    
     }
     
-    $item->setItem($_item);      
+    $user->setItem($item);
 
-    if ($item->saveAll()) {
-        header("Location: /admin/languages");
+    if ($user->save()) {
+        header("Location: /admin/users");
         exit;
     } else {
         $added = false;
     }
+    
 }
 
 // Selector
