@@ -6,7 +6,7 @@
  */
 
 namespace Quaver\Controller;
-use Quaver\Model\LangStrings;
+use Quaver\Model\User;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
@@ -15,13 +15,13 @@ if (!$_user->logged || !$_user->isAdmin()) {
 } 
 
 // Set up menu action
-$this->addTwigVars('section', 'languages');
+$this->addTwigVars('section', 'users');
 
 // Add or edit language strings
 if (@isset($_POST['edit']) || @isset($_POST['add'])) {
 	$added = false;
 
-    $item = new LangStrings;
+    $item = new User;
 
     foreach ($_POST['language'] as $k => $v) {
         
@@ -59,40 +59,40 @@ switch ($this->url_var[1]) {
     case('add'):
     	$this->addTwigVars('typePOST', 'add');
     	if ($added){
-	    	header("Location: /admin/languages");
+	    	header("Location: /admin/users");
 	    	exit;
     	} else {
             // Load template with data
-	    	$template = $this->twig->loadTemplate('admin/lang-Add.twig');
+	    	$template = $this->twig->loadTemplate('admin/user-Add.twig');
     	}
     	echo $template->render($this->twigVars);
     	break;
     case('edit'):
    	 	$this->addTwigVars('typePOST', 'edit');
-        $lang = new LangStrings;
-    	$item = $lang->getFromLabel($this->url_var[2]);
+        $user = new User;
+    	$item = $user->getFromId($this->url_var[2]);
     	$this->addTwigVars('item', $item);
 
         // Load template with data
-	    $template = $this->twig->loadTemplate('admin/lang-Add.twig');
+	    $template = $this->twig->loadTemplate('admin/user-Add.twig');
     	echo $template->render($this->twigVars);
     	break;
     case('del'):
-        $lang = new LangStrings;
-	    $items = $lang->getFromLabel($this->url_var[2]);
-        foreach ($items as $item) {
-            $item->delete();
+        $user = new User;
+	    $item = $user->getFromId($this->url_var[2]);
+        
+        if ($item->delete()){
+            header("Location: /admin/users");
+            exit;
         }
-        header("Location: /admin/languages");
-        exit;
-		break;
+        break;
     default:
-        $lang = new LangStrings;
-    	$items = $lang->getLanguageList();
-		$this->addTwigVars('items', $items);
+        $user = new User;
+    	$item = $user->getList();
+		$this->addTwigVars('items', $item);
 
         // Load template with data
-		$template = $this->twig->loadTemplate('admin/lang-List.twig');
+		$template = $this->twig->loadTemplate('admin/user-List.twig');
 		echo $template->render($this->twigVars);
         break;
 }
