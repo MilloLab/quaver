@@ -36,10 +36,11 @@ class Mail extends Base
      * @param type $_toName 
      * @param type $_vars 
      * @param type $_language 
-     * @param type $_subject_variables 
+     * @param type $_subject_variables
+     * @param type $_htmlMode 
      * @return type
      */
-    public function send($_subject, $_template = '', $_to, $_toName = '', $_from = '', $_fromName = '', $_vars = array(), $_language = '', $_subject_variables = array())
+    public function send($_subject, $_template = '', $_to, $_toName = '', $_from = '', $_fromName = '', $_vars = array(), $_language = '', $_subject_variables = array(), $_htmlMode = true)
     {
         global $_lang;
         
@@ -53,12 +54,19 @@ class Mail extends Base
 
 
             if (!empty($_template)){
-                // Start twig env
-                $loader = new \Twig_Loader_String();
-                $twig = new \Twig_Environment($loader);
 
-                // Render twig template
-                $html = $twig->render($template, $_vars);
+                if ($_htmlMode === true){
+                    // Start twig env
+                    $loader = new \Twig_Loader_String();
+                    $twig = new \Twig_Environment($loader);
+
+                    // Render twig template
+                    $html = $twig->render($template, $_vars);
+                } else {
+                    $html = $_template;    
+                }
+
+                
             } else {
                 $html = $_template;
             }
@@ -139,7 +147,7 @@ class Mail extends Base
                     $return = $mail->Send();
                 } catch (\phpmailerException $e) {
                     echo $e->errorMessage();
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
         
