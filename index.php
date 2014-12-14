@@ -32,7 +32,6 @@ if (!file_exists(GLOBAL_PATH . '/Quaver/Config.php') || !file_exists(GLOBAL_PATH
 // Autoloader & Config
 require_once(GLOBAL_PATH . '/Quaver/Config.php');
 require_once(GLOBAL_PATH . '/Quaver/Core/Autoloader.php');
-require_once(LIB_PATH . '/MangoPaySDK/mangoPayApi.inc');
 require_once(LIB_PATH . '/yaml/vendor/autoload.php');
 require_once(LIB_PATH . '/Twig/Autoloader.php');
 \Twig_Autoloader::register();

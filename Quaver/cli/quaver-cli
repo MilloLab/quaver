@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+require('clibootstrap.php');
+$commands = array();
+/** Include commands files - must be listed here to be used. **/
+$actions = scandir('cliactions');
+foreach($actions AS $file){
+	if($file <> '.' && $file <> '..'){
+		include 'cliactions/'.$file;
+	}
+}
+//Run function or provide help
+if(count($argv) > 1){
+
+  if(count($argv) > 2){
+    $argv[1](@$argv[2],@$argv[3]);
+  } else {
+    $argv[1](@$argv[2]); 
+  }
+} else {
+   echo "      
+____ _  _ ____ _  _ ____ ____ 
+|  | |  | |__| |  | |___ |__/ 
+|_\| |__| |  |  \/  |___ |  \     
+                                
+\033[1;30;32mCLI Command Line Interface for Quaver \033[0m
+To run a command, type './quaver-cli [commandName]' then hit Enter
+\n
+Available Commands: \n";
+   
+   foreach($commands AS $command){
+       echo "\033[1;30;32m".$command['command'] ."\033[0m - ". $command['description']."\n";
+   }
+   echo "\n\n";
+}
+function makeRed($text){
+	echo "\033[31m$text\033[0m";
+}
+function makeGreen($text){
+	echo "\033[32m$text\033[0m";
+}
