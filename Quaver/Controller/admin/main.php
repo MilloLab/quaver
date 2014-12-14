@@ -19,5 +19,3 @@ $this->addTwigVars('section', '');
 // Load template with data
 $template = $this->twig->loadTemplate('admin/main.twig');
 echo $template->render($this->twigVars);
-
-?>

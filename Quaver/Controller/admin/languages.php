@@ -28,16 +28,14 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
         $new_lang = new LangStrings;
         
         if ($_POST['idL'][$k]){
-            $_l['id'] = $_POST['idL'][$k];
+            $new_lang->id = $_POST['idL'][$k];
         } else {
-            $_l['id'] = null;
+            $new_lang->id = null;
         }
         
-        $_l['language'] = $_POST['language'][$k];
-        $_l['label'] = $_POST['label'];
-        $_l['text'] = $_POST['text'][$k];
-        
-        $new_lang->setItem($_l);
+        $new_lang->language = $_POST['language'][$k];
+        $new_lang->label = $_POST['label'];
+        $new_lang->text = $_POST['text'][$k];
 
         $_item['_languages'][] = $new_lang;  
     
@@ -96,7 +94,3 @@ switch ($this->url_var[1]) {
 		echo $template->render($this->twigVars);
         break;
 }
-
-
-
-

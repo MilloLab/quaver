@@ -11,7 +11,6 @@ if ($_user->logged){
 	$_user->unsetCookie();	
 }
 
-
 if (!empty($_GET['ref'])) {
     $goTo = strip_tags(addslashes($_GET['ref']));
 } elseif (!empty($_SERVER['HTTP_REFERER'])) {
@@ -22,5 +21,3 @@ if (!empty($_GET['ref'])) {
 
 header("Location: $goTo");
 exit;
-
-?>

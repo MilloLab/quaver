@@ -44,5 +44,3 @@ if (isset($_POST['email']) && isset($_POST['password'])
 
 $template = $this->twig->loadTemplate("login.twig");
 echo $template->render($this->twigVars);
-
-?>

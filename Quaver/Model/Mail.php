@@ -6,7 +6,9 @@
  */
 
 namespace Quaver\Model;
+
 use Quaver\Core\DB;
+use Quaver\Model\Mailing;
 
 /**
  * Class Mail
@@ -40,7 +42,7 @@ class Mail extends Base
      * @param type $_htmlMode 
      * @return type
      */
-    public function send($_subject, $_template = '', $_to, $_toName = '', $_from = '', $_fromName = '', $_vars = array(), $_language = '', $_subject_variables = array(), $_htmlMode = true)
+    public function send($_subject, $_template = '', $_to, $_toName = '', $_from = '', $_fromName = '', $_vars = array(), $_language = '', $_subject_variables = array(), $_htmlMode = true, $_attachments = array())
     {
         global $_lang;
         
@@ -58,17 +60,19 @@ class Mail extends Base
                 if ($_htmlMode === true){
                     // Start twig env
                     $loader = new \Twig_Loader_String();
-                    $twig = new \Twig_Environment($loader);
+                    $twig_options = array();
+                    $twig_options['autoescape'] = false;
+                    $twig = new \Twig_Environment($loader, $twig_options);
+
+                    $_template = htmlspecialchars_decode($_template, ENT_QUOTES);
 
                     // Render twig template
-                    $html = $twig->render($template, $_vars);
+                    $html = $twig->render($_template, $_vars);
                 } else {
                     $html = $_template;    
                 }
 
                 
-            } else {
-                $html = $_template;
             }
 
             // Check language
@@ -79,7 +83,7 @@ class Mail extends Base
             // Check subject vars
             if (!empty($_subject_variables)){
                 // Custom subjects by language and vars
-                $_subject = sprintf($_lang->l("mail-$subject"), $_subject_variables);        
+                $_subject = sprintf($_subject, $_subject_variables);        
             }
 
             $_mail['to'] = $_to;
@@ -90,35 +94,60 @@ class Mail extends Base
             if (!empty($_fromName)){
                 $_mail['fromName'] = $_fromName;
             }            
-            $_mail['body'] = $html;
+            $_mail['body'] = html_entity_decode($html);
             $_mail['subject'] = $_subject;
 
                 
             //Check type         
             if ($this->type == 'mandrill'){
 
-                if (defined('MANDRILL') && MANDRILL){
+                if (defined('MANDRILL') && MANDRILL == true){
                     require_once(LIB_PATH . '/Mandrill/src/Mandrill.php');
 
                     try {
                         $mandrill = new \Mandrill(MANDRILL_APIKEY);
-                        $message = array(
-                            'html' => $_mail['body'],
-                            'subject' => $_mail['subject'],
-                            'from_email' => $_mail['from'],
-                            'from_name' => $_mail['fromName'],
-                            'to' => array(
-                                array(
-                                    'email' => $_mail['to'],
-                                    'name' => $_mail['toName'],
-                                    'type' => 'to'
+
+                        if (!empty($_attachments)) {
+                            $message = array(
+                                'html' => $_mail['body'],
+                                'subject' => $_mail['subject'],
+                                'from_email' => $_mail['from'],
+                                'from_name' => $_mail['fromName'],
+                                'to' => array(
+                                    array(
+                                        'email' => $_mail['to'],
+                                        'name' => $_mail['toName'],
+                                        'type' => 'to'
+                                    )
+                                ),
+                                "attachments" => array(
+                                    array(
+                                        'content' => $_attachments['file_base64'],
+                                        'type' => $_attachments['type'], // for example application/pdf
+                                        'name' => $_attachments['name'],
+                                    ),
                                 )
-                            )
-                        );
+                            );
+                        } else {
+                            $message = array(
+                                'html' => $_mail['body'],
+                                'subject' => $_mail['subject'],
+                                'from_email' => $_mail['from'],
+                                'from_name' => $_mail['fromName'],
+                                'to' => array(
+                                    array(
+                                        'email' => $_mail['to'],
+                                        'name' => $_mail['toName'],
+                                        'type' => 'to'
+                                    )
+                                )
+                            );
+                        }
+                        
                         $async = false;
                         $return = $mandrill->messages->send($message, $async);
                         
-                    } catch(Mandrill_Error $e) {
+                    } catch(\Mandrill_Error $e) {
                         // Mandrill errors are thrown as exceptions
                         echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
                         // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
