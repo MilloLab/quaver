@@ -9,5 +9,3 @@ namespace Quaver\Controller;
 
 $template = $this->twig->loadTemplate('home.twig');
 echo $template->render($this->twigVars);
-
-?>

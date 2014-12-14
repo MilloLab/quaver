@@ -36,20 +36,18 @@ if (isset($_POST['email']) && isset($_POST['password'])
     // Check errors to continue
     if (!$_error) {
 
-        $item['active'] = 1;
-        $item['password'] = $user->hashPassword($_POST['password']);
-        $item['email'] = $_POST['email'];
+        $user->active = 1;
+        $user->password = $user->hashPassword($_POST['password']);
+        $user->email = $_POST['email'];
 
         if ($_POST['admin'] == true){
-            $item['level'] = "admin";
+            $user->level = "admin";
         } else {
-            $item['level'] = "user";    
+            $user->level = "user";    
         }
         
-        $item['dateRegister'] = date('Y-m-d H:i:s', time());
-        $item['dateLastLogin'] = date('Y-m-d H:i:s', time());
-        
-        $user->setItem($item);
+        $user->dateRegister = date('Y-m-d H:i:s', time());
+        $user->dateLastLogin = date('Y-m-d H:i:s', time());
 
         if ($user->save()) {
         
@@ -65,5 +63,3 @@ if (isset($_POST['email']) && isset($_POST['password'])
 
 $template = $this->twig->loadTemplate("register.twig");
 echo $template->render($this->twigVars);
-
-?>

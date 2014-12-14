@@ -22,19 +22,21 @@ function load($namespace) {
 
 	for ($i = 0; $i < $countSplitPath; $i++) {
 		if ($splitpath[$i] && !$firstword) {
-			if ($i == count($splitpath) - 1)
+			if ($i == count($splitpath) - 1) {
 				$name = $splitpath[$i];
-			else
+			} else {
 				$path .= DIRECTORY_SEPARATOR . $splitpath[$i];
+			}
 		}
 		if ($splitpath[$i] && $firstword) {
-			if ($splitpath[$i] != __NAMESPACE__)
+			if ($splitpath[$i] != __NAMESPACE__) {
 				break;
+			}
 			$firstword = false;
 		}
 	}
 	if (!$firstword) {
-		$fullpath = __DIR__ . $path . DIRECTORY_SEPARATOR . $name . '.php';
+		$fullpath = __DIR__ . '/..' . $path . DIRECTORY_SEPARATOR . $name . '.php';
 		return include_once($fullpath);
 	}
 	return false;
@@ -50,5 +52,3 @@ function loadPath($absPath) {
 }
 
 spl_autoload_register(__NAMESPACE__ . '\load');
-
-?>

@@ -6,21 +6,17 @@
  */
 
 // Core Path
-define('GLOBAL_PATH', dirname( __FILE__ ));
-define('MODEL_PATH', GLOBAL_PATH . '/Model');
-define('VIEW_PATH', GLOBAL_PATH . '/View');
-define('CONTROLLER_PATH', GLOBAL_PATH . '/Controller');
-define('LIB_PATH', GLOBAL_PATH . '/Lib');
+define('MODEL_PATH', GLOBAL_PATH . '/Quaver/Model');
+define('CONTROLLER_PATH', GLOBAL_PATH . '/Quaver/Controller');
+define('LIB_PATH', GLOBAL_PATH . '/Quaver/Lib');
 
 // Resource Path
-define('FILES_PATH', GLOBAL_PATH . '/Files');
-define('RES_PATH', '/Quaver/Resources'); #Master
-define('CSS_PATH', RES_PATH . '/css');
-define('JS_PATH',  RES_PATH . '/js');
-define('IMG_PATH', RES_PATH . '/img');
+define('FILES_PATH', './files');
+define('THEME_QUAVER', 'Default');
+define('BRAND_NAME', 'My Company Name');
 
 // Cookies
-define('COOKIE_NAME', 'yourdomain');
+define('COOKIE_NAME', 'quaver');
 define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
 define('COOKIE_PATH', '/');
 
@@ -30,7 +26,7 @@ define('MAINTENANCE_MODE', false);
 define('DEV_MODE', true);
 
 // Random variable to front files
-define('RANDOM_VAR', ''); // format YYYYMMDD
+define('RANDOM_VAR', '20141214'); // format YYYYMMDD
 
 // Template cache, manual clean (Twig)
 define('TEMPLATE_CACHE', false);
@@ -53,8 +49,8 @@ define('DB_DATABASE', 'qv');
  */
 
 // Contact mail
-define('CONTACT_EMAIL', '');
-define('CONTACT_NAME', '');
+define('CONTACT_EMAIL', 'info@mydomain.com');
+define('CONTACT_NAME', 'My Company Name');
 
 // MANDRILL
 define('MANDRILL', false);
@@ -62,6 +58,4 @@ define('MANDRILL_USERNAME', '');
 define('MANDRILL_APIKEY', '');
 
 // Cypher if you want use
-define('CIPHER_KEY', 'yourcipherkey'); //RC4
-
-?>
+define('CIPHER_KEY', '');

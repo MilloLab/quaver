@@ -8,48 +8,35 @@
 namespace Quaver;
 
 ini_set('display_errors', 0);
+error_reporting(E_ALL|E_STRICT);
+if (!file_exists(GLOBAL_PATH . '/script_errors.log')) {
+    $logFile = fopen("script_errors.log", "w") or die("Unable to open file!");
+    fwrite($logFile);
+    fclose($logFile);
+}
+ini_set('error_log', 'script_errors.log');
+ini_set('log_errors', 'On');
+
+date_default_timezone_set("Europe/Madrid");
+define('GLOBAL_PATH', dirname(__FILE__));
 
 // Check config file
-if ( !file_exists('./Quaver/Config.php') || !file_exists('./Quaver/Autoloader.php')) {
-
-	$msg = "This instance of app doesn't seem to be configured, please read the deployment guide, configure and try again.";
+if (!file_exists(GLOBAL_PATH . '/Quaver/Config.php') || !file_exists(GLOBAL_PATH . '/Quaver/Core/Autoloader.php')) {
+    $msg = "This instance of app doesn't seem to be configured, 
+    please read the deployment guide, configure and try again.";
     error_log($msg);
     echo "<h1>{$msg}</h1>";
     die;
-    
 }
 
-// Autoloader
-require_once('./Quaver/Autoloader.php');
-
-// Load configuration
-require_once('./Quaver/Config.php');
-
-// Check dev mode
-if (defined('DEV_MODE')) {       
-    if (DEV_MODE) {
-        error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
-        ini_set('display_errors', 1);
-    }
-}
-
-// Load other main classes
-require_once('./Quaver/Core/DB.php');
-require_once('./Quaver/Core/Core.php');
-
-// Load YAML Parser
-require_once('./Quaver/Lib/yaml/vendor/autoload.php');
-
-// Check maintenance 
-if (defined(MAINTENANCE_MODE) && MAINTENANCE_MODE === true && $_SERVER['REQUEST_URI'] != '/maintenance') {
-    header('Location: /maintenance');
-    exit;
-}
+// Autoloader & Config
+require_once(GLOBAL_PATH . '/Quaver/Config.php');
+require_once(GLOBAL_PATH . '/Quaver/Core/Autoloader.php');
+require_once(LIB_PATH . '/yaml/vendor/autoload.php');
+require_once(LIB_PATH . '/Twig/Autoloader.php');
+\Twig_Autoloader::register();
 
 use Quaver\Core\Core;
 
-// Init core
-$core = new Core;
-$core->start();
-
-?>
+$core = new Core();
+$core->run();

@@ -24,20 +24,18 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
     $user = new User;
 
     if ($_POST['id']){
-        $item['id'] = $_POST['id'];
+        $user->id = $_POST['id'];
     }
 
-    $item['level'] = $_POST['level'];
-    $item['active'] = $_POST['active'];
-    $item['password'] = $user->hashPassword($_POST['password']);
-    $item['email'] = $_POST['email'];
+    $user->level = $_POST['level'];
+    $user->active = $_POST['active'];
+    $user->password = $user->hashPassword($_POST['password']);
+    $user->email = $_POST['email'];
 
     if (isset($_POST['add'])){
-        $item['dateRegister'] = date('Y-m-d H:i:s', time());
-        $item['dateLastLogin'] = date('Y-m-d H:i:s', time());    
+        $user->dateRegister = date('Y-m-d H:i:s', time());
+        $user->dateLastLogin = date('Y-m-d H:i:s', time());    
     }
-    
-    $user->setItem($item);
 
     if ($user->save()) {
         header("Location: /admin/users");
@@ -91,7 +89,3 @@ switch ($this->url_var[1]) {
 		echo $template->render($this->twigVars);
         break;
 }
-
-
-
-

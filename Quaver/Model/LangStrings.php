@@ -110,7 +110,7 @@ class LangStrings extends Base
             foreach ($this->_languages as $item) {
                 $lang = new LangStrings;
                 $lang->setItem((array)$item);
-				$lang->save();
+                $lang->save();
             }
 
             return true;
@@ -153,8 +153,4 @@ class LangStrings extends Base
             $this->_languages = $_item['_languages'];
         }
     }
-   
-    
-
 }
-?>

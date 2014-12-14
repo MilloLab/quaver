@@ -258,9 +258,7 @@ class Lang extends Base
      */
     public function l($_label)
     {
-        return $this->typeFormat($_label, '');
+        return $this->typeFormat($_label, 'd');
     }
 
 }
-
-?>

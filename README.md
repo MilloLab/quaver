@@ -1,6 +1,6 @@
 What is Quaver?
 ===============
-It is a framework designed to develop from a basic website to a platform. Lightweight and simple to use.
+It is a framework designed to develop a web platform. Lightweight and simple to use.
 
 Quaver is developed by [Alberto González](https://github.com/albertogonzcat) & [MilloLab](http://millolab.com), and distributed under MIT license.
 
@@ -10,28 +10,31 @@ Installation
 ------------
 * Import `quaver.sql` and check `Quaver/Config.php` and `Quaver/Routes.yml`.
 * Optional: 
-	* Customize Mail model with PHPMailer/Mandrill functions.
+    * Customize Mail model with PHPMailer/Mandrill functions.
 
 Requeriments
 ------------
-* PHP >= 5.3
+* PHP >= 5.4
 * MYSQL PDO
 
 History
 -------
+* Version 0.6 (November-December 2014)
+    * New internal core flow and refactor lines of code
+    * CLI beta
 * Version 0.5 (October 2014)
-	* Dashboard
+    * Dashboard
 * Version 0.4 (September 2014)
-	* Redesign with namespaces and new structure
+    * Redesign with namespaces and new structure
 * Version 0.3 (September 2014)
-	* Set new core and new internal flow.
-	* New functions and extended models.
+    * Set new core and new internal flow.
+    * New functions and extended models.
 * Version 0.2 (Summer 2014)
-	* Set new functions.
+    * Set new functions.
 * Version 0.1 (Summer 2014)
-	* First version.
-	* Core level 1.
-	* Multilanguage supported.
+    * First version.
+    * Core level 1.
+    * Multilanguage supported.
 
 See [changelog](https://github.com/MilloLab/quaver/blob/master/changelog.md) for details.
 
