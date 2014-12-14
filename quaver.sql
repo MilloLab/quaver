@@ -72,11 +72,11 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `level` varchar(5) NOT NULL DEFAULT 'user',
+  `level` char(5) NOT NULL DEFAULT 'user',
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `dateRegister` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `dateLastLogin` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `dateRegister` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `dateLastLogin` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
