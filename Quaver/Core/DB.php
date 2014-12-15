@@ -8,7 +8,6 @@
 namespace Quaver\Core;
 
 use \PDO;
-use Quaver\Model\RC4;
 
 /**
  * Class DB
