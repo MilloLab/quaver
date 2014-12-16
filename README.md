@@ -2,7 +2,7 @@ What is Quaver?
 ===============
 It is a framework designed to develop a web platform. Lightweight and simple to use.
 
-Quaver is developed by [Alberto González](https://github.com/albertogonzcat) & [MilloLab](http://millolab.com), and distributed under MIT license.
+Quaver is developed by [Alberto G.C.](https://github.com/albertogcatalan) & [MilloLab](http://millolab.com), and distributed under MIT license.
 
 [![Latest Stable Version](https://poser.pugx.org/millolab/quaver/v/stable.svg)](https://packagist.org/packages/millolab/quaver) [![License](https://poser.pugx.org/millolab/quaver/license.svg)](https://packagist.org/packages/millolab/quaver)
 
@@ -35,8 +35,6 @@ History
     * First version.
     * Core level 1.
     * Multilanguage supported.
-
-See [changelog](https://github.com/MilloLab/quaver/blob/master/changelog.md) for details.
 
 
 External Lib

@@ -61,8 +61,9 @@ class Lang extends Base
             if ($resultLang) {
                 foreach ($resultLang as $string) {
 
-                    if (!isset($this->strings[$string['label']]))
+                    if (!isset($this->strings[$string['label']])) {
                         $this->strings[$string['label']] = utf8_encode($string['text']);
+                    }
                 
                 }
             }
@@ -90,15 +91,15 @@ class Lang extends Base
                 
                 if (LANG_FORCE) {
                     $this->getFromId(LANG);
-                }
-                else {
+                } else {
                     $language_slug = $this->getBrowserLanguage();
                     $this->getFromSlug($language_slug, true);
                 }
             }
 
-            if (empty($this->slug))
+            if (empty($this->slug)) {
                 $this->getFromId(LANG);
+            }
 
             $return = $this;
 
@@ -112,7 +113,7 @@ class Lang extends Base
      */
     public function getBrowserLanguage()
     {
-        return substr(@$_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     }
 
     /**
@@ -130,7 +131,9 @@ class Lang extends Base
     }
 
     /**
+     * setCookie
      * Set language cookie
+     * @return type
      */
     public function setCookie()
     {
@@ -164,7 +167,7 @@ class Lang extends Base
 
         $_slug = substr($_slug, 0, 3);
         $language = $db->query("SELECT id FROM $_table WHERE $slug_where = '$_slug' AND active = 1");
-        if (@$language) {
+        if ($language) {
             $this->getFromId($language->fetchColumn(0));
             $return = $this;
         }
@@ -216,7 +219,7 @@ class Lang extends Base
 
         $items = $db->query("SELECT id FROM $_table $where $order");
         
-        if (@$items){
+        if ($items){
             $result = $items->fetchAll();
             foreach ($result as $item) {
                 $ob_lang = new Lang;
@@ -225,7 +228,7 @@ class Lang extends Base
         }
 
 
-        return @$return;
+        return $return;
     }
 
     /**
@@ -236,8 +239,7 @@ class Lang extends Base
     public function typeFormat($_label, $_utf8 = '')
     {
 
-        //$return = $this->getString($_label);
-        $return = @$this->strings[$_label];
+        $return = $this->strings[$_label];
         switch ($_utf8) {
             case('d'):
                 $return = utf8_decode($return);
