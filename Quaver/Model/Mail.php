@@ -40,6 +40,7 @@ class Mail extends Base
      * @param type $_language 
      * @param type $_subject_variables
      * @param type $_htmlMode 
+     * @param type $_attachments 
      * @return type
      */
     public function send($_subject, $_template = '', $_to, $_toName = '', $_from = '', $_fromName = '', $_vars = array(), $_language = '', $_subject_variables = array(), $_htmlMode = true, $_attachments = array())
@@ -102,7 +103,6 @@ class Mail extends Base
             if ($this->type == 'mandrill'){
 
                 if (defined('MANDRILL') && MANDRILL == true){
-                    require_once(LIB_PATH . '/Mandrill/src/Mandrill.php');
 
                     try {
                         $mandrill = new \Mandrill(MANDRILL_APIKEY);

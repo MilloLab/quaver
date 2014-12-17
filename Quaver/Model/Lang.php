@@ -6,6 +6,7 @@
  */
 
 namespace Quaver\Model;
+
 use Quaver\Core\DB;
 
 /**

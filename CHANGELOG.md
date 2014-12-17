@@ -10,9 +10,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
  - Moved branch 0.6.X to master
  - Base model now abstract class
-
-### Fixed
- - 
+ - Updated composer.json
+ - Internal changes and clean on Core and Router model (version var)
 
 
 # Pre CHANGELOG (legacy)

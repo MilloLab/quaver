@@ -13,11 +13,6 @@ use Quaver\Model\User;
 class Core
 {
 
-    private $version = '0.6';
-
-    // Language system
-    public $language;
-
     /**
      * run
      * @param type $_mvc 
@@ -54,7 +49,6 @@ class Core
         } else {
             $_lang->getSiteLanguage();
         }
-        $this->language = $_lang->id;
 
         // Maintenance mode
         if ((!$_user->logged || $_user->logged && !$_user->isAdmin())
