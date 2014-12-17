@@ -10,13 +10,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
  - Moved branch 0.6.X to master
  - Base model now abstract class
- - 
- - Changed namespace to League\CommonMark
- - Made compatible with spec version 0.13
- - Moved delimiter stack functionality into separate class
 
 ### Fixed
- - Fixed regex which caused HHVM tests to fail
+ - 
 
 
 # Pre CHANGELOG (legacy)
