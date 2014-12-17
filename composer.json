@@ -18,7 +18,7 @@
         "twig/twig": "1.16.*@dev"
     },
     "require-dev": {
-        "mandrill/mandrill": "1.0.*",
+        "mandrill/mandrill": "1.0.*"
     },
     "extra": {
         "branch-alias": {
