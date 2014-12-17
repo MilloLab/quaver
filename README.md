@@ -8,21 +8,15 @@ Quaver is developed by [Alberto G.C.](https://github.com/albertogcatalan) & [Mil
 
 Installation
 ------------
-* Import `quaver.sql` and check `Quaver/Config.php` and `Quaver/Routes.yml`.
-* Optional: 
-    * Customize Mail model with PHPMailer/Mandrill functions.
+* Download latest version with composer: `composer create-project millolab/quaver path/`
+* Import `quaver.sql` to your database
+* Check `Quaver/Config.php` and `Quaver/Routes.yml`
+
 
 Requeriments
 ------------
 * PHP >= 5.4
-* MYSQL PDO
 
-External Lib
-------------
-* [Twig](http://twig.sensiolabs.org/) by SensioLabs.
-* [YAML Component](http://symfony.com/doc/current/components/yaml/introduction.html) of Symfony.
-* [PHPMailer](https://github.com/PHPMailer/PHPMailer).
-* [Mandrill PHP API Client](https://mandrillapp.com/api/docs/).
 
 Thanks to
 ---------

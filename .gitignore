@@ -1,2 +1,5 @@
 script_errors.log
 cli/script_errors.log
+files/
+Cache/
+vendor/

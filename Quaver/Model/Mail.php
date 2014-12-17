@@ -159,7 +159,6 @@ class Mail extends Base
                 }  
                 
             } else {
-                require_once(LIB_PATH . '/PHPMailer/PHPMailerAutoload.php');
                 
                 $mail = new \PHPMailer;
 
