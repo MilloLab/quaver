@@ -12,18 +12,10 @@ use Quaver\Core\DB;
 /**
  * Class Base
  */
-class Base
+abstract class Base
 {
 
     public $id;
-
-    /**
-     * constructor
-     */
-    public function __construct()
-    {
-
-    }
 
     /**
      * @param $_item
@@ -178,24 +170,5 @@ class Base
     {
         $return = $this->toArray();
         return json_encode($return);
-    }
-
-    /**
-     * @param $_format
-     * @return $this|bool|string
-     */
-    public function format($_format)
-    {
-        switch ($_format) {
-            case ('json'):
-                return $this->toJson();
-                break;
-            case ('array'):
-                return $this->toArray();
-                break;
-            default:
-                return $this;
-                break;
-        }
     }
 }
