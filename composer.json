@@ -15,11 +15,13 @@
     "require": {
         "php": ">=5.4.0",
         "symfony/yaml": "~2.3",
-        "twig/twig": "1.16.*@dev"
+        "twig/twig": "1.16.*@dev",
+        "millolab/quaver": "dev-master"
     },
     "require-dev": {
         "mandrill/mandrill": "1.0.*"
     },
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "0.6.1-dev"

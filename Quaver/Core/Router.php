@@ -14,6 +14,8 @@ use Quaver\Model\User;
 
 class Router
 {
+    private $version = '0.6';
+
     // Language system
     public $language;
 
@@ -286,6 +288,7 @@ class Router
             "js" => JS_PATH,
             "img" => IMG_PATH,
             "env" => DEV_MODE,
+            "version" => $this->version,
         );
 
         if (strstr($this->url_var[0], "/admin/") || strstr($this->url_var[0], "/start/")) {
