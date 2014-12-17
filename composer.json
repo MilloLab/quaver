@@ -18,13 +18,11 @@
         "twig/twig": "1.16.*@dev"
     },
     "require-dev": {
-        "symfony/yaml": "~2.3",
         "mandrill/mandrill": "1.0.*",
-        "twig/twig": "1.16.*@dev"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.6-dev"
+            "dev-master": "0.6.1-dev"
         }
     }
 }
