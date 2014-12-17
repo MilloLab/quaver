@@ -8,11 +8,11 @@
 namespace Quaver;
 
 define('GLOBAL_PATH', dirname(__FILE__));
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 error_reporting(E_ALL|E_STRICT);
 if (!file_exists(GLOBAL_PATH . '/script_errors.log')) {
     $logFile = fopen("script_errors.log", "w") or die("Unable to open file!");
-    fwrite($logFile);
+    fwrite($logFile, '');
     fclose($logFile);
 }
 ini_set('error_log', 'script_errors.log');

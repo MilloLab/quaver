@@ -12,7 +12,6 @@ use Quaver\Model\User;
 
 class Core
 {
-
     /**
      * run
      * @param type $_mvc 
