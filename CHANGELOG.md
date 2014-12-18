@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8] - 2014-12-18
+### Added
+ - Exception model
+ - Helper model
+
+### Changed
+ - New structure: Quaver/App now contains Models, Controller and Theme
+ - Base model rename to Model
+ - Added exceptions
+ - Now PHP min version is 5.3
+
 ## [0.7] - 2014-12-17
 ### Changed
  - Works fine with composer and all dependencies autoload
