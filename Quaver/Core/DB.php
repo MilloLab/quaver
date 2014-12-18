@@ -14,17 +14,14 @@ use \PDO;
  */
 class DB
 {
+
     public $conn = null;
-    public $cipher_key = "";
 
     /**
      * constructor
      */
     public function __construct()
     {
-
-        // Set encryption key
-        $this->cipher_key = CIPHER_KEY;
 
         // Connecting to mysql
         if (!defined('DB_USERNAME')
@@ -38,7 +35,6 @@ class DB
             try {
                 // Config mysql link
                 $this->conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE, DB_USERNAME, DB_PASSWORD);
-
                 $this->conn->exec('SET CHARACTER SET utf8');
 
                 if (defined('DEV_MODE') && DEV_MODE) {
@@ -46,8 +42,7 @@ class DB
                 }
 
             } catch (\PDOException $e) {
-                print "Error!: " . $e->getMessage() . "<br/>";
-                die();
+                throw new \Quaver\Core\Exception($e->getMessage());
             }
 
         }
@@ -76,12 +71,10 @@ class DB
         try {
 
             $result->execute($params);
-
             return $result;
 
         } catch (\PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
     }
@@ -93,8 +86,8 @@ class DB
     {
         try {
             return self::query("SELECT LAST_INSERT_ID();")->fetchColumn();
-        } catch (\Exception $e) {
-            return 0;
+        } catch (\Quaver\Core\Exception $e) {
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
     }
 }

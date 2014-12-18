@@ -5,17 +5,18 @@
  * (see README for details)
  */
 
-namespace Quaver\Model;
+namespace Quaver\Core;
 
 use Quaver\Core\DB;
 
 /**
- * Class Base
+ * Class Model
  */
-abstract class Base
+abstract class Model
 {
 
     public $id;
+    public $table;
 
     /**
      * @param $_item
@@ -63,10 +64,9 @@ abstract class Base
             }
 
             return $this;
-
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+        
+        } catch(\PDOException $e) {
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
     }
@@ -109,8 +109,7 @@ abstract class Base
             return true;
 
         } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
 
@@ -136,8 +135,7 @@ abstract class Base
                 return false;
             }
         } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
     }
 

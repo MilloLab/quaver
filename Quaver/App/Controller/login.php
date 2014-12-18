@@ -5,8 +5,9 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-use Quaver\Model\User;
+namespace Quaver\App\Controller;
+
+use Quaver\App\Model\User;
 
 if ($_user->logged){
 	header("Location: /");

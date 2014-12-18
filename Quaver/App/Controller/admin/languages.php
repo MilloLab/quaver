@@ -5,8 +5,9 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-use Quaver\Model\LangStrings;
+namespace Quaver\App\Controller;
+
+use Quaver\App\Model\LangStrings;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
@@ -78,11 +79,14 @@ switch ($this->url_var[1]) {
     case('del'):
         $lang = new LangStrings;
 	    $items = $lang->getFromLabel($this->url_var[2]);
+
         foreach ($items as $item) {
             $item->delete();
         }
+
         header("Location: /admin/languages");
         exit;
+        
 		break;
     default:
         $lang = new LangStrings;

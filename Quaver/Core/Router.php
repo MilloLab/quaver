@@ -9,12 +9,12 @@ namespace Quaver\Core;
 
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
-use Quaver\Model\Lang;
-use Quaver\Model\User;
+use Quaver\Core\Lang;
+use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.7';
+    private $version = '0.8';
 
     // Language system
     public $language;
@@ -37,8 +37,8 @@ class Router
         $this->language = $_lang->id;
 
         // Theme system
-        define('VIEW_PATH', GLOBAL_PATH . '/Quaver/Theme/' . THEME_QUAVER . '/View');
-        define('RES_PATH', '/Quaver/Theme/' . THEME_QUAVER . '/Resources');
+        define('VIEW_PATH', GLOBAL_PATH . '/Quaver/App/Theme/' . THEME_QUAVER . '/View');
+        define('RES_PATH', '/Quaver/App/Theme/' . THEME_QUAVER . '/Resources');
         define('CSS_PATH', RES_PATH . '/css');
         define('JS_PATH', RES_PATH . '/js');
         define('IMG_PATH', RES_PATH . '/img');
@@ -217,7 +217,7 @@ class Router
             if (file_exists($controllerPath)) {
                 require_once($controllerPath);
             } else {
-                throw new \Exception("Error loading controller: $route", 1);
+                throw new \Quaver\Core\Exception("Error loading controller: $route");
             }
         }
 
@@ -291,7 +291,7 @@ class Router
             "version" => $this->version,
         );
 
-        if (strstr($this->url_var[0], "/admin/") || strstr($this->url_var[0], "/start/")) {
+        if (strstr($this->url_var[0], "/admin/")) {
             if (defined('DEV_MODE') && DEV_MODE == false) {
                 $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' 
                     --abbrev-commit $(git merge-base local-master master)");

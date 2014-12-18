@@ -5,8 +5,9 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-use Quaver\Model\User;
+namespace Quaver\App\Controller;
+
+use Quaver\App\Model\User;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
@@ -78,6 +79,7 @@ switch ($this->url_var[1]) {
             header("Location: /admin/users");
             exit;
         }
+        
         break;
     default:
         $user = new User;

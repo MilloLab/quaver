@@ -5,7 +5,7 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
+namespace Quaver\App\Controller;
 
 $template = $this->twig->loadTemplate('home.twig');
 echo $template->render($this->twigVars);

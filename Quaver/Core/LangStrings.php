@@ -5,13 +5,14 @@
  * (see README for details)
  */
 
-namespace Quaver\Model;
+namespace Quaver\Core;
+
 use Quaver\Core\DB;
 
 /**
  * Class LangStrings
  */
-class LangStrings extends Base
+class LangStrings extends \Quaver\Core\Model
 {
     public $_fields = array(
         "id",
@@ -52,9 +53,8 @@ class LangStrings extends Base
 
             return $return;
 
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+        } catch (\PDOException $e) {
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
     }
@@ -88,9 +88,8 @@ class LangStrings extends Base
 
             return $return;
 
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+        } catch (\PDOException $e) {
+            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
     }

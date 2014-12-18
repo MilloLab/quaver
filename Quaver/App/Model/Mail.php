@@ -5,15 +5,12 @@
  * (see README for details)
  */
 
-namespace Quaver\Model;
-
-use Quaver\Core\DB;
-use Quaver\Model\Mailing;
+namespace Quaver\App\Model;
 
 /**
  * Class Mail
  */
-class Mail extends Base
+class Mail
 {
 
     public $type; // "mandril"
@@ -189,4 +186,3 @@ class Mail extends Base
     
     }
 }
-?>

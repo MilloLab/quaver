@@ -5,7 +5,7 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
+namespace Quaver\App\Controller;
 
 if ($_user->logged){
 	$_user->unsetCookie();	
