@@ -82,7 +82,7 @@ class DB
     /**
      * @return int
      */
-    public static function insertId()
+    public function insertId()
     {
         try {
             return $this->query("SELECT LAST_INSERT_ID();")->fetchColumn();

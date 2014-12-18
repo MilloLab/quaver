@@ -23,17 +23,28 @@ $this->addTwigVars('section', 'users');
 
 // Add or edit users strings
 if (isset($_POST['edit']) || isset($_POST['add'])) {
+
+    foreach ($_POST as $k => $v) {
+        $_POST[$k] = \Quaver\Core\Helper::clearInjection($v);
+    }
+
 	$added = false;
 
     $user = new User;
 
-    if ($_POST['id']){
-        $user->id = $_POST['id'];
+    if (isset($_POST['id'])) {
+        $user->getFromId($_POST['id']);
     }
 
     $user->level = $_POST['level'];
     $user->active = $_POST['active'];
-    $user->password = $user->hashPassword($_POST['password']);
+
+    if (isset($_POST['password'])) {
+        $user->password = $user->hashPassword($_POST['password']);
+    } else {
+        $user->password = 0;
+    }
+    
     $user->email = $_POST['email'];
 
     if (isset($_POST['add'])){

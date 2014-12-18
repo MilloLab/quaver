@@ -15,6 +15,9 @@ if (!$_user->logged || !$_user->isAdmin()) {
     exit;
 } 
 
+// Control var
+$added = false;
+
 // Set up menu action
 $this->addTwigVars('section', 'languages');
 

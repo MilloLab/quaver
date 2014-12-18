@@ -89,7 +89,8 @@ abstract class Model
                 if ($set != '') {
                     $set .= ', ';
                 }
-                $set .= "$field = :$field";
+                
+                $set .= "$field = :$field";                
                 $values[":$field"] = $this->$field;
             }
 
