@@ -15,6 +15,9 @@ if (!$_user->logged || !$_user->isAdmin()) {
     exit;
 } 
 
+// Control var
+$added = false;
+
 // Set up menu action
 $this->addTwigVars('section', 'users');
 
@@ -48,7 +51,7 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
 }
 
 // Selector
-switch ($this->url_var[1]) {
+switch ($this->getCurrentURL()) {
 
     case('add'):
     	$this->addTwigVars('typePOST', 'add');

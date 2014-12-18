@@ -121,6 +121,25 @@ class Router
     }
 
     /**
+     * getCurrentURL
+     * @param type $position 
+     * @return type
+     */
+    public function getCurrentURL($position = 1)
+    {
+        $return = false;
+        $length = count($this->url_var);
+
+        if ($length == 1) {
+            $return = $this->url_var[0];
+        } else {
+            $return = $this->url_var[$position]; 
+        }
+
+        return $return;
+    } 
+
+    /**
      * getCurrentRoute
      * @return type
      */

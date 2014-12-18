@@ -36,7 +36,6 @@ class LangStrings extends \Quaver\Core\Model
         try {
 
             $db = new DB;
-            $_id = (int)$_id;
             $_table = $this->table;
             $return = NULL;
 
@@ -70,8 +69,7 @@ class LangStrings extends \Quaver\Core\Model
     {
         try {
 
-            $db = new DB;
-            $_id = (int)$_id;
+            $db = new DB;        
             $_table = $this->table;
             $return = NULL;
 
@@ -148,7 +146,7 @@ class LangStrings extends \Quaver\Core\Model
             }
         }
 
-        if ($_item['_languages']) {
+        if (!empty($_item['_languages'])) {
             $this->_languages = $_item['_languages'];
         }
     }

@@ -85,7 +85,7 @@ class DB
     public static function insertId()
     {
         try {
-            return self::query("SELECT LAST_INSERT_ID();")->fetchColumn();
+            return $this->query("SELECT LAST_INSERT_ID();")->fetchColumn();
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }

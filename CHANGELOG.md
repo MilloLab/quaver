@@ -13,6 +13,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Added exceptions
  - Now PHP min version is 5.3
 
+### Fixed
+ - User methods
+ - languages/users controller
+
+
 ## [0.7] - 2014-12-17
 ### Changed
  - Works fine with composer and all dependencies autoload

@@ -41,7 +41,6 @@ class User extends \Quaver\Core\Model
         try {
 
             $db = new DB;
-            $_id = (int)$_id;
             $_table = $this->table;
             $return = NULL;
 
@@ -223,7 +222,6 @@ class User extends \Quaver\Core\Model
         try {
 
             $db = new DB;
-            $_id = (int)$_id;
             $_table = $this->table;
             $return = NULL;
 
@@ -259,7 +257,6 @@ class User extends \Quaver\Core\Model
         try {
 
             $db = new DB;
-            $_id = (int)$_id;
             $_table = $this->table;
             $return = NULL;
 

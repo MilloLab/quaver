@@ -7,7 +7,7 @@
 
 namespace Quaver\App\Controller;
 
-use Quaver\App\Model\LangStrings;
+use Quaver\Core\LangStrings;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
@@ -53,7 +53,7 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
 }
 
 // Selector
-switch ($this->url_var[1]) {
+switch ($this->getCurrentURL()) {
 
     case('add'):
     	$this->addTwigVars('typePOST', 'add');
