@@ -5,8 +5,9 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-use Quaver\Model\User;
+namespace Quaver\App\Controller;
+
+use Quaver\App\Model\User;
 
 if ($_user->logged){
     header("Location: /");
@@ -59,7 +60,6 @@ if (isset($_POST['email']) && isset($_POST['password'])
         }
     }
 }
-
 
 $template = $this->twig->loadTemplate("register.twig");
 echo $template->render($this->twigVars);

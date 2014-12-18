@@ -5,14 +5,18 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-use Quaver\Model\LangStrings;
+namespace Quaver\App\Controller;
+
+use Quaver\Core\LangStrings;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
     header("Location: /");
     exit;
 } 
+
+// Control var
+$added = false;
 
 // Set up menu action
 $this->addTwigVars('section', 'languages');
@@ -52,7 +56,7 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
 }
 
 // Selector
-switch ($this->url_var[1]) {
+switch ($this->getCurrentURL()) {
 
     case('add'):
     	$this->addTwigVars('typePOST', 'add');
@@ -78,11 +82,14 @@ switch ($this->url_var[1]) {
     case('del'):
         $lang = new LangStrings;
 	    $items = $lang->getFromLabel($this->url_var[2]);
+
         foreach ($items as $item) {
             $item->delete();
         }
+
         header("Location: /admin/languages");
         exit;
+        
 		break;
     default:
         $lang = new LangStrings;

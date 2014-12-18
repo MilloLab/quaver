@@ -6,8 +6,8 @@
  */
 
 // Core Path
-define('MODEL_PATH', GLOBAL_PATH . '/Quaver/Model');
-define('CONTROLLER_PATH', GLOBAL_PATH . '/Quaver/Controller');
+define('MODEL_PATH', GLOBAL_PATH . '/Quaver/App/Model');
+define('CONTROLLER_PATH', GLOBAL_PATH . '/Quaver/App/Controller');
 
 // Resource Path
 define('FILES_PATH', './files');

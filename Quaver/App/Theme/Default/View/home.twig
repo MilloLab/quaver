@@ -4,7 +4,7 @@
 
   <div class="container">
     <div class="jumbotron centered">
-      <h1>Welcome to Quaver</h1>
+      <h1>Welcome to Quaver {{ qv.version }}</h1>
       <p>Local Lang: {{ language.locale|replace('_', '-') }}</p>
       <p>Sample String: hello_world = {{ language.l('hello_world') }}</p>
       <p>

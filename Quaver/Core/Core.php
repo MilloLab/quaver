@@ -7,8 +7,8 @@
 
 namespace Quaver\Core;
 
-use Quaver\Model\Lang;
-use Quaver\Model\User;
+use Quaver\Core\Lang;
+use Quaver\App\Model\User;
 
 class Core
 {

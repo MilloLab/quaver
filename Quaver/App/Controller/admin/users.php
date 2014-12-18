@@ -5,8 +5,9 @@
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-use Quaver\Model\User;
+namespace Quaver\App\Controller;
+
+use Quaver\App\Model\User;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
@@ -14,22 +15,36 @@ if (!$_user->logged || !$_user->isAdmin()) {
     exit;
 } 
 
+// Control var
+$added = false;
+
 // Set up menu action
 $this->addTwigVars('section', 'users');
 
 // Add or edit users strings
 if (isset($_POST['edit']) || isset($_POST['add'])) {
+
+    foreach ($_POST as $k => $v) {
+        $_POST[$k] = \Quaver\Core\Helper::clearInjection($v);
+    }
+
 	$added = false;
 
     $user = new User;
 
-    if ($_POST['id']){
-        $user->id = $_POST['id'];
+    if (isset($_POST['id'])) {
+        $user->getFromId($_POST['id']);
     }
 
     $user->level = $_POST['level'];
     $user->active = $_POST['active'];
-    $user->password = $user->hashPassword($_POST['password']);
+
+    if (isset($_POST['password'])) {
+        $user->password = $user->hashPassword($_POST['password']);
+    } else {
+        $user->password = 0;
+    }
+    
     $user->email = $_POST['email'];
 
     if (isset($_POST['add'])){
@@ -47,7 +62,7 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
 }
 
 // Selector
-switch ($this->url_var[1]) {
+switch ($this->getCurrentURL()) {
 
     case('add'):
     	$this->addTwigVars('typePOST', 'add');
@@ -78,6 +93,7 @@ switch ($this->url_var[1]) {
             header("Location: /admin/users");
             exit;
         }
+        
         break;
     default:
         $user = new User;

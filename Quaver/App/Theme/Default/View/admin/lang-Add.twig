@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="language">Language</label>
                 {% if typePOST == 'add' %}
-                <input class="form-control" type="text" id="language" name="language[]" value="{{ item[tab.id-1].language }}">
+                <input class="form-control" type="text" id="language" name="language[]" value="{{ tab.id }}">
                 {% else %}
                 <span>{{ item[tab.id-1].language }}</span>
                 <input type="hidden" name="language[]" id="language" value="{{ item[tab.id-1].language }}" />
