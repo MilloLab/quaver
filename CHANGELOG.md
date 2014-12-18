@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [0.8.1] - 2014-12-18
+### Added
+ - A little Model test with PHPUnit
+ 
 ### Changed
  - View: Home page (demo)
  - README
