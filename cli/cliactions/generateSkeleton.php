@@ -1,11 +1,11 @@
 <?php
-$commands[] = array('command'=>'skeleton [name]','description'=>'Generate a skeleton: model, controller and view');
+$commands[] = array('command'=>'skeleton [name]','description'=>'Generate a skeleton: model and controller');
 
 function skeleton($name)
 {
 	$moduleName = slugify($name);
 
-	if (is_dir(MODEL_PATH."/$moduleName")) {
+	if (is_dir(MODEL_PATH . "/$moduleName")) {
 		die("Module already exists! \n");
 	}
 
@@ -14,22 +14,18 @@ function skeleton($name)
 	echo "\n\nGenerating skeleton $moduleName... \n\n";
 	sleep(1);
 
-	//create Controller
+	// create Controller
 	echo "Creating Controller... \n";
 	generateController(CONTROLLER_PATH, $moduleName);
 
-	//create Model
+	// create Model
 	echo "Creating Model... \n";
 	generateModuleModel(MODEL_PATH, $moduleName);
-
-	//create View
-	echo "Creating View... \n";
-	generateView(VIEW_PATH, $moduleName);
 
 	$endTime = time();
 
 	echo $moduleName." created \n";
-	$time = number_format($startTime - $endTime,5);
+	$time = number_format($startTime - $endTime, 5);
 	echo "Complete.\n\n";
 
 	echo "Check your Routes.yml to add this new module!!!\n\n";
@@ -45,9 +41,7 @@ function generateController($path,$moduleName)
  * (see README for details)
  */
 
-namespace Quaver\Controller;
-
-use Quaver\Model\Functions;
+namespace Quaver\App\Controller;
 
 \$template = \$this->twig->loadTemplate('$moduleName.twig');
 echo $template->render(\$this->twigVars);";
@@ -65,49 +59,40 @@ function generateModuleModel($path, $moduleName)
  * (see README for details)
  */
 
-namespace Quaver\Model;
+namespace Quaver\App\Model;
 
 use Quaver\Core\DB;
 
-class $moduleName extends Base
+class $moduleName extends \Quaver\Core\Model
 {
 	public \$_table = '$moduleName';
 
 }";
 	if (is_dir($path)) {
-		file_put_contents($path."/$moduleName.php", $contents);
-	}
-}
-
-
-function generateView($path,$moduleName) 
-{
-	$contents="Hello, {{ $moduleName }}!";
-	if (is_dir($path)) {
-		file_put_contents($path."/$moduleName.twig", $contents);
+		file_put_contents($path . "/$moduleName.php", $contents);
 	}
 }
 
 function slugify($text)
 { 
-  // replace non letter or digits by -
-  $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+    // replace non letter or digits by -
+    $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 
-  // trim
-  $text = trim($text, '-');
+    // trim
+    $text = trim($text, '-');
 
-  // transliterate
-  $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    // transliterate
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
 
-  // lowercase
-  $text = strtolower($text);
+    // lowercase
+    $text = strtolower($text);
 
-  // remove unwanted characters
-  $text = preg_replace('~[^-\w]+~', '', $text);
+    // remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
 
-  if (empty($text)) {
-    return 'n-a';
-  }
+    if (empty($text)) {
+        return 'n-a';
+    }
 
-  return $text;
+    return $text;
 }
