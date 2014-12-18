@@ -10,7 +10,8 @@ namespace Quaver\App\Model;
 use Quaver\Core\DB;
 
 /**
- * Class User
+ * User
+ * @package default
  */
 class User extends \Quaver\Core\Model
 {

@@ -8,7 +8,8 @@
 namespace Quaver\Core;
 
 /**
- * Class Helper
+ * Helper
+ * @package default
  */
 class Helper
 {

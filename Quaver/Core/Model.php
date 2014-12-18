@@ -10,7 +10,8 @@ namespace Quaver\Core;
 use Quaver\Core\DB;
 
 /**
- * Class Model
+ * Model
+ * @package default
  */
 abstract class Model
 {
@@ -65,7 +66,7 @@ abstract class Model
 
             return $this;
         
-        } catch(\PDOException $e) {
+        } catch (\PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
 
@@ -90,7 +91,7 @@ abstract class Model
                     $set .= ', ';
                 }
                 
-                $set .= "$field = :$field";                
+                $set .= "$field = :$field";
                 $values[":$field"] = $this->$field;
             }
 

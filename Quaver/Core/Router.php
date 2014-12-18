@@ -12,6 +12,10 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Quaver\Core\Lang;
 use Quaver\App\Model\User;
 
+/**
+ * Router
+ * @package default
+ */
 class Router
 {
     private $version = '0.8';
@@ -133,11 +137,11 @@ class Router
         if ($length == 1) {
             $return = $this->url_var[0];
         } else {
-            $return = $this->url_var[$position]; 
+            $return = $this->url_var[$position];
         }
 
         return $return;
-    } 
+    }
 
     /**
      * getCurrentRoute

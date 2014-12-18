@@ -10,7 +10,8 @@ namespace Quaver\Core;
 use Quaver\Core\DB;
 
 /**
- * Class LangStrings
+ * LangStrings
+ * @package default
  */
 class LangStrings extends \Quaver\Core\Model
 {

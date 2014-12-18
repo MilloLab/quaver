@@ -10,7 +10,8 @@ namespace Quaver\Core;
 use \PDO;
 
 /**
- * Class DB
+ * DB
+ * @package default
  */
 class DB
 {
