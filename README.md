@@ -1,6 +1,6 @@
 What is Quaver?
 ===============
-It is a framework designed to develop a web platform. Lightweight and simple to use. Also contains mini CMS with manage your platform.
+It is a framework designed to develop a web, a web platform or whatever you want. Lightweight and simple to use.
 
 Quaver is developed by [Alberto G.C.](https://github.com/albertogcatalan) & [MilloLab](http://millolab.com), and distributed under MIT license.
 
