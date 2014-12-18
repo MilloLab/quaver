@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.1] - 2014-12-18
+### Changed
+ - View: Home page (demo)
+ - README
+
+
 ## [0.8] - 2014-12-18
 ### Added
  - Exception model
