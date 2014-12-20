@@ -16,8 +16,19 @@ use Quaver\Core\DB;
 abstract class Model
 {
 
-    public $id;
-    public $table;
+    public $id,
+        $table,
+        $language;
+
+    /**
+     * Get language when start the object 
+     * @return type
+     */
+    public function __construct()
+    {
+        global $_lang;
+        $this->language = $_lang->id;
+    }
 
     /**
      * @param $_item
