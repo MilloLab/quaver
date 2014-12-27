@@ -18,13 +18,13 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    private $version = '0.8';
+    private $version = '0.8.2';
 
     // Language system
     public $language;
 
     // URL management
-    public $url_var;
+    public $url;
     public $queryString;
     
     // Template system
@@ -112,7 +112,8 @@ class Router
     }
 
     /**
-     * Intercept and process the current route
+     * route
+     * @return type
      */
     public function route()
     {
@@ -132,12 +133,12 @@ class Router
     public function getCurrentURL($position = 1)
     {
         $return = false;
-        $length = count($this->url_var);
+        $length = count($this->url->uri);
 
         if ($length == 1) {
-            $return = $this->url_var[0];
+            $return = $this->url->path;
         } else {
-            $return = $this->url_var[$position];
+            $return = $this->url->uri[$position];
         }
 
         return $return;
@@ -206,7 +207,10 @@ class Router
             preg_match($regexp, $_url, $match);
 
             if (@$match) {
-                $this->url_var = $match;
+                $this->url = array(
+                    "uri" => array_splice($match, 1),
+                    "path" => $match[0],
+                );
                 $view = $item;
                 break;
             }
@@ -301,20 +305,19 @@ class Router
             $this->addTwigVars('userDisabled', true);
         }
 
-        // Current url
-        $this->addTwigVars('url', strip_tags($this->url_var[0]));
-
         // Extra parametres
         $config = array(
+            "theme" => THEME_QUAVER,
             "randomVar" => RANDOM_VAR,
             "css" => CSS_PATH,
             "js" => JS_PATH,
             "img" => IMG_PATH,
             "env" => DEV_MODE,
             "version" => $this->version,
-        );
+            "url" => $this->url,
+        );  
 
-        if (strstr($this->url_var[0], "/admin/")) {
+        if (strstr($this->url->path, "/admin/")) {
             if (defined('DEV_MODE') && DEV_MODE == false) {
                 $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' 
                     --abbrev-commit $(git merge-base local-master master)");

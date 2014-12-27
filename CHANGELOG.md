@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.2] - 2014-12-27
+### Changed
+ - New URL array to manage path and uri
+ - Updated QV array (to use in Twig)
+
 ## [0.8.1] - 2014-12-18
 ### Added
  - A little Model test with PHPUnit

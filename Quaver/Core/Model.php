@@ -26,8 +26,7 @@ abstract class Model
      */
     public function __construct()
     {
-        global $_lang;
-        $this->language = $_lang->id;
+        $this->language = $GLOBALS['_lang']->id;
     }
 
     /**

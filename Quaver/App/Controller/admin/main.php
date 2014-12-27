@@ -9,7 +9,7 @@ namespace Quaver\App\Controller;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
-    header("Location: /");
+    header("Location: /login");
     exit;
 } 
 

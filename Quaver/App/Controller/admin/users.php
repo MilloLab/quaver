@@ -11,7 +11,7 @@ use Quaver\App\Model\User;
 
 // Check privileges
 if (!$_user->logged || !$_user->isAdmin()) {
-    header("Location: /");
+    header("Location: /login");
     exit;
 } 
 
@@ -78,7 +78,7 @@ switch ($this->getCurrentURL()) {
     case('edit'):
    	 	$this->addTwigVars('typePOST', 'edit');
         $user = new User;
-    	$item = $user->getFromId($this->url_var[2]);
+    	$item = $user->getFromId($this->url->uri[1]);
     	$this->addTwigVars('item', $item);
 
         // Load template with data
@@ -87,19 +87,16 @@ switch ($this->getCurrentURL()) {
     	break;
     case('del'):
         $user = new User;
-	    $item = $user->getFromId($this->url_var[2]);
-        
+	    $item = $user->getFromId($this->url->uri[1]);
         if ($item->delete()){
             header("Location: /admin/users");
             exit;
         }
-        
         break;
     default:
         $user = new User;
-    	$item = $user->getList();
-		$this->addTwigVars('items', $item);
-
+    	$items = $user->getList();
+		$this->addTwigVars('items', $items);
         // Load template with data
 		$template = $this->twig->loadTemplate('admin/user-List.twig');
 		echo $template->render($this->twigVars);
