@@ -18,7 +18,7 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    private $version = '0.8.2';
+    private $version = '0.8.3';
 
     // Language system
     public $language;
@@ -133,12 +133,12 @@ class Router
     public function getCurrentURL($position = 1)
     {
         $return = false;
-        $length = count($this->url->uri);
+        $length = count($this->url['uri']);
 
-        if ($length == 1) {
-            $return = $this->url->path;
+        if ($length == 0) {
+            $return = $this->url['path'];
         } else {
-            $return = $this->url->uri[$position];
+            $return = $this->url['uri'][$position];
         }
 
         return $return;
@@ -317,7 +317,7 @@ class Router
             "url" => $this->url,
         );  
 
-        if (strstr($this->url->path, "/admin/")) {
+        if (strstr($this->url['path'], "/admin/")) {
             if (defined('DEV_MODE') && DEV_MODE == false) {
                 $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' 
                     --abbrev-commit $(git merge-base local-master master)");

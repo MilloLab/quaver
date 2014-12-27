@@ -78,7 +78,7 @@ switch ($this->getCurrentURL()) {
     case('edit'):
    	 	$this->addTwigVars('typePOST', 'edit');
         $user = new User;
-    	$item = $user->getFromId($this->url->uri[1]);
+    	$item = $user->getFromId($this->url['uri'][1]);
     	$this->addTwigVars('item', $item);
 
         // Load template with data
@@ -87,7 +87,7 @@ switch ($this->getCurrentURL()) {
     	break;
     case('del'):
         $user = new User;
-	    $item = $user->getFromId($this->url->uri[1]);
+	    $item = $user->getFromId($this->url['uri'][1]);
         if ($item->delete()){
             header("Location: /admin/users");
             exit;

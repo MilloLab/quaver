@@ -72,7 +72,7 @@ switch ($this->getCurrentURL()) {
     case('edit'):
    	 	$this->addTwigVars('typePOST', 'edit');
         $lang = new LangStrings;
-    	$item = $lang->getFromLabel($this->url->uri[1]);
+    	$item = $lang->getFromLabel($this->url['uri'][1]);
     	$this->addTwigVars('item', $item);
 
         // Load template with data
@@ -81,7 +81,7 @@ switch ($this->getCurrentURL()) {
     	break;
     case('del'):
         $lang = new LangStrings;
-	    $items = $lang->getFromLabel($this->url->uri[1]);
+	    $items = $lang->getFromLabel($this->url['uri'][1]);
 
         foreach ($items as $item) {
             $item->delete();
