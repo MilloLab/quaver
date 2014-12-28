@@ -1,1 +1,2 @@
-body{padding-top:100px}
+body{padding-top:100px}@font-face{font-family:'millolab-icons';src:url("../fonts/millolab-icons.eot");src:url("../fonts/millolab-icons.eot?#iefix") format("embedded-opentype"),url("../fonts/millolab-icons.woff") format("woff"),url("../fonts/millolab-icons.ttf") format("truetype"),url("../fonts/millolab-icons.svg?#millolab-icons") format("svg");font-weight:normal;font-style:normal}
+.fa-millolab:before{content:"\f101";font-family:'millolab-icons';font-weight:normal;font-style:normal;speak:none;text-decoration:none;text-transform:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;font-size:1em;position:relative;bottom:-0.15em}

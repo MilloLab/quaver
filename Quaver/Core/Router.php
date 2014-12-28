@@ -18,7 +18,7 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    private $version = '0.8.3';
+    private $version = '0.8.4';
 
     // Language system
     public $language;
@@ -36,9 +36,7 @@ class Router
      */
     public function __construct()
     {
-        global $_lang;
-
-        $this->language = $_lang->id;
+        $this->language = $GLOBALS['_lang']->id;
 
         // Theme system
         define('VIEW_PATH', GLOBAL_PATH . '/Quaver/App/Theme/' . THEME_QUAVER . '/View');
@@ -88,6 +86,12 @@ class Router
         // Create twig object
         $this->twig = new \Twig_Environment($loader, $twig_options);
 
+        // Create a custom filter to translate strings
+        $filter = new \Twig_SimpleFilter('t', function ($string) {
+            return $GLOBALS['_lang']->typeFormat($string, 'd');
+        });
+        $this->twig->addFilter($filter);
+
         // Clear Twig cache
         if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {
             if (isset($this->queryString['clearCache'])) {
@@ -130,7 +134,7 @@ class Router
      * @param type $position 
      * @return type
      */
-    public function getCurrentURL($position = 1)
+    public function getCurrentURL($position = 0)
     {
         $return = false;
         $length = count($this->url['uri']);
@@ -265,6 +269,7 @@ class Router
 
     /**
      * Set main variables
+     * @return type
      */
     public function getGlobalTwigVars()
     {

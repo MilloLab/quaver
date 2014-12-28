@@ -23,38 +23,37 @@ class Core
      */
     public function run($_mvc = true)
     {
-        global $_lang, $_user;
 
         // Check important folders
         $this->checkFiles();
 
         // Load user
-        $_user = new User;
+        $GLOBALS['_user'] = new User;
         if (!empty($_COOKIE[COOKIE_NAME . "_log"])) {
-            $_user->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
+            $GLOBALS['_user']->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
         }
 
         session_start();
         if (isset($_SESSION['logged'])) {
 
             if ($_SESSION['logged'] == true && $_SESSION['uID'] != 0) {
-                $_user->getFromId($_SESSION['uID']);
+                $GLOBALS['_user']->getFromId($_SESSION['uID']);
             }
             
         }
 
         // Load language
-        $_lang = new Lang;
+        $GLOBALS['_lang'] = new Lang;
         if (!empty($_GET['lang'])) {
             $lang_slug = substr($_GET['lang'], 0, 3);
-            $_lang->getFromSlug($lang_slug);
-            $_lang->setCookie();
+            $GLOBALS['_lang']->getFromSlug($lang_slug);
+            $GLOBALS['_lang']->setCookie();
         } else {
-            $_lang->getSiteLanguage();
+            $GLOBALS['_lang']->getSiteLanguage();
         }
 
         // Maintenance mode
-        if ((!$_user->logged || $_user->logged && !$_user->isAdmin())
+        if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
             && (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE)
         ) {
             header("Location: /maintenance/");

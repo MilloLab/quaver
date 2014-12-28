@@ -2,10 +2,25 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.4] - 2014-12-28
+### Added
+ - New custom filter to translate strings: usq {{ 'string'|t }}
+ - Updated homepage
+
+### Changed
+ - Refactoring globals to $GLOBALS
+ - Bootstrap 3.3.1
+
+### Fixed
+ - Autoloader bugs
+ - Routing system now works correctly
+
+
 ## [0.8.2/3] - 2014-12-27
 ### Changed
  - New URL array to manage path and uri
  - Updated QV array (to use in Twig)
+
 
 ## [0.8.1] - 2014-12-18
 ### Added

@@ -13,7 +13,7 @@ namespace Quaver;
  * @param type $namespace 
  * @return type
  */
-public function load($namespace) {
+function load($namespace) {
 	$splitpath = explode('\\', $namespace);
 	$path = '';
 	$name = '';
@@ -47,7 +47,7 @@ public function load($namespace) {
  * @param type $absPath 
  * @return type
  */
-public function loadPath($absPath) {
+function loadPath($absPath) {
 	return include_once($absPath);
 }
 
