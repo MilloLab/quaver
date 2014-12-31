@@ -8,12 +8,9 @@
 namespace Quaver\App\Model;
 
 use Quaver\Core\DB;
+use Quaver\Core\Model;
 
-/**
- * User
- * @package default
- */
-class User extends \Quaver\Core\Model
+class User extends Model
 {
     public $_fields = array(
       "id",

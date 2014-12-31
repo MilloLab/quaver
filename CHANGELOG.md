@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.5] - 2014-12-31
+### Added
+ - Some test with PHPUnit
+
+### Changed
+ - Rename Core to Bootstrap and other minor changes
+
+
 ## [0.8.4] - 2014-12-28
 ### Added
  - New custom filter to translate strings: usq {{ 'string'|t }}

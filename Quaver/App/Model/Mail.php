@@ -7,10 +7,6 @@
 
 namespace Quaver\App\Model;
 
-/**
- * Mail
- * @package default
- */
 class Mail
 {
 

@@ -35,7 +35,7 @@ require_once(GLOBAL_PATH . '/Quaver/Core/Autoloader.php');
 require_once(GLOBAL_PATH . '/vendor/autoload.php');
 \Twig_Autoloader::register();
 
-use Quaver\Core\Core;
+use Quaver\Core\Bootstrap;
 
-$core = new Core();
-$core->run();
+$bootstrap = new Bootstrap();
+$bootstrap->run();

@@ -7,10 +7,6 @@
 
 namespace Quaver\Core;
 
-/**
- * Helper
- * @package default
- */
 class Helper
 {
     

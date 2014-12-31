@@ -10,11 +10,7 @@ namespace Quaver\Core;
 use Quaver\Core\Lang;
 use Quaver\App\Model\User;
 
-/**
- * Core
- * @package default
- */
-class Core
+class Bootstrap
 {
     /**
      * run

@@ -5,9 +5,4 @@
  * (see README for details)
  */
 
-namespace Quaver\Core;
-
-class Exception extends \Exception
-{
-    
-}
+require_once __DIR__.'/../vendor/autoload.php';

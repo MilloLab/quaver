@@ -12,13 +12,9 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Quaver\Core\Lang;
 use Quaver\App\Model\User;
 
-/**
- * Router
- * @package default
- */
 class Router
 {
-    private $version = '0.8.4';
+    private $version = '0.8.5';
 
     // Language system
     public $language;
@@ -125,7 +121,7 @@ class Router
         $this->fixTrailingSlash($route);
         $view = $this->getView($route);
         if ($view != false) {
-            $this->dispatch($view['controller']);
+            $this->dispatch($view);
         }
     }
 
@@ -203,19 +199,19 @@ class Router
             $routes = $yaml->parse(file_get_contents(GLOBAL_PATH . '/Quaver/Routes.yml'));
 
         } catch (ParseException $e) {
-            printf("Unable to parse the YAML string: %s", $e->getMessage());
+            throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
         }
 
         foreach ($routes as $item) {
             $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $item['url']) . "$/";
             preg_match($regexp, $_url, $match);
 
-            if (@$match) {
+            if ($match) {
                 $this->url = array(
                     "uri" => array_splice($match, 1),
                     "path" => $match[0],
                 );
-                $view = $item;
+                $view = $item['controller'];
                 break;
             }
         }

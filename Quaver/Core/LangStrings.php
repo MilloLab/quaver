@@ -9,10 +9,6 @@ namespace Quaver\Core;
 
 use Quaver\Core\DB;
 
-/**
- * LangStrings
- * @package default
- */
 class LangStrings extends \Quaver\Core\Model
 {
     public $_fields = array(

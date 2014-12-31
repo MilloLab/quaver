@@ -9,10 +9,6 @@ namespace Quaver\Core;
 
 use Quaver\Core\DB;
 
-/**
- * Model
- * @package default
- */
 abstract class Model
 {
 
