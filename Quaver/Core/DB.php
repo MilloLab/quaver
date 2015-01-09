@@ -12,7 +12,7 @@ use \PDO;
 class DB
 {
 
-    public $conn = null;
+    private $conn = null;
 
     /**
      * constructor
@@ -31,10 +31,10 @@ class DB
 
             try {
                 // Config mysql link
-                $this->conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+                $this->conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE.';port='.DB_PORT, DB_USERNAME, DB_PASSWORD);
                 $this->conn->exec('SET CHARACTER SET utf8');
 
-                if (defined('DEV_MODE') && DEV_MODE) {
+                if (defined('DEV_MODE') && DEV_MODE === true) {
                     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 }
 

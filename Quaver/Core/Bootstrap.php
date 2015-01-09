@@ -25,7 +25,7 @@ class Bootstrap
 
         // Load user
         $GLOBALS['_user'] = new User;
-        if (!empty($_COOKIE[COOKIE_NAME . "_log"])) {
+        if (isset($_COOKIE[COOKIE_NAME . "_log"])) {
             $GLOBALS['_user']->getFromCookie($_COOKIE[COOKIE_NAME . "_log"]);
         }
 
@@ -40,7 +40,7 @@ class Bootstrap
 
         // Load language
         $GLOBALS['_lang'] = new Lang;
-        if (!empty($_GET['lang'])) {
+        if (isset($_GET['lang'])) {
             $lang_slug = substr($_GET['lang'], 0, 3);
             $GLOBALS['_lang']->getFromSlug($lang_slug);
             $GLOBALS['_lang']->setCookie();

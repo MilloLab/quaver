@@ -62,10 +62,11 @@ function generateModuleModel($path, $moduleName)
 namespace Quaver\App\Model;
 
 use Quaver\Core\DB;
+use Quaver\Core\Model;
 
-class $moduleName extends \Quaver\Core\Model
+class $moduleName extends Model
 {
-	public \$_table = '$moduleName';
+	protected \$_table = '$moduleName';
 
 }";
 	if (is_dir($path)) {

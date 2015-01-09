@@ -14,7 +14,7 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.5';
+    private $version = '0.8.6';
 
     // Language system
     public $language;
@@ -32,7 +32,9 @@ class Router
      */
     public function __construct()
     {
-        $this->language = $GLOBALS['_lang']->id;
+        if (isset($GLOBALS['_lang'])) {
+            $this->language = $GLOBALS['_lang']->id;
+        }
 
         // Theme system
         define('VIEW_PATH', GLOBAL_PATH . '/Quaver/App/Theme/' . THEME_QUAVER . '/View');
@@ -120,6 +122,7 @@ class Router
         $route = $this->getCurrentRoute();
         $this->fixTrailingSlash($route);
         $view = $this->getView($route);
+
         if ($view != false) {
             $this->dispatch($view);
         }
@@ -269,15 +272,15 @@ class Router
      */
     public function getGlobalTwigVars()
     {
-        global $_lang, $_user;
-
         // Language
-        $this->addTwigVars("language", $_lang);
+        $this->addTwigVars("language", $GLOBALS['_lang']);
 
         // Languages
         $languageVars = array();
         $ob_l = new Lang;
-        foreach ($ob_l->getList() as $lang) {
+        $langList = $ob_l->getList();
+
+        foreach ($langList as $lang) {
             $item = array(
                 "id" => $lang->id,
                 "name" => utf8_encode($lang->name),
@@ -288,14 +291,8 @@ class Router
         }
         $this->addTwigVars('languages', $languageVars);
 
-        // User data
-        $userVars = array(
-            "admin" => $_user->isAdmin(),
-            "logged" => $_user->logged,
-            "sessionHash" => $_user->cookie,
-        );
-        $this->addTwigVars("user", $userVars);
-        $this->addTwigVars("_user", $_user);
+        // Load user data
+        $this->addTwigVars("_user", $GLOBALS['_user']);
 
         // Login errors
         if (isset($this->queryString['login-error'])) {

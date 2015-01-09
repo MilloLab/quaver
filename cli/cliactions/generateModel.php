@@ -14,13 +14,14 @@ function model($module, $dbtable) {
  * (see README for details)
  */
 
-namespace Quaver\Model;
+namespace Quaver\App\Model;
 
 use Quaver\Core\DB;
+use Quaver\Core\Model;
 
-class $className extends Base
+class $className extends Model
 {
-	public \$_table = '$dbtable';
+	protected \$_table = '$dbtable';
 
 }";
 	$path = MODEL_PATH;

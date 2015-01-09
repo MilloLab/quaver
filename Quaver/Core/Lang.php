@@ -22,8 +22,8 @@ class Lang extends \Quaver\Core\Model
     );
 
     public $strings;
-    public $table = 'lang';
-    public $table_strings = 'lang_strings';
+    protected $table = 'lang';
+    protected $table_strings = 'lang_strings';
 
     /**
      * @param $_id
@@ -52,11 +52,9 @@ class Lang extends \Quaver\Core\Model
 
             if ($resultLang) {
                 foreach ($resultLang as $string) {
-
                     if (!isset($this->strings[$string['label']])) {
                         $this->strings[$string['label']] = utf8_encode($string['text']);
                     }
-                
                 }
             }
             

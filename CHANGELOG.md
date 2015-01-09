@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.6] - 2015-01-09
+### Changed
+ - New mail model
+ - Change public $table to protected (all models)
+ - Many empty changes to isset function for best performance
+ - Change globals uses
+ - HTML demo updated
+ - Delete user twigVars (deprecated), now use "_user" to access full object
+ - CLI updated to new structure (0.8)
+
+### Fixed
+ - Issue when load globals objects
+
+
 ## [0.8.5] - 2014-12-31
 ### Added
  - Some test with PHPUnit

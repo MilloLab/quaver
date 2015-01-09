@@ -19,7 +19,7 @@ class LangStrings extends \Quaver\Core\Model
     );
 
     public $_languages;
-    public $table = 'lang_strings';
+    protected $table = 'lang_strings';
 
 
     /**
@@ -100,7 +100,7 @@ class LangStrings extends \Quaver\Core\Model
     public function saveAll()
     {
         // Other languages
-        if (!empty($this->_languages)) {
+        if (isset($this->_languages)) {
             foreach ($this->_languages as $item) {
                 $lang = new LangStrings;
                 $lang->setItem((array)$item);
@@ -120,7 +120,7 @@ class LangStrings extends \Quaver\Core\Model
     public function deleteAll()
     {
         // Other languages
-        if (!empty($this->_languages)) {
+        if (isset($this->_languages)) {
             foreach ($this->_languages as $item) {
                 $lang = new LangStrings;
                 $lang->setItem((array)$item);
@@ -143,7 +143,7 @@ class LangStrings extends \Quaver\Core\Model
             }
         }
 
-        if (!empty($_item['_languages'])) {
+        if (isset($_item['_languages'])) {
             $this->_languages = $_item['_languages'];
         }
     }

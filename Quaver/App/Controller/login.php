@@ -16,9 +16,9 @@ if ($_user->logged){
 
 // REF
 $goTo = '/';
-if (!empty($_GET['ref'])) {
+if (isset($_GET['ref'])) {
     $goTo = strip_tags(addslashes($_GET['ref']));
-} else if (!empty($_SERVER['HTTP_REFERER'])) {
+} else if (isset($_SERVER['HTTP_REFERER'])) {
     $goTo = strip_tags(addslashes($_SERVER['HTTP_REFERER']));
 }
 

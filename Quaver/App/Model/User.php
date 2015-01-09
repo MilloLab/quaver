@@ -25,7 +25,7 @@ class User extends Model
     public $cookie = '';
     public $logged = false;
 
-    public $table = 'user'; // sql table
+    protected $table = 'user'; // sql table
 
 
     /**
@@ -40,7 +40,7 @@ class User extends Model
 
             $db = new DB;
             $_table = $this->table;
-            $return = NULL;
+            $return = false;
 
             $item = $db->query("SELECT id FROM $_table");
 
@@ -165,7 +165,6 @@ class User extends Model
                 } else {
                     $this->logged = true;
                 }
-
                 $return = $this->id;
                 $this->updateLastLogin();
             } else {

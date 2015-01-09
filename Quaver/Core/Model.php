@@ -13,8 +13,9 @@ abstract class Model
 {
 
     public $id,
-        $table,
         $language;
+
+    protected $table;
 
     /**
      * Get language when start the object 
@@ -22,7 +23,9 @@ abstract class Model
      */
     public function __construct()
     {
-        $this->language = $GLOBALS['_lang']->id;
+        if (isset($GLOBALS['_lang'])) {
+            $this->language = $GLOBALS['_lang']->id;    
+        }
     }
 
     /**
@@ -154,13 +157,13 @@ abstract class Model
     {
         $return = false;
 
-        if (!empty($this->_fields)) {
+        if (isset($this->_fields)) {
             foreach ($this->_fields as $field) {
                 $return[$field] = $this->$field;
             }
         }
 
-        if (!empty($this->_fields_extra)) {
+        if (isset($this->_fields_extra)) {
             foreach ($this->_fields_extra as $field) {
                 $return[$field] = $this->$field;
             }
@@ -170,11 +173,16 @@ abstract class Model
     }
 
     /**
-     * @return string
+     * toJson
+     * @return type
      */
     public function toJson()
     {
-        $return = $this->toArray();
-        return json_encode($return);
+        if ($this->toArray()) {
+            $return = json_encode($this->toArray());
+        } else {
+            $return = false;
+        } 
+        return $return;
     }
 }

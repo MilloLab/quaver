@@ -8,8 +8,28 @@
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
  
-    <h1 class="page-header">Home</h1>
-    <p>Hello {{ _user.email }}</p>
+    <h1 class="page-header">Hi {{ _user.email }}</h1>
+    <div class="container">
+    <div class="jumbotron centered">
+      <h1>Welcome to Quaver {{ qv.version }}</h1>
+      <p>Local Lang: {{ language.locale|replace('_', '-') }}</p>
+      <p>Sample String: hello_world = {{ 'hello_world'|t }}</p>
+
+
+      <h2>Routing</h2>
+      <p>Path: {{ qv.url.path }}</p>
+      {% for uri in qv.url.uri %}
+        <p>URI {{loop.index}}: {{ uri }}</p>
+      {% endfor %}
+
+      <h2>Important</h2>
+      <ul>
+      <li>Import <strong>quaver.sql</strong> to your database</li>
+      <li>Check <strong>Quaver/Config.php</strong> and <strong>Quaver/Routes.yml</strong></li>
+      </ul>
+
+    </div>
+  </div>
 </div>
 
 {% endblock %}
