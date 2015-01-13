@@ -14,6 +14,6 @@ ini_set('log_errors', 'On');
 
 define('GLOBAL_PATH', dirname( __FILE__ ));
 define('MODEL_PATH', GLOBAL_PATH . '/../Quaver/App/Model');
-define('CONTROLLER_PATH', GLOBAL_PATH . '/../Quaver/Controller');
+define('CONTROLLER_PATH', GLOBAL_PATH . '/../Quaver/App/Controller');
 
 

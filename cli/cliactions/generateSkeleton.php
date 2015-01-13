@@ -44,7 +44,7 @@ function generateController($path,$moduleName)
 namespace Quaver\App\Controller;
 
 \$template = \$this->twig->loadTemplate('$moduleName.twig');
-echo $template->render(\$this->twigVars);";
+echo \$template->render(\$this->twigVars);";
 	if (is_dir($path)) {
 		file_put_contents($path."/$moduleName.php", $contents);
 	}
