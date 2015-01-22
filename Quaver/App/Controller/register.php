@@ -41,7 +41,7 @@ if (isset($_POST['email']) && isset($_POST['password'])
         $user->password = $user->hashPassword($_POST['password']);
         $user->email = $_POST['email'];
 
-        if ($_POST['admin'] == true){
+        if (isset($_POST['admin'])) {
             $user->level = "admin";
         } else {
             $user->level = "user";    

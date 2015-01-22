@@ -14,7 +14,7 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.6';
+    private $version = '0.8.7';
 
     // Language system
     public $language;
@@ -45,26 +45,7 @@ class Router
         define('FONT_PATH', RES_PATH . '/fonts');
 
         // Getting all directories in /template
-        $path = VIEW_PATH;
-
-        $templatesDir = array($path);
-        $dirsToScan = array($path);
-
-        $dirKey = 0;
-        while (count($dirsToScan) > $dirKey) {
-            $results = scandir($dirsToScan[$dirKey]);
-            foreach ($results as $result) {
-                if ($result === '.' || $result === '..') {
-                    continue;
-                }
-
-                if (is_dir($dirsToScan[$dirKey] . '/' . $result)) {
-                    $templatesDir[] = $dirsToScan[$dirKey] . '/' . $result;
-                    $dirsToScan[] = $dirsToScan[$dirKey] . '/' . $result;
-                }
-            }
-            $dirKey++;
-        }
+        $templatesDir = array(VIEW_PATH);
 
         // Get query string from URL to core var
         $this->getQueryString();
@@ -137,6 +118,14 @@ class Router
     {
         $return = false;
         $length = count($this->url['uri']);
+
+        if ($position == 0 && $length > 0) {
+            $position = $length - 1;
+
+            if (is_numeric($this->url['uri'][$position])) {
+                $position -= 1;                
+            }
+        }
 
         if ($length == 0) {
             $return = $this->url['path'];

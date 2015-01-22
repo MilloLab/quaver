@@ -21,7 +21,7 @@ use Quaver\Core\Model;
 
 class $className extends Model
 {
-	protected \$_table = '$dbtable';
+	protected \$table = '$dbtable';
 
 }";
 	$path = MODEL_PATH;

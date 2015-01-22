@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.7] - 2015-01-22
+### Changed
+ - Added CleanString method to Helper
+ - Refactor some methods
+
+### Fixed
+ - Fix CLI variables
+ - Router: getCurrentURL now works correctly
+ - Controller: Fix demo register
+
+
 ## [0.8.6a] - 2015-01-13
 ### Fixed
  - Fix CLI path and variables

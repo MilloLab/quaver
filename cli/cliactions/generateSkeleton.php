@@ -66,7 +66,7 @@ use Quaver\Core\Model;
 
 class $moduleName extends Model
 {
-	protected \$_table = '$moduleName';
+	protected \$table = '$moduleName';
 
 }";
 	if (is_dir($path)) {

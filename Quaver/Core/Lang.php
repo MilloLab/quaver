@@ -31,19 +31,16 @@ class Lang extends \Quaver\Core\Model
      */
     public function getFromId($_id)
     {
+        $db = new DB;
+        $_id = (int)$_id;
+        $_table = $this->table;
 
-        try {
-            $db = new DB;
-            $_id = (int)$_id;
-            $_table = $this->table;
+        $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
+        $result = $item->fetchAll();
 
-            $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
-            $result = $item->fetchAll();
-
-            if ($result) {
-                $this->setItem($result[0]);
-            }
-
+        if ($result) {
+            $this->setItem($result[0]);
+            
             $_table_strings = $this->table_strings;
             $_idSet = $this->id;
 
@@ -57,13 +54,9 @@ class Lang extends \Quaver\Core\Model
                     }
                 }
             }
-            
-            return $this;
-
-        } catch (\PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
+        return $this;
     }
 
 
@@ -74,11 +67,12 @@ class Lang extends \Quaver\Core\Model
     {
 
         $return = $this->getLanguageFromCookie();
+
         if (!$return) {
 
             if (defined('LANG_FORCE')) {
                 
-                if (LANG_FORCE) {
+                if (LANG_FORCE === true) {
                     $this->getFromId(LANG);
                 } else {
                     $language_slug = \Quaver\Core\Helper::getBrowserLanguage();
@@ -119,7 +113,6 @@ class Lang extends \Quaver\Core\Model
      */
     public function setCookie()
     {
-
         if (!empty($this->id)) {
             setcookie(COOKIE_NAME . "_lang",
                       $this->id,
@@ -127,7 +120,6 @@ class Lang extends \Quaver\Core\Model
                       COOKIE_PATH,
                       COOKIE_DOMAIN);
         }
-
     }
 
     /**
@@ -138,30 +130,26 @@ class Lang extends \Quaver\Core\Model
      */
     public function getFromSlug($_slug, $_short = false)
     {
-        try {
-            $db = new DB;
+        $db = new DB;
 
-            $return = LANG;
-            $_table = $this->table;
+        $return = LANG;
+        $_table = $this->table;
 
-            $slug_where = 'slug';
-            if ($_short) {
-                $slug_where = 'SUBSTR(slug, 1, 2)';
-            }
-
-            $_slug = substr($_slug, 0, 3);
-            $language = $db->query("SELECT id FROM $_table WHERE $slug_where = '$_slug' AND active = 1");
-
-            if ($language) {
-                $this->getFromId($language->fetchColumn(0));
-                $return = $this;
-            }
-
-            return $return;
-
-        } catch (\PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
+        $slug_where = 'slug';
+        if ($_short) {
+            $slug_where = 'SUBSTR(slug, 1, 2)';
         }
+
+        $_slug = substr($_slug, 0, 3);
+        $language = $db->query("SELECT id FROM $_table WHERE $slug_where = '$_slug' AND active = 1");
+        $resultLang = $language->fetchColumn(0);
+
+        if ($resultLang) {
+            $this->getFromId($resultLang);
+            $return = $this;
+        }
+
+        return $return;
     }
 
     /**
@@ -170,27 +158,19 @@ class Lang extends \Quaver\Core\Model
      */
     public function getLanguages()
     {
-        try {
+        $db = new DB;
+        $return = null;
+        $_table = 'lang';
 
-            $db = new DB;
+        $items = $db->query("SELECT * FROM $_table ORDER BY id ASC");
+        $result = $items->fetchAll();
 
-            $return = array();
-            $_table = $this->table;
-
-            $items = $db->query("SELECT * FROM $_table ORDER BY id ASC");
-            $result = $items->fetchAll();
-
-            foreach ($result as $l) {
-                $ob_lang = new Lang;
-                $return[] = $ob_lang->getFromId($l['id']);
-            }
-
-            return $return;
-
-        } catch (PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
+        foreach ($result as $l) {
+            $ob_lang = new Lang;
+            $return[] = $ob_lang->getFromId($l['id']);
         }
 
+        return $return;
     }
 
     /**
@@ -199,43 +179,35 @@ class Lang extends \Quaver\Core\Model
      * @param type $_byPriority 
      * @return type
      */
-    public function getList($_all = false, $_byPriority = false)
+    public static function getList($_all = false, $_byPriority = false)
     {
-        try {
 
-            $db = new DB;
+        $db = new DB;
+        $return = null;
+        $_table = 'lang';
 
-            $return = array();
-            $result = null;
-            $_table = $this->table;
+        $where = '';
+        $order = '';
 
-            $where = '';
-            $order = '';
-
-            if ($_byPriority) {
-                $order = 'ORDER BY priority ASC';
-            }
-
-            if ($_all) {
-                $where = "WHERE active = 1";
-            }
-
-            $items = $db->query("SELECT id FROM $_table $where $order");
-
-            if ($items){
-                $result = $items->fetchAll();
-                foreach ($result as $item) {
-                    $ob_lang = new Lang;
-                    $return[] = $ob_lang->getFromId($item['id']);
-                }
-            }
-
-            return $return;
-
-        } catch (\PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
+        if ($_byPriority) {
+            $order = 'ORDER BY priority ASC';
         }
-        
+
+        if ($_all) {
+            $where = "WHERE active = 1";
+        }
+
+        $items = $db->query("SELECT id FROM $_table $where $order");
+
+        if ($items){
+            $result = $items->fetchAll();
+            foreach ($result as $item) {
+                $ob_lang = new Lang;
+                $return[] = $ob_lang->getFromId($item['id']);
+            }
+        }
+
+        return $return;
     }
 
     /**
@@ -245,18 +217,17 @@ class Lang extends \Quaver\Core\Model
      */
     public function typeFormat($_label, $_utf8 = '')
     {
-
-        $return = $this->strings[$_label];
-        switch ($_utf8) {
-            case('d'):
-                $return = utf8_decode($return);
-                break;
-            case('e'):
-                $return = utf8_encode($return);
-                break;
-        }
-
-        if (empty($return)) {
+        if (isset($this->strings[$_label])) {
+            $return = $this->strings[$_label];
+            switch ($_utf8) {
+                case('d'):
+                    $return = utf8_decode($return);
+                    break;
+                case('e'):
+                    $return = utf8_encode($return);
+                    break;
+            }
+        } else {
             $return = "#$_label#";
         }
 

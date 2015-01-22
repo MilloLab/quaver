@@ -58,27 +58,19 @@ abstract class Model
      */
     public function getFromId($_id)
     {
+        $db = new DB;
+        $_id = (int)$_id;
+        $_table = $this->table;
 
-        try {
+        $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
 
-            $db = new DB;
-            $_id = (int)$_id;
-            $_table = $this->table;
+        $result = $item->fetchAll();
 
-            $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
-
-            $result = $item->fetchAll();
-
-            if ($result) {
-                $this->setItem($result[0]);
-            }
-
-            return $this;
-        
-        } catch (\PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
+        if ($result) {
+            $this->setItem($result[0]);
         }
 
+        return $this;
     }
 
     /**

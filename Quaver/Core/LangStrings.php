@@ -19,40 +19,38 @@ class LangStrings extends \Quaver\Core\Model
     );
 
     public $_languages;
-    protected $table = 'lang_strings';
+
+    protected $table = 'lang_strings'; // sql table
 
 
     /**
-     * getLanguageList function.
-     * 
-     * @access public
-     * @return void
+     * Get all strings
+     * @return type
      */
-    public function getLanguageList()
+    public static function getList()
     {
-        try {
+        $db = new DB;
+        $_table = 'lang_strings';
+        $return = null;
 
-            $db = new DB;
-            $_table = $this->table;
-            $return = NULL;
-
-            $item = $db->query("SELECT id FROM $_table WHERE language = 1");
-
-            $result = $item->fetchAll();
-
-            if ($result) {
-                foreach ($result as $item) {
-                    $l = new LangStrings;
-                    $return[] = $l->getFromId($item['id']);
-                }
-            }
-
-            return $return;
-
-        } catch (\PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
+        if (isset($_GLOBAL['lang'])) {
+            $language = $_GLOBAL['lang']->id;
+        } else {
+            $language = 1;
         }
 
+        $item = $db->query("SELECT id FROM $_table WHERE language = $language");
+
+        $result = $item->fetchAll();
+
+        if ($result) {
+            foreach ($result as $item) {
+                $l = new LangStrings;
+                $return[] = $l->getFromId($item['id']);
+            }
+        }
+
+        return $return;
     }
     
     /**
@@ -64,29 +62,22 @@ class LangStrings extends \Quaver\Core\Model
      */
     public function getFromLabel($_label)
     {
-        try {
+        $db = new DB;        
+        $_table = $this->table;
+        $return = null;
 
-            $db = new DB;        
-            $_table = $this->table;
-            $return = NULL;
+        $item = $db->query("SELECT id FROM $_table WHERE label like '$_label' ORDER BY language");
 
-            $item = $db->query("SELECT id FROM $_table WHERE label like '$_label' ORDER BY language");
+        $result = $item->fetchAll();
 
-            $result = $item->fetchAll();
-
-            if ($result) {
-                foreach ($result as $item) {
-                    $l = new LangStrings;
-                    $return[] = $l->getFromId($item['id']);
-                }
+        if ($result) {
+            foreach ($result as $item) {
+                $l = new LangStrings;
+                $return[] = $l->getFromId($item['id']);
             }
-
-            return $return;
-
-        } catch (\PDOException $e) {
-            throw new \Quaver\Core\Exception($e->getMessage());
         }
 
+        return $return;
     }
     
    
