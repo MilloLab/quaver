@@ -14,3 +14,6 @@ matrix:
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source --dev
+
+notifications:
+    slack: millolab:UxU0G2ZMSkj5xGiIn8FqM0yv
