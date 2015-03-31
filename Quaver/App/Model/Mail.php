@@ -82,6 +82,14 @@ class Mail
 
             $this->body = html_entity_decode($this->body);
 
+            if (empty($this->from)) {
+                $this->from = CONTACT_EMAIL;
+            }
+
+            if (empty($this->fromName)) {
+                $this->fromName = CONTACT_NAME;
+            }
+
             $this->send();
 
         }

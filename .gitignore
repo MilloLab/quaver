@@ -4,3 +4,4 @@ files/
 Cache/
 vendor/
 docs/
+composer.lock
