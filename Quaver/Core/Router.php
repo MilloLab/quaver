@@ -14,7 +14,7 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.7';
+    private $version = '0.8.9';
 
     // Language system
     public $language;

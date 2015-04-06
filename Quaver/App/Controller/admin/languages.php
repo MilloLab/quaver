@@ -93,7 +93,7 @@ switch ($this->getCurrentURL()) {
 		break;
     default:
         $lang = new LangStrings;
-    	$items = $lang->getLanguageList();
+    	$items = $lang->getList();
 		$this->addTwigVars('items', $items);
 
         // Load template with data
