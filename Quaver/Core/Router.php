@@ -14,7 +14,7 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.9';
+    private $version = '0.8.10';
 
     // Language system
     public $language;
@@ -110,6 +110,19 @@ class Router
     }
 
     /**
+     * getUrlPart
+     * @param type $position 
+     * @return type
+     */
+    public function getUrlPart($position)
+    {
+        if (isset($this->url['uri'][$position])) {
+            return $this->url['uri'][$position];
+        }
+        return null;
+    }
+
+    /**
      * getCurrentURL
      * @param type $position 
      * @return type
@@ -122,7 +135,7 @@ class Router
         if ($position == 0 && $length > 0) {
             $position = $length - 1;
 
-            if (is_numeric($this->url['uri'][$position])) {
+            if (is_numeric($this->getUrlPart($position))) {
                 $position -= 1;                
             }
         }
@@ -130,7 +143,7 @@ class Router
         if ($length == 0) {
             $return = $this->url['path'];
         } else {
-            $return = $this->url['uri'][$position];
+            $return = $this->getUrlPart($position);
         }
 
         return $return;

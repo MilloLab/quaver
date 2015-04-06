@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.10] - 2015-03-06
+### Changed
+ - New method getUrlPart
+ - Refactor
+
+### Fixed
+ - Demo controllers
+
 ## [0.8.7] - 2015-01-22
 ### Changed
  - Added CleanString method to Helper
