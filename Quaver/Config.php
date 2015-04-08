@@ -14,6 +14,10 @@ define('FILES_PATH', './files');
 define('THEME_QUAVER', 'Default');
 define('BRAND_NAME', 'My Company Name');
 
+// Internal definition
+define('QV_ROUTES_EXT', 0);
+define('QV_ROUTES_EXT_PATH', ''); //name of package
+
 // Cookies
 define('COOKIE_NAME', 'quaver');
 define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);

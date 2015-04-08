@@ -14,7 +14,7 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.10';
+    private $version = '0.8.11';
 
     // Language system
     public $language;
@@ -200,11 +200,30 @@ class Router
         $view = false;
 
         try {
+
+            $routes_qv = null;
             $yaml = new Parser();
-            $routes = $yaml->parse(file_get_contents(GLOBAL_PATH . '/Quaver/Routes.yml'));
+            $routes_qv = $yaml->parse(file_get_contents(GLOBAL_PATH . '/Quaver/Routes.yml'));
 
         } catch (ParseException $e) {
             throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
+        }
+
+        if (defined('QV_ROUTES_EXT') && QV_ROUTES_EXT) {
+            
+            $routes_ext = null;
+
+            try {
+                $yaml = new Parser();
+                $routes_ext = $yaml->parse(file_get_contents(VENDOR_PATH . '/' . QV_ROUTES_EXT_PATH . '/Quaver/Routes.yml'));
+                $routes = array_merge($routes_qv, $routes_ext);
+
+            } catch (ParseException $e) {
+                throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
+            }           
+
+        } else {
+            $routes = $routes_qv;
         }
 
         foreach ($routes as $item) {
