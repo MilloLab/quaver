@@ -215,7 +215,7 @@ class Router
 
             try {
                 $yaml = new Parser();
-                $routes_ext = $yaml->parse(file_get_contents(VENDOR_PATH . '/' . QV_ROUTES_EXT_PATH . '/Quaver/Routes.yml'));
+                $routes_ext = $yaml->parse(file_get_contents(VENDOR_PATH . '/' . QV_ROUTES_EXT_PATH . '/Routes.yml'));
                 $routes = array_merge($routes_qv, $routes_ext);
 
             } catch (ParseException $e) {

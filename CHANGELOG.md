@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.8.11] - 2015-03-09
+### Added
+ - Support to extend routing (only one module)
+
+### Fixed
+ - Demo controllers
+
+
 ## [0.8.10] - 2015-03-06
 ### Changed
  - New method getUrlPart

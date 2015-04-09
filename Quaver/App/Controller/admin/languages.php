@@ -56,7 +56,7 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
 }
 
 // Selector
-switch ($this->getCurrentURL()) {
+switch ($this->getUrlPart(0)) {
 
     case('add'):
     	$this->addTwigVars('typePOST', 'add');

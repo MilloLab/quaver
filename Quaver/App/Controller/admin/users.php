@@ -24,10 +24,6 @@ $this->addTwigVars('section', 'users');
 // Add or edit users strings
 if (isset($_POST['edit']) || isset($_POST['add'])) {
 
-    foreach ($_POST as $k => $v) {
-        $_POST[$k] = \Quaver\Core\Helper::clearInjection($v);
-    }
-
 	$added = false;
 
     $user = new User;
@@ -62,7 +58,7 @@ if (isset($_POST['edit']) || isset($_POST['add'])) {
 }
 
 // Selector
-switch ($this->getCurrentURL()) {
+switch ($this->getUrlPart(0)) {
 
     case('add'):
     	$this->addTwigVars('typePOST', 'add');
