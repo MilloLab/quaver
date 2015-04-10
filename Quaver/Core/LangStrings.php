@@ -33,8 +33,10 @@ class LangStrings extends \Quaver\Core\Model
         $_table = 'lang_strings';
         $return = null;
 
-        if (isset($_GLOBAL['lang'])) {
-            $language = $_GLOBAL['lang']->id;
+        global $_lang;
+
+        if (isset($_lang->id)) {
+            $language = $_lang->id;
         } else {
             $language = 1;
         }

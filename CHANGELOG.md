@@ -2,7 +2,16 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.8.11] - 2015-03-09
+## [0.8.12] - 2015-04-10
+### Added
+ - New routing system
+ - Ajax: new flow
+
+### Fixed
+ - LangString
+
+
+## [0.8.11] - 2015-04-09
 ### Added
  - Support to extend routing (only one module)
 
@@ -10,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
  - Demo controllers
 
 
-## [0.8.10] - 2015-03-06
+## [0.8.10] - 2015-04-06
 ### Changed
  - New method getUrlPart
  - Refactor

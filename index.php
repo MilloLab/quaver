@@ -36,6 +36,13 @@ require_once(GLOBAL_PATH . '/vendor/autoload.php');
 \Twig_Autoloader::register();
 
 use Quaver\Core\Bootstrap;
+use Quaver\Core\Router;
 
-$bootstrap = new Bootstrap();
+$bootstrap = new Bootstrap;
+$router = new Router;
+
+// Add paths
+$router->addPath('/', GLOBAL_PATH . '/Quaver/Routes.yml');
+
+$bootstrap->router = $router;
 $bootstrap->run();

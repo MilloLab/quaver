@@ -14,7 +14,8 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.11';
+    private $version = '0.8.12';
+    private $routes;
 
     // Language system
     public $language;
@@ -32,6 +33,9 @@ class Router
      */
     public function __construct()
     {
+
+        $this->routes = array();
+
         if (isset($GLOBALS['_lang'])) {
             $this->language = $GLOBALS['_lang']->id;
         }
@@ -109,6 +113,26 @@ class Router
         }
     }
 
+    /**
+     * addPath
+     * @param type $container 
+     * @param type $path 
+     * @return type
+     */
+    public function addPath($container, $path)
+    {
+        try {
+
+            $yaml = new Parser();
+            $elements = $yaml->parse(file_get_contents($path));
+
+            isset($this->routes[$container]) ? $this->routes[$container] += $elements: $this->routes[$container] = $elements;
+
+        } catch (ParseException $e) {
+            throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
+        }           
+    }
+    
     /**
      * getUrlPart
      * @param type $position 
@@ -195,49 +219,36 @@ class Router
      */
     public function getView($_url)
     {
-        $routes = null;
+
         $return = false;
         $view = false;
 
-        try {
-
-            $routes_qv = null;
-            $yaml = new Parser();
-            $routes_qv = $yaml->parse(file_get_contents(GLOBAL_PATH . '/Quaver/Routes.yml'));
-
-        } catch (ParseException $e) {
-            throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
-        }
-
-        if (defined('QV_ROUTES_EXT') && QV_ROUTES_EXT) {
+        foreach ($this->routes as $indexPath => $container) {
             
-            $routes_ext = null;
-
-            try {
-                $yaml = new Parser();
-                $routes_ext = $yaml->parse(file_get_contents(VENDOR_PATH . '/' . QV_ROUTES_EXT_PATH . '/Routes.yml'));
-                $routes = array_merge($routes_qv, $routes_ext);
-
-            } catch (ParseException $e) {
-                throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
-            }           
-
-        } else {
-            $routes = $routes_qv;
-        }
-
-        foreach ($routes as $item) {
-            $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $item['url']) . "$/";
+            $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $indexPath) . "/";
             preg_match($regexp, $_url, $match);
 
             if ($match) {
-                $this->url = array(
-                    "uri" => array_splice($match, 1),
-                    "path" => $match[0],
-                );
-                $view = $item['controller'];
-                break;
+
+                foreach ($container as $item) {
+
+                    $regexp = "/^" . str_replace(array("/", "\\\\"), array("\/", "\\"), $item['url']) . "$/";
+                    preg_match($regexp, $_url, $match);
+
+                    if ($match) {
+                        $this->url = array(
+                            "uri" => array_splice($match, 1),
+                            "path" => $match[0],
+                            "host" => $_SERVER['HTTP_HOST'],
+                            "protocol" => empty($_SERVER['HTTPS'])? 'http://' : 'https://'
+                        );
+                        $view = $item['controller'];
+                        break;
+                    }
+                }
             }
+
+            
         }
 
         if ($view) {

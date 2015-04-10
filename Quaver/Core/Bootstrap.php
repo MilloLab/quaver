@@ -8,18 +8,20 @@
 namespace Quaver\Core;
 
 use Quaver\Core\Lang;
+use Quaver\Core\Router;
 use Quaver\App\Model\User;
 
 class Bootstrap
-{
+{   
+
+    public $router;
+
     /**
      * run
-     * @param type $_mvc 
      * @return type
      */
-    public function run($_mvc = true)
-    {
-
+    function run()
+    {    
         // Check important folders
         $this->checkFiles();
 
@@ -56,18 +58,17 @@ class Bootstrap
             exit;
         }
 
-        // Assoc URL to MVC
-        if ($_mvc) {
-            $router = new Router();
-            $router->route();
+        if ($this->router) {
+            $this->router->route();
         }
+        
     }
 
     /**
      * checkFiles
      * @return type
      */
-    public function checkFiles()
+    function checkFiles()
     {
 
         if (!file_exists(GLOBAL_PATH . '/Cache/')) {
