@@ -8,6 +8,7 @@
 namespace Quaver\Core;
 
 use Quaver\Core\DB;
+use Quaver\Core\LangStrings;
 
 class Lang extends \Quaver\Core\Model
 {
@@ -228,7 +229,15 @@ class Lang extends \Quaver\Core\Model
                     break;
             }
         } else {
-            $return = "#$_label#";
+
+            $newString = new LangStrings;
+            $newString->language = $this->id;
+            $newString->label = $_label;
+            $newString->text = "#$_label#";
+
+            if ($newString->save()) {
+                $return = "#$_label#";
+            }
         }
 
         return $return;

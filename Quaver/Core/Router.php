@@ -14,7 +14,7 @@ use Quaver\App\Model\User;
 
 class Router
 {
-    private $version = '0.8.12';
+    public $version = '0.9';
     private $routes;
 
     // Language system
@@ -23,10 +23,6 @@ class Router
     // URL management
     public $url;
     public $queryString;
-    
-    // Template system
-    public $twig = null;
-    public $twigVars = array();
 
     /**
      * constructor
@@ -38,51 +34,6 @@ class Router
 
         if (isset($GLOBALS['_lang'])) {
             $this->language = $GLOBALS['_lang']->id;
-        }
-
-        // Theme system
-        define('VIEW_PATH', GLOBAL_PATH . '/Quaver/App/Theme/' . THEME_QUAVER . '/View');
-        define('RES_PATH', '/Quaver/App/Theme/' . THEME_QUAVER . '/Resources');
-        define('CSS_PATH', RES_PATH . '/css');
-        define('JS_PATH', RES_PATH . '/js');
-        define('IMG_PATH', RES_PATH . '/img');
-        define('FONT_PATH', RES_PATH . '/fonts');
-
-        // Getting all directories in /template
-        $templatesDir = array(VIEW_PATH);
-
-        // Get query string from URL to core var
-        $this->getQueryString();
-
-        // Create twig loader
-        $loader = new \Twig_Loader_Filesystem($templatesDir);
-
-        $twig_options = array();
-        if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {
-            $twig_options['cache'] = GLOBAL_PATH . "/Cache";
-        }
-        
-        if (defined('CACHE_AUTO_RELOAD') && CACHE_AUTO_RELOAD) {
-            $twig_options['auto_reload'] = true;
-        }
-        
-        // Create twig object
-        $this->twig = new \Twig_Environment($loader, $twig_options);
-
-        // Create a custom filter to translate strings
-        $filter = new \Twig_SimpleFilter('t', function ($string) {
-            return $GLOBALS['_lang']->typeFormat($string, 'd');
-        });
-        $this->twig->addFilter($filter);
-
-        // Clear Twig cache
-        if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {
-            if (isset($this->queryString['clearCache'])) {
-                $this->twig->clearCacheFiles();
-                $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                header("Location: $url");
-                exit;
-            }
         }
 
         // Restoring user_default session sample
@@ -106,10 +57,10 @@ class Router
     {
         $route = $this->getCurrentRoute();
         $this->fixTrailingSlash($route);
-        $view = $this->getView($route);
+        $controller = $this->getController($route);
 
-        if ($view != false) {
-            $this->dispatch($view);
+        if ($controller != false) {
+            $this->dispatch($controller);
         }
     }
 
@@ -213,11 +164,11 @@ class Router
     }
 
     /**
-     * getView
+     * getController
      * @param type $url 
      * @return type
      */
-    public function getView($_url)
+    public function getController($_url)
     {
 
         $return = false;
@@ -242,7 +193,7 @@ class Router
                             "host" => $_SERVER['HTTP_HOST'],
                             "protocol" => empty($_SERVER['HTTPS'])? 'http://' : 'https://'
                         );
-                        $view = $item['controller'];
+                        $controller = $item;
                         break;
                     }
                 }
@@ -251,8 +202,8 @@ class Router
             
         }
 
-        if ($view) {
-            $return = $view;
+        if ($controller) {
+            $return = $controller;
         } else {
             $this->dispatch('e404');
         }
@@ -262,24 +213,34 @@ class Router
 
     /**
      * dispatch
-     * @param type $route 
+     * @param type $controller 
      * @return type
      */
-    public function dispatch($route)
+    public function dispatch($controller)
     {
 
         global $_lang, $_user;
         
-        if ($route) {
-            $controllerPath = CONTROLLER_PATH . "/" . $route . ".php";
+        if ($controller) {
 
-            $this->getGlobalTwigVars();
+            $controllerURL = $controller['url'];
+            $controllerPath = isset($controller['path']);
+            $controllerName = $controller['controller'];
+            $controllerNamespace = '\\Quaver\\App\\Controller\\' . $controllerName;
+            $actionName = $controller['action'] . 'Action';
+
+            $realPath = !empty($controllerPath) ? $controllerPath . "/" . $controllerName . ".php" : CONTROLLER_PATH . "/" . $controllerName . ".php";
 
             // Load controller
-            if (file_exists($controllerPath)) {
-                require_once($controllerPath);
+            if (file_exists($realPath)) {
+                
+                $controller = new $controllerNamespace($this);
+                $controller->setView($controllerName . '.twig');
+                $controller->$actionName();
+                
+                
             } else {
-                throw new \Quaver\Core\Exception("Error loading controller: $route");
+                throw new \Quaver\Core\Exception("Error loading controller: " . $controller['controller']);
             }
         }
 
@@ -296,82 +257,5 @@ class Router
         if (!empty($qs)) {
             parse_str($qs, $this->queryString);
         }
-    }
-
-    /**
-     * Set main variables
-     * @return type
-     */
-    public function getGlobalTwigVars()
-    {
-        // Language
-        $this->addTwigVars("language", $GLOBALS['_lang']);
-
-        // Languages
-        $languageVars = array();
-        $ob_l = new Lang;
-        $langList = $ob_l->getList();
-
-        foreach ($langList as $lang) {
-            $item = array(
-                "id" => $lang->id,
-                "name" => utf8_encode($lang->name),
-                "slug" => $lang->slug,
-                "locale" => $lang->locale,
-            );
-            array_push($languageVars, $item);
-        }
-        $this->addTwigVars('languages', $languageVars);
-
-        // Load user data
-        $this->addTwigVars("_user", $GLOBALS['_user']);
-
-        // Login errors
-        if (isset($this->queryString['login-error'])) {
-            $this->addTwigVars('loginError', true);
-        }
-
-        if (isset($this->queryString['user-disabled'])) {
-            $this->addTwigVars('userDisabled', true);
-        }
-
-        // Extra parametres
-        $config = array(
-            "theme" => THEME_QUAVER,
-            "randomVar" => RANDOM_VAR,
-            "css" => CSS_PATH,
-            "js" => JS_PATH,
-            "img" => IMG_PATH,
-            "env" => DEV_MODE,
-            "version" => $this->version,
-            "url" => $this->url,
-        );  
-
-        if (strstr($this->url['path'], "/admin/")) {
-            if (defined('DEV_MODE') && DEV_MODE == false) {
-                $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' 
-                    --abbrev-commit $(git merge-base local-master master)");
-            } else {
-                $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)' 
-                    --abbrev-commit $(git merge-base local-dev dev)");
-            }
-
-            $config['build'] = $build;
-            
-        }
-        
-        $this->addTwigVars('qv', $config);
-
-    }
-
-    /**
-     * addTwigVars
-     * @param type $_key 
-     * @param type $_array 
-     * @return type
-     */
-    public function addTwigVars($_key, $_array)
-    {
-        $this->twigVars[$_key] = $_array;
     }
 }

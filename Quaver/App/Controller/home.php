@@ -7,6 +7,15 @@
 
 namespace Quaver\App\Controller;
 
-$this->addTwigVars('siteTitle', "Welcome to Quaver" . ' - ' . BRAND_NAME);
-$template = $this->twig->loadTemplate('home.twig');
-echo $template->render($this->twigVars);
+use Quaver\Core\Controller;
+
+class home extends Controller
+{
+    public function homeAction()
+    {
+        $this->addTwigVars('siteTitle', "Welcome to Quaver" . ' - ' . BRAND_NAME);
+        $this->render();
+    }
+}
+
+
