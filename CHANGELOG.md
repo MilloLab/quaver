@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
  - Auto-create language strings
+ - Bootstrap 3.3.4
 
 
 ## [0.8.12] - 2015-04-10

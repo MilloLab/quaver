@@ -2,38 +2,46 @@ home:
     url: /
     controller: home
     action: home
+    view: home
 
 404:
     url: /404/
     controller: e404
     action: index
+    view: e404
 
 admin:
     url: /admin/
-    controller: admin/main
-    action: index
+    path: admin
+    controller: dashboard
+    action: home
 
 admin_languages:
     url: /admin/languages/([a-zA-Z0-9-_]+)?[/]?([a-zA-Z0-9-_]+)?[/]?
-    controller: admin/languages
+    path: admin
+    controller: dashboard
     action: languages
 
 admin_users:
     url: /admin/users/([a-zA-Z0-9-_]+)?[/]?([a-zA-Z0-9-_]+)?[/]?
-    controller: admin/users
+    path: admin
+    controller: dashboard
     action: users
 
 register:
     url: /register/
-    controller: register
+    controller: auth
     action: register
+    view: register
 
 login:
     url: /login/
-    controller: login
+    controller: auth
     action: login
+    view: login
 
 logout:
     url: /logout/
-    controller: logout
+    controller: auth
     action: logout
+    view: none

@@ -81,11 +81,12 @@ abstract class Controller
     /**
      * setView
      * @param type $path 
+     * @param type $extension 
      * @return type
      */
-    public function setView($path)
+    public function setView($path, $extension = 'twig')
     {
-        $this->template = $this->twig->loadTemplate($path);
+        $this->template = $this->twig->loadTemplate($path . '.' . $extension);
     }
     
     /**

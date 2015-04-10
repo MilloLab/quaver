@@ -172,7 +172,7 @@ class Router
     {
 
         $return = false;
-        $view = false;
+        $controller = false;
 
         foreach ($this->routes as $indexPath => $container) {
             
@@ -202,7 +202,7 @@ class Router
             
         }
 
-        if ($controller) {
+        if (isset($controller['controller'])) {
             $return = $controller;
         } else {
             $this->dispatch('e404');
@@ -220,24 +220,44 @@ class Router
     {
 
         global $_lang, $_user;
+
+        if ($controller == 'e404') {
+            $controller = $this->routes['/']['404'];
+        }
         
         if ($controller) {
 
+            if (isset($controller['path'])) {
+                $controllerPath = $controller['path'];
+                $pathNamespace = $controllerPath . '\\';
+            } else {
+                $controllerPath = '';
+                $pathNamespace = '';
+            }
+
+
+            if (isset($controller['view'])) {
+                $controllerView = $controller['view'];
+            }
+            
             $controllerURL = $controller['url'];
-            $controllerPath = isset($controller['path']);
             $controllerName = $controller['controller'];
-            $controllerNamespace = '\\Quaver\\App\\Controller\\' . $controllerName;
+            $controllerNamespace = '\\Quaver\\App\\Controller\\' . $pathNamespace . $controllerName;
             $actionName = $controller['action'] . 'Action';
 
-            $realPath = !empty($controllerPath) ? $controllerPath . "/" . $controllerName . ".php" : CONTROLLER_PATH . "/" . $controllerName . ".php";
+            $realPath = !empty($controllerPath) ? CONTROLLER_PATH . '/' . $controllerPath . '/' . $controllerName . '.php' : CONTROLLER_PATH . '/' . $controllerName . '.php';
 
             // Load controller
             if (file_exists($realPath)) {
                 
                 $controller = new $controllerNamespace($this);
-                $controller->setView($controllerName . '.twig');
+
+                if (isset($controllerView) && $controllerView != 'none') {
+                    
+                    $controller->setView($controllerView);
+                }
+
                 $controller->$actionName();
-                
                 
             } else {
                 throw new \Quaver\Core\Exception("Error loading controller: " . $controller['controller']);

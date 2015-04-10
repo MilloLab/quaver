@@ -9,10 +9,11 @@
       <p>Sample String: hello_world = {{ 'hello_world'|t }}</p>
 
       <h2>Routing</h2>
-      <p>Path: {{ qv.url.path }}</p>
+      <p>Actual Path: {{ qv.url.path }}</p>
       {% for uri in qv.url.uri %}
         <p>URI {{loop.index}}: {{ uri }}</p>
       {% endfor %}
+      <p>Custom routes at index.php: <i>$router->addPath('/', GLOBAL_PATH . '/Quaver/Routes.yml');</i></p>
 
       <h2>Install</h2>
       <ul>

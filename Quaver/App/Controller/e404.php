@@ -7,11 +7,22 @@
 
 namespace Quaver\App\Controller;
 
-$url = $this->getCurrentRoute();
+use Quaver\Core\Controller;
 
-header("HTTP/1.0 404 Not Found");
-trigger_error("[404] $url", E_USER_WARNING);
+class e404 extends Controller
+{
+    public function indexAction()
+    {   
+        global $_lang;
+        
+        $url = $this->router->getCurrentRoute();
 
-$this->addTwigVars('siteTitle', $_lang->l('title-404') . ' - ' . BRAND_NAME);
-$template = $this->twig->loadTemplate("404.twig");
-echo $template->render($this->twigVars);
+        header("HTTP/1.0 404 Not Found");
+        trigger_error("[404] $url", E_USER_WARNING);
+
+        if (!defined('AJAX_METHOD')) {
+            $this->addTwigVars('siteTitle', $_lang->l('title-404') . ' - ' . BRAND_NAME);
+            $this->render();
+        }
+    }
+}
