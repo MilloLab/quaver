@@ -109,10 +109,10 @@ class Router
             // Load config class of module
             $class = $namespace . '\\Config'; 
             $newModule = new $class();
-            $elements = $newModule->getParams();
+            $newModule->getParams();
 
             // Load module configuration
-            isset($this->modules[$moduleName]) ? $this->modules[$moduleName]['params'] += $elements: $this->modules[$moduleName]['params'] = $elements;
+            isset($this->modules[$moduleName]) ? $this->modules[$moduleName]['params'] += $newModule: $this->modules[$moduleName]['params'] = $newModule;
             
             // Set namespace and paths vars
             $this->modules[$moduleName]['namespace'] = $namespace;
