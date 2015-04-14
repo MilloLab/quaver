@@ -5,7 +5,7 @@
   <div class="container">
     <div class="jumbotron centered">
       <h1>Welcome to Quaver {{ qv.version }}</h1>
-      <p>Local Lang: {{ language.locale|replace('_', '-') }}</p>
+      <p>Local Lang: {{ qv.language.locale|replace('_', '-') }}</p>
       <p>Sample String: hello_world = {{ 'hello_world'|t }}</p>
 
       <h2>Routing</h2>

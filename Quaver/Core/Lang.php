@@ -10,6 +10,10 @@ namespace Quaver\Core;
 use Quaver\Core\DB;
 use Quaver\Core\LangStrings;
 
+/**
+ * Lang class
+ * @package Core
+ */
 class Lang extends \Quaver\Core\Model
 {
 
@@ -27,8 +31,9 @@ class Lang extends \Quaver\Core\Model
     protected $table_strings = 'lang_strings';
 
     /**
-     * @param $_id
-     * @return $this
+     * Get object from ID
+     * @param type $_id 
+     * @return type
      */
     public function getFromId($_id)
     {
@@ -62,7 +67,8 @@ class Lang extends \Quaver\Core\Model
 
 
     /**
-     * @return $this|bool|lang
+     * Get site language
+     * @return type
      */
     public function getSiteLanguage()
     {
@@ -93,7 +99,7 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * getLanguageFromCookie
+     * Get language from cookie
      * @return type
      */
     public function getLanguageFromCookie()
@@ -108,8 +114,7 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * setCookie
-     * Set language cookie
+     * Language cookie setter
      * @return type
      */
     public function setCookie()
@@ -124,7 +129,7 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * getFromSlug
+     * Get object from slug
      * @param type $_slug 
      * @param type $_short 
      * @return type
@@ -154,7 +159,7 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * getLanguages (object array)
+     * Get all languages
      * @return type
      */
     public function getLanguages()
@@ -175,7 +180,7 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * getList
+     * Get languages list
      * @param type $_all 
      * @param type $_byPriority 
      * @return type
@@ -212,9 +217,10 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * @param $_label
-     * @param string $_utf8
-     * @return string
+     * Convert string to real text
+     * @param type $_label 
+     * @param type $_utf8 
+     * @return type
      */
     public function typeFormat($_label, $_utf8 = '')
     {
@@ -244,8 +250,9 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * @param $_label
-     * @return string
+     * TypeFormat shortener
+     * @param type $_label 
+     * @return type
      */
     public function l($_label)
     {

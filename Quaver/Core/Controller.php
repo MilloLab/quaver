@@ -10,6 +10,10 @@ namespace Quaver\Core;
 use Quaver\Core\Lang;
 use Quaver\Core\DB;
 
+/**
+ * Controller base class
+ * @package Core
+ */
 abstract class Controller
 {
     public $router;
@@ -18,9 +22,12 @@ abstract class Controller
     public $template;
     public $twig = null;
     public $twigVars = array();
+    public $configVars = array();
 
     /**
-     * constructor
+     * Router constructor
+     * @param type $router 
+     * @return type
      */
     public function __construct($router)
     {
@@ -79,7 +86,7 @@ abstract class Controller
     }
 
     /**
-     * setView
+     * Asociate views to render
      * @param type $path 
      * @param type $extension 
      * @return type
@@ -90,7 +97,7 @@ abstract class Controller
     }
     
     /**
-     * render
+     * Render views
      * @return type
      */
     public function render()
@@ -99,7 +106,7 @@ abstract class Controller
     }
 
     /**
-     * Set main variables
+     * Set main twig variables
      * @return type
      */
     public function getGlobalTwigVars()
@@ -142,9 +149,15 @@ abstract class Controller
             "css" => CSS_PATH,
             "js" => JS_PATH,
             "img" => IMG_PATH,
-            "env" => DEV_MODE,
+            "env" => DEV_MODE ? "development" : "production",
             "version" => $this->router->version,
             "url" => $this->router->url,
+            "language" => $GLOBALS['_lang'],
+            "langStrings" => $languageVars,
+            "user" => $GLOBALS['_user'],
+            "modules" => $this->router->modules,
+            "routes" => $this->router->routes
+
         );  
 
         if (strstr($this->router->url['path'], "/admin/")) {
@@ -159,13 +172,14 @@ abstract class Controller
             $config['build'] = $build;
             
         }
-        
-        $this->addTwigVars('qv', $config);
+
+        $this->configVars = $config;
+        $this->addTwigVars('qv', $this->configVars);
 
     }
 
     /**
-     * addTwigVars
+     * Add vars to twig
      * @param type $_key 
      * @param type $_array 
      * @return type
@@ -173,6 +187,18 @@ abstract class Controller
     public function addTwigVars($_key, $_array)
     {
         $this->twigVars[$_key] = $_array;
+    }
+
+    /**
+     * Extend qv object for twig
+     * @param type $_key 
+     * @param type $_array 
+     * @return type
+     */
+    public function addQuaverTwigVars($_key, $_array)
+    {
+        $this->configVars[$_key] = $_array;
+        $this->addTwigVars('qv', $this->configVars);
     }
     
     

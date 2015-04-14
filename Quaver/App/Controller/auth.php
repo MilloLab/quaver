@@ -11,9 +11,17 @@ use Quaver\Core\Controller;
 use Quaver\App\Model\User;
 use Quaver\App\Model\Functions;
 
+/**
+ * Auth controller
+ * @package App
+ */
 class auth extends Controller
 {
 
+    /**
+     * User login
+     * @return type
+     */
     public function loginAction()
     {
         global $_user, $_lang;
@@ -74,6 +82,10 @@ class auth extends Controller
         $this->render();
     }
 
+    /**
+     * User logout
+     * @return type
+     */
     public function logoutAction()
     {
         global $_user, $_lang;
@@ -102,6 +114,10 @@ class auth extends Controller
         exit;
     }
 
+    /**
+     * User register
+     * @return type
+     */
     public function registerAction()
     {
         global $_user, $_lang;

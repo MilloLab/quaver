@@ -9,6 +9,10 @@ namespace Quaver\App\Controller;
 
 use Quaver\Core\Controller;
 
+/**
+ * Error404 controller
+ * @package App
+ */
 class e404 extends Controller
 {
     public function indexAction()

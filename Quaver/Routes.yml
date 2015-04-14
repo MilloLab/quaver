@@ -1,3 +1,4 @@
+# Basic
 home:
     url: /
     controller: home
@@ -10,6 +11,38 @@ home:
     action: index
     view: e404
 
+maintenance:
+    url: /maintenance/
+    controller: home
+    action: maintenance
+    view: maintenance
+
+language:
+    url: /language/([a-zA-Z0-9-_]+)?[/]?
+    controller: language
+    action: language
+    view: none
+
+# Auth
+register:
+    url: /register/
+    controller: auth
+    action: register
+    view: register
+
+login:
+    url: /login/
+    controller: auth
+    action: login
+    view: login
+
+logout:
+    url: /logout/
+    controller: auth
+    action: logout
+    view: none
+
+# Admin
 admin:
     url: /admin/
     path: admin
@@ -28,20 +61,3 @@ admin_users:
     controller: dashboard
     action: users
 
-register:
-    url: /register/
-    controller: auth
-    action: register
-    view: register
-
-login:
-    url: /login/
-    controller: auth
-    action: login
-    view: login
-
-logout:
-    url: /logout/
-    controller: auth
-    action: logout
-    view: none

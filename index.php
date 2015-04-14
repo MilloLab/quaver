@@ -32,7 +32,7 @@ if (!file_exists(GLOBAL_PATH . '/Quaver/Config.php') || !file_exists(GLOBAL_PATH
 // Autoloader & Config
 require_once(GLOBAL_PATH . '/Quaver/Config.php');
 require_once(GLOBAL_PATH . '/Quaver/Core/Autoloader.php');
-require_once(GLOBAL_PATH . '/vendor/autoload.php');
+require_once(VENDOR_PATH . '/autoload.php');
 \Twig_Autoloader::register();
 
 use Quaver\Core\Bootstrap;

@@ -9,13 +9,18 @@ namespace Quaver\Core;
 
 use \PDO;
 
+/**
+ * DB class
+ * @package Core
+ */
 class DB
 {
 
     private $conn = null;
 
     /**
-     * constructor
+     * DB constructor
+     * @return type
      */
     public function __construct()
     {
@@ -45,11 +50,12 @@ class DB
         }
 
     }
-
+    
     /**
-     * @param $query
-     * @param null $params
-     * @return mixed
+     * Run database queries
+     * @param type $query 
+     * @param type $params 
+     * @return type
      * @throws Exception
      */
     public function query($query, $params = null)
@@ -77,7 +83,8 @@ class DB
     }
 
     /**
-     * @return int
+     * Get last insert ID
+     * @return type
      */
     public function insertId()
     {

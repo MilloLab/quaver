@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
  - Controllers as actions
  - New internal flow
+ - Now you can extend {{ qv }} functionality
+ - Load external modules (see QV-Module documentation)
 
 ### Changed
  - Auto-create language strings

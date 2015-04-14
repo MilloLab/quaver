@@ -11,9 +11,17 @@ use Quaver\Core\Controller;
 use Quaver\Core\LangStrings;
 use Quaver\App\Model\User;
 
+/**
+ * Dashboard controller
+ * @package App
+ */
 class dashboard extends Controller
 {
 
+    /**
+     * Show home
+     * @return type
+     */
     public function homeAction()
     {   
         global $_user;
@@ -30,6 +38,10 @@ class dashboard extends Controller
         $this->render();
     }
 
+    /**
+     * Manage languages
+     * @return type
+     */
     public function languagesAction()
     {
         global $_user;
@@ -123,6 +135,10 @@ class dashboard extends Controller
         $this->render();
     }
 
+    /**
+     * Manage users
+     * @return type
+     */
     public function usersAction()
     {
         global $_user;

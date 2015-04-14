@@ -9,6 +9,10 @@ namespace Quaver\Core;
 
 use Quaver\Core\DB;
 
+/**
+ * Model class
+ * @package Core
+ */
 abstract class Model
 {
 
@@ -29,7 +33,9 @@ abstract class Model
     }
 
     /**
-     * @param $_item
+     * Setter
+     * @param type $_item 
+     * @return type
      */
     public function setItem($_item)
     {
@@ -41,7 +47,8 @@ abstract class Model
     }
 
     /**
-     * @return array
+     * Getter
+     * @return type
      */
     public function getItem()
     {
@@ -53,8 +60,9 @@ abstract class Model
     }
 
     /**
-     * @param $_id
-     * @return $this
+     * Get object from ID
+     * @param type $_id 
+     * @return type
      */
     public function getFromId($_id)
     {
@@ -74,7 +82,8 @@ abstract class Model
     }
 
     /**
-     * @return bool
+     * Save data to DB
+     * @return type
      */
     public function save()
     {
@@ -119,7 +128,8 @@ abstract class Model
     }
 
     /**
-     * @return bool
+     * Delete object (DB) 
+     * @return type
      */
     public function delete()
     {
@@ -143,7 +153,8 @@ abstract class Model
     }
 
     /**
-     * @return bool
+     * Convert all to Array
+     * @return type
      */
     public function toArray()
     {
@@ -165,7 +176,7 @@ abstract class Model
     }
 
     /**
-     * toJson
+     * Encode to JSON
      * @return type
      */
     public function toJson()

@@ -7,6 +7,10 @@
 
 namespace Quaver\Core;
 
+/**
+ * Excepcion class
+ * @package Core
+ */
 class Exception extends \Exception
 {
     

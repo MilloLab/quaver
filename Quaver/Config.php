@@ -8,6 +8,7 @@
 // Core Path
 define('MODEL_PATH', GLOBAL_PATH . '/Quaver/App/Model');
 define('CONTROLLER_PATH', GLOBAL_PATH . '/Quaver/App/Controller');
+define('VENDOR_PATH', GLOBAL_PATH . '/vendor');
 
 // Resource Path
 define('FILES_PATH', './files');
@@ -25,7 +26,7 @@ define('MAINTENANCE_MODE', false);
 define('DEV_MODE', true);
 
 // Random variable to front files
-define('RANDOM_VAR', '20141214'); // format YYYYMMDD
+define('RANDOM_VAR', 'YYYYMMDD'); // format YYYYMMDD
 
 // Template cache, manual clean (Twig)
 define('TEMPLATE_CACHE', false);
@@ -60,5 +61,5 @@ define('MANDRILL', false);
 define('MANDRILL_USERNAME', '');
 define('MANDRILL_APIKEY', '');
 
-// Cypher if you want use
-define('CIPHER_KEY', '');
+// Cypher KEY
+define('CIPHER_KEY', ''); // 8 digits

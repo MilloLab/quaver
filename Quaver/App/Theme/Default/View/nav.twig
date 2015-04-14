@@ -11,7 +11,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/">Quaver</a>
-          <p class="navbar-text">{% if _user.email %} Hello, {{ _user.email }} {% endif %}</p>
+          <p class="navbar-text">{% if qv.user.email %} Hello, {{ qv.user.email }} {% endif %}</p>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -20,7 +20,7 @@
             
             
             
-            {% if _user.logged %}
+            {% if qv.user.logged %}
               <li><a href="/admin">Dashboard</a></li>
               <li><a href="/logout">Logout</a></li>
             {% else %}

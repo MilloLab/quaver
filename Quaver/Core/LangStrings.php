@@ -9,6 +9,10 @@ namespace Quaver\Core;
 
 use Quaver\Core\DB;
 
+/**
+ * LangStrings class
+ * @package Core
+ */
 class LangStrings extends \Quaver\Core\Model
 {
     public $_fields = array(
@@ -24,7 +28,7 @@ class LangStrings extends \Quaver\Core\Model
 
 
     /**
-     * Get all strings
+     * Get language list
      * @return type
      */
     public static function getList()
@@ -56,7 +60,7 @@ class LangStrings extends \Quaver\Core\Model
     }
     
     /**
-     * getFromLabel function.
+     * Get string from label
      * 
      * @access public
      * @param mixed $_label
@@ -85,7 +89,7 @@ class LangStrings extends \Quaver\Core\Model
    
     
     /**
-     * saveAll function.
+     * Save all strings
      * 
      * @access public
      * @return void
@@ -105,7 +109,7 @@ class LangStrings extends \Quaver\Core\Model
     }
 
     /**
-     * deleteAll function.
+     * Delete all strings
      * 
      * @access public
      * @return void
@@ -126,7 +130,9 @@ class LangStrings extends \Quaver\Core\Model
     
 
     /**
-     * @param $_item
+     * Language string setter
+     * @param type $_item 
+     * @return type
      */
     public function setItem($_item)
     {

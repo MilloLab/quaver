@@ -7,11 +7,15 @@
 
 namespace Quaver\Core;
 
+/**
+ * Helper class
+ * @package Core
+ */
 class Helper
 {
     
     /**
-     * getBrowserLanguage
+     * Get browser language
      * @return type
      */
     public static function getBrowserLanguage()
@@ -19,7 +23,10 @@ class Helper
         return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     }
 
-    // Function to get the client IP address
+    /**
+     * Function to get the client IP address
+     * @return type
+     */
     public static function getClientIP()
     {
         $ipaddress = '';
@@ -42,66 +49,24 @@ class Helper
     }
     
     /**
-    * cipher function.
-    * 
-    * @access public
-    * @return void
-    */
+     * Cipher data with CYPHER_KEY constant and mcrypt
+     * @param type $_value 
+     * @return type
+     */
     public static function cipher($_value) {
         $_value = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, CIPHER_KEY, $_value, MCRYPT_MODE_ECB));
         return $_value;
     }
 
     /**
-    * decipher function.
-    * 
-    * @access public
-    * @return void
-    */
+     * Decipher data with CYPHER_KEY constant and mcrypt
+     * @param type $_value 
+     * @return type
+     */
     public static function decipher($_value) {
         $decode = base64_decode($_value);
         $_value = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, CIPHER_KEY, $decode, MCRYPT_MODE_ECB));
         return $_value;
-    }
-
-    /**
-     * clearInjection
-     * @param type $val 
-     * @param type $post 
-     * @return type
-     */
-    public static function clearInjection($val, $post = false)
-    {
-        if ($post) {
-            $val = str_ireplace("SELECT","",$val);
-            $val = str_ireplace("COPY","",$val);
-            $val = str_ireplace("DELETE","",$val);
-            $val = str_ireplace("DROP","",$val);
-            $val = str_ireplace("DUMP","",$val);
-            $val = str_ireplace(" OR ","",$val);
-            $val = str_ireplace("LIKE","",$val);
-        } else {
-            $val = str_ireplace("SELECT","",$val);
-            $val = str_ireplace("COPY","",$val);
-            $val = str_ireplace("DELETE","",$val);
-            $val = str_ireplace("DROP","",$val);
-            $val = str_ireplace("DUMP","",$val);
-            $val = str_ireplace(" OR ","",$val);
-            $val = str_ireplace("%","",$val);
-            $val = str_ireplace("LIKE","",$val);
-            $val = str_ireplace("--","",$val);
-            $val = str_ireplace("^","",$val);
-            $val = str_ireplace("[","",$val);
-            $val = str_ireplace("]","",$val);
-            $val = str_ireplace("\\","",$val);
-            $val = str_ireplace("!","",$val);
-            $val = str_ireplace("¡","",$val);
-            $val = str_ireplace("?","",$val);
-            $val = str_ireplace("=","",$val);
-            $val = str_ireplace("&","",$val);
-        }
-
-        return $val;
     }
 
     /**
@@ -149,23 +114,20 @@ class Helper
     }
 
     /**
-    * formatDate function.
-    * 
-    * @access public
-    * @param mixed $_time
-    * @return void
-    */
+     * Change date to spanish format
+     * @param type $_time 
+     * @return type
+     */
     public static function formatDate($_time)
-    {
-        
+    {    
         return date("d-m-Y H:i:s", $_time);
     }
 
     /**
-    * formatPercentage
-    * @param type $n 
-    * @return type
-    */
+     * Change percentage to spanish format
+     * @param type $n 
+     * @return type
+     */
     public static function formatPercentage($n)
     {
         $n = str_replace(',','.', $n);
@@ -173,9 +135,10 @@ class Helper
     }
 
     /**
-    * @param $_str
-    * @return string
-    */
+     * (Legacy) Clean integers puntuation
+     * @param type $s 
+     * @return type
+     */
     public static function cleanInt($s)
     {
         $s = str_replace('"','', $s);
@@ -188,7 +151,7 @@ class Helper
     }
 
     /**
-     * Clean string
+     * (Legacy) Clean format string
      * @param type $_str 
      * @return type
      */

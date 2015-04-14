@@ -11,16 +11,20 @@ use Quaver\Core\Lang;
 use Quaver\Core\Router;
 use Quaver\App\Model\User;
 
+/**
+ * Bootstrap class
+ * @package Core
+ */
 class Bootstrap
 {   
 
     public $router;
 
     /**
-     * run
+     * Run instance
      * @return type
      */
-    function run()
+    public function run()
     {    
         // Check important folders
         $this->checkFiles();
@@ -54,21 +58,24 @@ class Bootstrap
         if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
             && (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE)
         ) {
-            header("Location: /maintenance/");
-            exit;
+            if ($this->router) {
+                $this->router->dispatch('maintenance');
+            }
+        } else {
+            if ($this->router) {
+                $this->router->route();   
+            }
         }
 
-        if ($this->router) {
-            $this->router->route();
-        }
+        
         
     }
 
     /**
-     * checkFiles
+     * Check if exists some folders
      * @return type
      */
-    function checkFiles()
+    public function checkFiles()
     {
 
         if (!file_exists(GLOBAL_PATH . '/Cache/')) {

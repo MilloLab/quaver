@@ -12,10 +12,15 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Quaver\Core\Lang;
 use Quaver\App\Model\User;
 
+/**
+ * Router class
+ * @package Core
+ */
 class Router
 {
     public $version = '0.9';
-    private $routes;
+    public $routes;
+    public $modules;
 
     // Language system
     public $language;
@@ -25,7 +30,8 @@ class Router
     public $queryString;
 
     /**
-     * constructor
+     * Router constructor
+     * @return type
      */
     public function __construct()
     {
@@ -50,7 +56,7 @@ class Router
     }
 
     /**
-     * route
+     * Routing flow
      * @return type
      */
     public function route()
@@ -65,7 +71,7 @@ class Router
     }
 
     /**
-     * addPath
+     * Add new paths (yml)
      * @param type $container 
      * @param type $path 
      * @return type
@@ -77,15 +83,54 @@ class Router
             $yaml = new Parser();
             $elements = $yaml->parse(file_get_contents($path));
 
+            // Asign each routes
             isset($this->routes[$container]) ? $this->routes[$container] += $elements: $this->routes[$container] = $elements;
 
         } catch (ParseException $e) {
             throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
         }           
     }
+
+    /**
+     * Add modules to Quaver
+     * @param type $moduleName 
+     * @param type $packageName 
+     * @param type $modulePath 
+     * @param type $moduleRoute 
+     * @return type
+     */
+    public function addModule($moduleName, $packageName, $modulePath = '', $moduleRoute = '/')
+    {   
+        try {
+
+            $namespace = '\\Quaver\\' . $moduleName . '\\App';
+            $namespacePath = '/Quaver/' . $moduleName . '/App';
+
+            // Load config class of module
+            $class = $namespace . '\\Config'; 
+            $newModule = new $class();
+            $elements = $newModule->getParams();
+
+            // Load module configuration
+            isset($this->modules[$moduleName]) ? $this->modules[$moduleName]['params'] += $elements: $this->modules[$moduleName]['params'] = $elements;
+            
+            // Set namespace and paths vars
+            $this->modules[$moduleName]['namespace'] = $namespace;
+            $this->modules[$moduleName]['namespacePath'] = $namespacePath;
+            $this->modules[$moduleName]['packageName'] = $packageName;
+            $this->modules[$moduleName]['realPath'] = $modulePath ? $modulePath . '/' . $packageName : VENDOR_PATH . '/' . $packageName;
+
+            // Load routes of module
+            !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath . '/' . $packageName . '/' . $namespacePath . '/' . 'Routes.yml') : $this->addPath($moduleRoute, VENDOR_PATH . '/' . $packageName . '/' . $namespacePath . '/' . 'Routes.yml');
+
+        } catch (ParseException $e) {
+            throw new \Quaver\Core\Exception("Unable to load module: $moduleName", $e->getMessage());
+        }
+
+    }
     
     /**
-     * getUrlPart
+     * Get actual URI
      * @param type $position 
      * @return type
      */
@@ -98,7 +143,7 @@ class Router
     }
 
     /**
-     * getCurrentURL
+     * Get current URL/URI
      * @param type $position 
      * @return type
      */
@@ -125,7 +170,7 @@ class Router
     }
 
     /**
-     * getCurrentRoute
+     * Get current action to route
      * @return type
      */
     public function getCurrentRoute()
@@ -140,7 +185,7 @@ class Router
     }
 
     /**
-     * fixTrailingSlash
+     * Fix trailing slash
      * @param type $_url 
      * @return type
      */
@@ -153,7 +198,7 @@ class Router
     }
 
     /**
-     * removeSlash
+     * Remove slash
      * @param type $_url 
      * @return type
      */
@@ -164,7 +209,7 @@ class Router
     }
 
     /**
-     * getController
+     * Get asociate controller
      * @param type $url 
      * @return type
      */
@@ -212,7 +257,7 @@ class Router
     }
 
     /**
-     * dispatch
+     * Dispatch action
      * @param type $controller 
      * @return type
      */
@@ -221,53 +266,82 @@ class Router
 
         global $_lang, $_user;
 
-        if ($controller == 'e404') {
-            $controller = $this->routes['/']['404'];
-        }
-        
-        if ($controller) {
+        try {
 
-            if (isset($controller['path'])) {
-                $controllerPath = $controller['path'];
-                $pathNamespace = $controllerPath . '\\';
-            } else {
-                $controllerPath = '';
-                $pathNamespace = '';
+            if ($controller == 'e404') {
+                $controller = $this->routes['/']['404'];
             }
 
-
-            if (isset($controller['view'])) {
-                $controllerView = $controller['view'];
+            if ($controller == 'maintenance') {
+                $controller = $this->routes['/']['maintenance'];
             }
             
-            $controllerURL = $controller['url'];
-            $controllerName = $controller['controller'];
-            $controllerNamespace = '\\Quaver\\App\\Controller\\' . $pathNamespace . $controllerName;
-            $actionName = $controller['action'] . 'Action';
+            if ($controller) {
 
-            $realPath = !empty($controllerPath) ? CONTROLLER_PATH . '/' . $controllerPath . '/' . $controllerName . '.php' : CONTROLLER_PATH . '/' . $controllerName . '.php';
-
-            // Load controller
-            if (file_exists($realPath)) {
-                
-                $controller = new $controllerNamespace($this);
-
-                if (isset($controllerView) && $controllerView != 'none') {
-                    
-                    $controller->setView($controllerView);
+                if (isset($controller['path'])) {
+                    $controllerPath = $controller['path'];
+                    $pathNamespace = $controllerPath . '\\';
+                } else {
+                    $controllerPath = '';
+                    $pathNamespace = '';
                 }
 
-                $controller->$actionName();
-                
-            } else {
-                throw new \Quaver\Core\Exception("Error loading controller: " . $controller['controller']);
-            }
-        }
+                if (isset($controller['view'])) {
+                    $controllerView = $controller['view'];
+                }
 
+                $defaultNamespace = '\\Quaver\\App\\Controller\\';
+                
+                $controllerURL = $controller['url'];
+                $controllerName = $controller['controller'];
+                $controllerNamespace = $defaultNamespace . $pathNamespace . $controllerName;
+                $actionName = isset($controller['action']) ? $controller['action'] . 'Action' : 'indexAction';
+
+                $realPath = !empty($controllerPath) ? CONTROLLER_PATH . '/' . $controllerPath . '/' . $controllerName . '.php' : CONTROLLER_PATH . '/' . $controllerName . '.php';
+
+                // Try to load controller
+                if (file_exists($realPath)) {
+                    
+                    $controller = new $controllerNamespace($this);
+
+                    if (isset($controllerView) && $controllerView != 'none') {
+                        
+                        $controller->setView($controllerView);
+                    }
+
+                    $controller->$actionName();
+                    
+                } else {
+                    foreach ($this->modules as $module) {
+
+                        $moduleNamespace = $module['namespace'];
+                        $realModulePath = !empty($controllerPath) ? $module['realPath'] . $module['namespacePath'] . '/Controller/' . $controllerPath . '/' . $controllerName . '.php' : $module['realPath'] . $module['namespacePath'] . '/Controller/' . $controllerName . '.php';
+
+                        // Try to load module controller
+                        if (file_exists($realModulePath)) {
+                            
+                            $controllerNamespace = $moduleNamespace . $pathNamespace . '\\Controller\\' .$controllerName;
+                            $controller = new $controllerNamespace($this);
+
+                            if (isset($controllerView) && $controllerView != 'none') {
+                                
+                                $controller->setView($controllerView);
+                            }
+
+                            $controller->$actionName();
+                            
+                        }
+
+                    }
+                }
+            }
+        } catch (ParseException $e) {
+            throw new \Quaver\Core\Exception("Unable to load controller: " . $controller['controller'], $e->getMessage());
+        }
     }
 
     /**
-     * getQueryString
+     * Get query string from URI
      * @return type
      */
     public function getQueryString()
