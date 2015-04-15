@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/yaml": "~2.7",
+        "symfony/yaml": "~2.8",
         "twig/twig": "1.18",
         "millolab/quaver-helloworld": "0.1.*@dev"
     },

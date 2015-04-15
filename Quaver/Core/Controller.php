@@ -55,7 +55,9 @@ abstract class Controller
 
         // Add paths of modules
         foreach ($this->router->modules as $module) {
-            $loader->addPath($module['realPath'] . $module['namespacePath'] . '/Theme/' . $module['params']->theme . '/View');
+            if (isset($module['params']->theme) && !empty($module['params']->theme)) {
+                $loader->addPath($module['realPath'] . $module['namespacePath'] . '/Theme/' . $module['params']->theme . '/View');
+            }
         }
 
         $twig_options = array();
