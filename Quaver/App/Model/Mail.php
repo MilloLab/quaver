@@ -7,6 +7,10 @@
 
 namespace Quaver\App\Model;
 
+/**
+ * Mail class
+ * @package App
+ */
 class Mail
 {
 
@@ -28,7 +32,7 @@ class Mail
         $language;
 
     /**
-     * constructor
+     * Mail constructor
      * @param type $type 
      * @return type
      */
@@ -41,7 +45,7 @@ class Mail
 
 
     /**
-     * prepare mail
+     * Configure email
      * @return type
      */
     public function prepare()
@@ -97,7 +101,7 @@ class Mail
     }
 
     /**
-     * mail sender
+     * Send email
      * @return type
      */
     public function send()

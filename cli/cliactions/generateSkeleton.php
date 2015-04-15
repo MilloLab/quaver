@@ -43,8 +43,24 @@ function generateController($path,$moduleName)
 
 namespace Quaver\App\Controller;
 
-\$template = \$this->twig->loadTemplate('$moduleName.twig');
-echo \$template->render(\$this->twigVars);";
+use Quaver\Core\Controller;
+
+/**
+ * $moduleName class
+ * @package App
+ */
+class $moduleName extends Controller
+{
+    /**
+     * Index action
+     * @return type
+     */
+    public function indexAction()
+    {   
+        $this->render();
+    }
+
+}";
 	if (is_dir($path)) {
 		file_put_contents($path."/$moduleName.php", $contents);
 	}
@@ -64,6 +80,10 @@ namespace Quaver\App\Model;
 use Quaver\Core\DB;
 use Quaver\Core\Model;
 
+/**
+ * $moduleName class
+ * @package App
+ */
 class $moduleName extends Model
 {
 	protected \$table = '$moduleName';

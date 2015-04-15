@@ -19,6 +19,10 @@ namespace Quaver\App\Model;
 use Quaver\Core\DB;
 use Quaver\Core\Model;
 
+/**
+ * $className class
+ * @package App
+ */
 class $className extends Model
 {
 	protected \$table = '$dbtable';

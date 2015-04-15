@@ -10,6 +10,10 @@ namespace Quaver\App\Model;
 use Quaver\Core\DB;
 use Quaver\Core\Model;
 
+/**
+ * User class
+ * @package App
+ */
 class User extends Model
 {
     public $_fields = array(
@@ -29,7 +33,7 @@ class User extends Model
 
 
     /**
-    * getList function.
+    * Get users list
     * 
     * @access public
     * @return void
@@ -61,7 +65,7 @@ class User extends Model
     }
 
     /**
-    * isActive function.
+    * Check if user is active
     * 
     * @access public
     * @return void
@@ -74,7 +78,7 @@ class User extends Model
     }
 
     /**
-    * isAdmin function.
+    * Check if user is admin
     * 
     * @access public
     * @return void
@@ -88,7 +92,7 @@ class User extends Model
     }
 
     /**
-    * setCookie function.
+    * Cookie setter
     * 
     * @access public
     * @param string $_cookie (default: '')
@@ -106,7 +110,7 @@ class User extends Model
     }
 
     /**
-    * unsetCookie function.
+    * Unset user cookie
     * 
     * @access public
     * @return void
@@ -120,7 +124,7 @@ class User extends Model
     }
 
     /**
-    * cookie function.
+    * Create new cookie
     * 
     * @access public
     * @return void
@@ -135,7 +139,7 @@ class User extends Model
     }
 
     /**
-    * getFromCookie function.
+    * Get user from cookie
     * 
     * @access public
     * @param mixed $_cookie
@@ -181,7 +185,7 @@ class User extends Model
     }
 
     /**
-    * updateLastLogin function.
+    * Update last login (date)
     * 
     * @access public
     * @return void
@@ -195,7 +199,7 @@ class User extends Model
     }
 
     /**
-    * hashPassword function.
+    * Hash user password
     * 
     * @access public
     * @return void
@@ -208,7 +212,7 @@ class User extends Model
     }
 
     /**
-    * isEmailRegistered function.
+    * Check if email is registered
     * 
     * @access public
     * @param mixed $_email
@@ -242,7 +246,7 @@ class User extends Model
     }
 
     /**
-    * getFromEmailPassword function.
+    * Get user from email and password
     * 
     * @access public
     * @param mixed $_email
