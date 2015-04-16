@@ -41,7 +41,7 @@ class Router extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertEquals('register', $view['controller']);
+        $this->assertEquals('auth', $view['controller']);
 
         if ($view) {
             $return = $view;
