@@ -101,7 +101,7 @@ abstract class Model
                     $set .= ', ';
                 }
                 
-                $set .= "$field = :$field";
+                $set .= "`$field` = :$field";
                 $values[":$field"] = $this->$field;
             }
 
