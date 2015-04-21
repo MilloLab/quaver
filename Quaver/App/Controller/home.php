@@ -48,7 +48,7 @@ class home extends Controller
     public function languageAction()
     {
         $language = new Lang;
-        $language->getFromSlug($this->getUrlPart(0));
+        $language->getFromSlug($this->router->getUrlPart(0));
 
         if ($language) {
             $language->setCookie();

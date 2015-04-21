@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.1a] - 2015-04-21
+### Fixed
+ - Fix getUrlPart at languageAction (home)
+
+
 ## [0.9.1] - 2015-04-21
 ### Fixed
  - Fix warning when load twig modules
