@@ -54,11 +54,14 @@ abstract class Controller
         $loader = new \Twig_Loader_Filesystem($templatesDir);
 
         // Add paths of modules
-        foreach ($this->router->modules as $module) {
-            if (isset($module['params']->theme) && !empty($module['params']->theme)) {
-                $loader->addPath($module['realPath'] . $module['namespacePath'] . '/Theme/' . $module['params']->theme . '/View');
-            }
+        if ($this->router->modules) {
+            foreach ($this->router->modules as $module) {
+                if (isset($module['params']->theme) && !empty($module['params']->theme)) {
+                    $loader->addPath($module['realPath'] . $module['namespacePath'] . '/Theme/' . $module['params']->theme . '/View');
+                }
+            }    
         }
+        
 
         $twig_options = array();
         if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {

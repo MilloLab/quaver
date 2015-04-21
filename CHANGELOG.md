@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.1] - 2015-04-21
+### Fixed
+ - Fix warning when load twig modules
+
+
 ## [0.9] - 2015-04-14
 ### Added
  - Controllers as actions

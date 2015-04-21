@@ -43,6 +43,8 @@ $router = new Router;
 
 // Add paths
 $router->addPath('/', GLOBAL_PATH . '/Quaver/Routes.yml');
+
+// Add modules
 $router->addModule('HelloWorld', 'millolab/quaver-helloworld');
 
 $bootstrap->router = $router;
