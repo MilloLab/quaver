@@ -41,7 +41,7 @@ class Lang extends \Quaver\Core\Model
         $_id = (int)$_id;
         $_table = $this->table;
 
-        $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
+        $item = $db->query("SELECT * FROM $_table WHERE id = '$_id' AND active = 1");
         $result = $item->fetchAll();
 
         if ($result) {
@@ -168,7 +168,7 @@ class Lang extends \Quaver\Core\Model
         $return = null;
         $_table = 'lang';
 
-        $items = $db->query("SELECT * FROM $_table ORDER BY id ASC");
+        $items = $db->query("SELECT * FROM $_table WHERE active = 1 ORDER BY id ASC");
         $result = $items->fetchAll();
 
         foreach ($result as $l) {
@@ -185,7 +185,7 @@ class Lang extends \Quaver\Core\Model
      * @param type $_byPriority 
      * @return type
      */
-    public static function getList($_all = false, $_byPriority = false)
+    public static function getList($_all = true, $_byPriority = false)
     {
 
         $db = new DB;
@@ -224,7 +224,7 @@ class Lang extends \Quaver\Core\Model
      */
     public function typeFormat($_label, $_utf8 = '')
     {
-        if (isset($this->strings[$_label])) {
+        if (isset($this->strings[$_label]) && !empty($this->strings[$_label])) {
             $return = $this->strings[$_label];
             switch ($_utf8) {
                 case('d'):
