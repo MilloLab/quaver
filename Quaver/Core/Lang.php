@@ -41,7 +41,7 @@ class Lang extends \Quaver\Core\Model
         $_id = (int)$_id;
         $_table = $this->table;
 
-        $item = $db->query("SELECT * FROM $_table WHERE id = '$_id' AND active = 1");
+        $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
         $result = $item->fetchAll();
 
         if ($result) {
