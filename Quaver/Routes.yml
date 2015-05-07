@@ -19,7 +19,7 @@ maintenance:
 
 language:
     url: /language/([a-zA-Z0-9-_]+)?[/]?
-    controller: language
+    controller: home
     action: language
     view: none
 
