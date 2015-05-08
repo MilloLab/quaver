@@ -2,18 +2,15 @@
 
 {% block title %}Quaver Dashboard{% endblock %}
 
-   
-
-
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
  
-    <h1 class="page-header">Hi {{ qv.user.email }}</h1>
-    <div class="container">
+    <h1 class="page-header">{{ ('hi')|t }} {{ qv.user.email }}</h1>
+    
     <div class="jumbotron centered">
-      <h1>Welcome to Quaver {{ qv.version }}</h1>
-      <p>Local Lang: {{ qv.language.locale|replace('_', '-') }}</p>
-      <p>Sample String: hello_world = {{ 'hello_world'|t }}</p>
+      <h1>{{ ('welcome')|t }} {{ qv.version }}</h1>
+      <p>{{ ('local-lang')|t }}: {{ qv.language.locale|replace('_', '-') }}</p>
+      <p>{{ ('sample-string')|t }}: hello_world = {{ 'hello_world'|t }}</p>
 
 
       <h2>Routing</h2>
@@ -22,14 +19,14 @@
         <p>URI {{loop.index}}: {{ uri }}</p>
       {% endfor %}
 
-      <h2>Important</h2>
+      <h2>{{ ('important')|t }}</h2>
       <ul>
-      <li>Import <strong>quaver.sql</strong> to your database</li>
-      <li>Check <strong>Quaver/Config.php</strong> and <strong>Quaver/Routes.yml</strong></li>
+      <li>{{ ('import')|t }} <strong>quaver.sql</strong> {{ ('to-your-database')|t }}</li>
+      <li>{{ ('check')|t }} <strong>Quaver/Config.php</strong> {{ ('and')|t }} <strong>Quaver/Routes.yml</strong></li>
       </ul>
 
     </div>
-  </div>
+  
 </div>
 
 {% endblock %}

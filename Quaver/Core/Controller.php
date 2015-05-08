@@ -133,15 +133,16 @@ abstract class Controller
             $item = array(
                 "id" => $lang->id,
                 "name" => utf8_encode($lang->name),
+                "large" => utf8_encode($lang->large),
                 "slug" => $lang->slug,
                 "locale" => $lang->locale,
             );
             array_push($languageVars, $item);
         }
-        $this->addTwigVars('languages', $languageVars);
+        $this->addTwigVars('languages', $languageVars); // legacy support 
 
         // Load user data
-        $this->addTwigVars("_user", $GLOBALS['_user']);
+        $this->addTwigVars("_user", $GLOBALS['_user']); // legacy support
 
         // Login errors
         if (isset($this->router->queryString['login-error'])) {
@@ -163,7 +164,7 @@ abstract class Controller
             "version" => $this->router->version,
             "url" => $this->router->url,
             "language" => $GLOBALS['_lang'],
-            "langStrings" => $languageVars,
+            "languages" => $languageVars,
             "user" => $GLOBALS['_user'],
             "modules" => $this->router->modules,
             "routes" => $this->router->routes

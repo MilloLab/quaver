@@ -1,17 +1,11 @@
-
 {% block sidebar %}
-
-  <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li {% if section == '' %}class="active"{% endif %}><a href="/admin/">Home</a></li>
-            <li {% if section == 'users' %}class="active"{% endif %}><a href="/admin/users">Users</a></li>
-            <li {% if section == 'languages' %}class="active"{% endif %}><a href="/admin/languages">Languages</a></li>
-            
-          </ul>
-          
-          
+    <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li {% if section == '' %}class="active"{% endif %}><a href="/admin/">{{ ('sidebar-home')|t }}</a></li>
+            <li {% if section == 'users' %}class="active"{% endif %}><a href="/admin/users">{{ ('sidebar-users')|t }}</a></li>
+            <li {% if section == 'languages' %}class="active"{% endif %}><a href="/admin/languages">{{ ('sidebar-languages')|t }}</a></li>
+            <li {% if section == 'lang' %}class="active"{% endif %}><a href="/admin/lang">{{ ('sidebar-lang')|t }}</a></li>
+            <li {% if section == 'log' %}class="active"{% endif %}><a href="/admin/log">Log</a></li>
+        </ul>
   </div>
-
-   
-
 {% endblock %}

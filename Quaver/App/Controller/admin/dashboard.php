@@ -8,7 +8,9 @@
 namespace Quaver\App\Controller\admin;
 
 use Quaver\Core\Controller;
+use Quaver\Core\Log;
 use Quaver\Core\LangStrings;
+use Quaver\Core\Lang;
 use Quaver\App\Model\User;
 
 /**
@@ -61,7 +63,7 @@ class dashboard extends Controller
         // Add or edit language strings
         if (isset($_POST['edit']) || isset($_POST['add'])) {
             $added = false;
-
+            $isNew = false;
             $item = new LangStrings;
 
             foreach ($_POST['language'] as $k => $v) {
@@ -71,6 +73,7 @@ class dashboard extends Controller
                 if ($_POST['idL'][$k]){
                     $new_lang->id = $_POST['idL'][$k];
                 } else {
+                    $isNew = true;
                     $new_lang->id = null;
                 }
                 
@@ -85,6 +88,7 @@ class dashboard extends Controller
             $item->setItem($_item);      
 
             if ($item->saveAll()) {
+                Log::notify($GLOBALS['_user'], $isNew? Log::ACTION_CREATE : Log::ACTION_UPDATE, $item);
                 header("Location: /admin/languages");
                 exit;
             } else {
@@ -101,7 +105,7 @@ class dashboard extends Controller
                     header("Location: /admin/languages");
                     exit;
                 } else {
-                    $this->setView('admin/lang-Add');
+                    $this->setView('admin/langString-Add');
                 }
                 break;
             case('edit'):
@@ -110,7 +114,7 @@ class dashboard extends Controller
                 $item = $lang->getFromLabel($this->router->url['uri'][1]);
                 $this->addTwigVars('item', $item);
 
-                $this->setView('admin/lang-Add');                
+                $this->setView('admin/langString-Add');                
                 break;
             case('del'):
                 $lang = new LangStrings;
@@ -118,6 +122,7 @@ class dashboard extends Controller
 
                 foreach ($items as $item) {
                     $item->delete();
+                    Log::notify($GLOBALS['_user'], Log::ACTION_DELETE, $item);
                 }
 
                 header("Location: /admin/languages");
@@ -129,7 +134,7 @@ class dashboard extends Controller
                 $items = $lang->getList();
                 $this->addTwigVars('items', $items);
 
-                $this->setView('admin/lang-List');
+                $this->setView('admin/langString-List');
                 break;
         }
         $this->render();
@@ -158,11 +163,14 @@ class dashboard extends Controller
         if (isset($_POST['edit']) || isset($_POST['add'])) {
 
             $added = false;
+            $isNew = false;
 
             $user = new User;
 
             if (isset($_POST['id'])) {
                 $user->getFromId($_POST['id']);
+            } else {
+                $isNew = true;
             }
 
             $user->level = $_POST['level'];
@@ -182,6 +190,7 @@ class dashboard extends Controller
             }
 
             if ($user->save()) {
+                Log::notify($GLOBALS['_user'], $isNew? Log::ACTION_CREATE : Log::ACTION_UPDATE, $user);
                 header("Location: /admin/users");
                 exit;
             } else {
@@ -213,6 +222,7 @@ class dashboard extends Controller
                 $user = new User;
                 $item = $user->getFromId($this->router->url['uri'][1]);
                 if ($item->delete()){
+                    Log::notify($GLOBALS['_user'], Log::ACTION_DELETE, $item);
                     header("Location: /admin/users");
                     exit;
                 }
@@ -224,6 +234,119 @@ class dashboard extends Controller
                 $this->setView('admin/user-List');
                 break;
         }
+        $this->render();
+    }
+
+    /**
+     * Manage lang table
+     * @return type
+     */
+    public function langAction()
+    {
+        global $_user;
+
+        // Check privileges
+        if (!$_user->logged || !$_user->isAdmin()) {
+            header("Location: /login");
+            exit;
+        }
+
+        // Control var
+        $added = false;
+
+        // Set up menu action
+        $this->addTwigVars('section', 'lang');
+
+        // Add or edit users strings
+        if (isset($_POST['edit']) || isset($_POST['add'])) {
+            $item = new Lang;
+            $isNew = false;
+
+            if (empty($_POST['id'])) {
+                $isNew = true;
+            } else {
+                $item->getFromId($_POST['id']);
+            }
+
+            $item->name = $_POST['name'];
+            $item->large = $_POST['large'];
+            $item->slug = $_POST['slug'];
+            $item->locale = $_POST['locale'];
+            $item->active = $_POST['active'];
+            $item->priority = $_POST['priority'];
+
+            if ($item->save()) { 
+                Log::notify($GLOBALS['_user'], $isNew? Log::ACTION_CREATE : Log::ACTION_UPDATE, $item);
+                header("Location: /admin/lang");
+                exit;
+            } else {
+                $added = false;
+            }
+        }
+
+        // Selector
+        switch ($this->router->getUrlPart(0)) {
+
+            case('add'):
+                $this->addTwigVars('typePOST', 'add');
+                if ($added){
+                    header("Location: /admin/lang");
+                    exit;
+                } else {
+                    $this->setView('admin/language-Add');
+                }
+                echo $template->render($this->twigVars);
+                break;
+            case('edit'):
+                $this->addTwigVars('typePOST', 'edit');
+                $lang = new Lang;
+                $item = $lang->getFromId($this->router->getUrlPart(1));
+                $this->addTwigVars('item', $item);
+                $this->setView('admin/language-Add');
+                break;
+            case('del'):
+                $item = new Lang;
+                $item->getFromId($this->router->getUrlPart(1));
+                if ($item->id) {
+                    $item->delete();
+                }
+                Log::notify($GLOBALS['_user'], Log::ACTION_DELETE, $item);
+                header("Location: /admin/lang");
+                exit;
+                break;
+            default:
+                $lang = new Lang;
+                $items = $lang->getList(false);
+                $this->addTwigVars('items', $items);
+                $this->setView('admin/language-List');
+                break;
+        }
+
+        $this->render();
+    }
+
+    /**
+     * See log table
+     * @return type
+     */
+    public function logAction()
+    {
+        $this->addTwigVars('section', 'log');
+
+        switch (count($this->router->url['uri'])) {
+            case 0:
+                $log = new Log;
+                $items = $log->getList();
+
+                $this->addTwigVars('items', $items);
+                $this->setView('admin/log-List');
+                break;
+
+            default:
+                $this->router->dispatch('e404');
+                exit;
+        }
+
         $this->render();
     }
 }

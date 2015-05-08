@@ -1,18 +1,16 @@
 {% extends "admin/aLayout.twig" %}
 
-{% block title %}Users - Quaver Dashboard{% endblock %}
-
-   
-
+{% block title %}{{ ('users')|t }} - Quaver Dashboard{% endblock %}
 
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <form id="formCreator" action="" method="post" enctype="multipart/form-data" name="formCreator">
     <div class="btn-group pull-right">
-        <button class="btn btn-success" name="{{ typePOST }}" type="submit"> Save</button>
+        <a class="btn btn-default" href="/admin/users"> {{ ('back')|t }}</a>
+        <button class="btn btn-success" name="{{ typePOST }}" type="submit"> {{ ('save')|t }}</button>
     </div>
     
-    <h1 class="page-header">User: <a><b>{{ item.id }}</b></a> </h1>
+    <h1 class="page-header">{{ ('user')|t }}: <a><b>{{ item.id }}</b></a> </h1>
     
     <div class="form-group">
             <label for="email">Email</label>
@@ -25,21 +23,21 @@
         </div>
 
     <div class="form-group">
-            <label for="level">Privileges</label>
+            <label for="level">{{ ('level')|t }}</label>
 
             <select class="form-control" name="level">
-              <option value="user" {% if item.level == 'user' %}selected{% endif %}>User</option>
-              <option value="admin" {% if item.level == 'admin' %}selected{% endif %}>Admin</option>
+              <option value="user" {% if item.level == 'user' %}selected{% endif %}>{{ ('user')|t }}</option>
+              <option value="admin" {% if item.level == 'admin' %}selected{% endif %}>{{ ('admin-type')|t }}</option>
             </select>
 
         </div>
 
         <div class="form-group">
-            <label for="active">¿Do you want active user?</label>
+            <label for="active">{{ ('active')|t }}</label>
 
             <select class="form-control" name="active">
-              <option value="1" {% if item.active == '1' %}selected{% endif %}>Yes</option>
-              <option value="0" {% if item.active == '0' %}selected{% endif %}>No</option>
+              <option value="1" {% if item.active == '1' %}selected{% endif %}>{{ ('enabled')|t }}</option>
+              <option value="0" {% if item.active == '0' %}selected{% endif %}>{{ ('disabled')|t }}</option>
             </select>
 
         </div>

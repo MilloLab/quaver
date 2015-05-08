@@ -1,0 +1,66 @@
+{% extends "admin/aLayout.twig" %}
+
+{% block title %}{{ ('sidebar-lang')|t }} - Quaver Dashboard{% endblock %}
+
+   
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<form id="formCreator" action="" method="post" enctype="multipart/form-data" name="formCreator">
+    <div class="btn-group pull-right">
+        <a class="btn btn-default" href="/admin/lang"> {{ ('back')|t }}</a>
+        <button class="btn btn-success" name="{{ typePOST }}" type="submit"> {{ ('save')|t }}</button>
+    </div>
+    
+    <h1 class="page-header">{{ ('language')|t }}: <a><b>{{ item.name }}</b></a> </h1>
+    
+    <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" id="name" name="name" value="{{ item.name }}">
+        </div>
+
+    <div class="form-group">
+            <label for="name">Large</label>
+            <input class="form-control" type="text" id="large" name="large" value="{{ item.large }}">
+        </div>
+
+    <div class="form-group">
+            <label for="slug">Slug</label>
+            <input class="form-control" type="text" id="slug" name="slug" value="{{ item.slug }}">
+        </div>
+
+    <div class="form-group">
+            <label for="locale">Locale</label>
+            <input class="form-control" type="text" id="locale" name="locale" value="{{ item.locale }}">
+        </div>
+
+    <div class="form-group">
+            <label for="active">Active</label>
+            <select class="form-control" name="active">
+              <option value="1" {% if item.active == '1' %}selected{% endif %}>{{ ('enabled')|t }}</option>
+              <option value="0" {% if item.active == '0' %}selected{% endif %}>{{ ('disabled')|t }}</option>
+            </select>
+        </div>
+
+    <div class="form-group">
+            <label for="priority">Priority</label>
+            <input class="form-control" type="text" id="priority" name="priority" value="{{ item.priority }}">
+        </div>
+
+
+            <hr/>
+
+        {% if item.id %}
+        <input type="hidden" name="id" id="id" value="{{ item.id }}" />
+        {% endif %}
+
+        </form>
+        
+        </div>
+
+
+{% endblock %}
+
+
+

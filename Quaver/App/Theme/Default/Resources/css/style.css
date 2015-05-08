@@ -1,6 +1,11 @@
 body {
-  padding-top: 100px;
+  padding-top: 70px;
 }
+
+.footer {
+    text-align: center;
+}
+
 @font-face {
     font-family:'millolab-icons';
     src:url("../fonts/millolab-icons.eot");

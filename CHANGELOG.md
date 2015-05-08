@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.2] - 2015-05-08
+### Added
+ - Log system with panel
+ - Lang panel (admin)
+ - Language Strings
+ - Kint library
+
+### Changed
+ - Code improvements
+ 
+### Fixed
+ - Lang and Routes improvements
+
+
 ## [0.9.1b] - 2015-04-21
 ### Fixed
  - Minor improvements

@@ -1,21 +1,19 @@
 {% extends "admin/aLayout.twig" %}
 
-{% block title %}Languages - Quaver Dashboard{% endblock %}
-
-   
-
+{% block title %}{{ ('sidebar-languages')|t }} - Quaver Dashboard{% endblock %}
 
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <form id="formCreator" action="" method="post" enctype="multipart/form-data" name="formCreator">
     <div class="btn-group pull-right">
-        <button class="btn btn-success" name="{{ typePOST }}" type="submit"> Save</button>
+        <a class="btn btn-default" href="/admin/languages"> {{ ('back')|t }}</a>
+        <button class="btn btn-success" name="{{ typePOST }}" type="submit"> {{ ('save')|t }}</button>
     </div>
     
     <h1 class="page-header">String: <a><b>{{ item[0].label }}</b></a> </h1>
     
     <div class="form-group">
-            <label for="label">Label (use this in your HTML)</label>
+            <label for="label">Label</label>
             <input class="form-control" type="text" id="label" name="label" value="{{ item[0].label }}">
         </div>
 
@@ -26,7 +24,7 @@
             <h2 class="page-subheader">{{ tab.locale }} </h2>
         
             <div class="form-group">
-                <label for="language">Language</label>
+                <label for="language">Idioma</label>
                 {% if typePOST == 'add' %}
                 <input class="form-control" type="text" id="language" name="language[]" value="{{ tab.id }}">
                 {% else %}
@@ -36,7 +34,7 @@
             </div>
 
             <div class="form-group">
-                <label for="text">Text</label>
+                <label for="text">Texto</label>
                 <textarea name="text[]" id="text" class="form-control">{{ item[tab.id-1].text }}</textarea>
             </div>
 

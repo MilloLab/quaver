@@ -20,6 +20,7 @@ class Lang extends \Quaver\Core\Model
     public $_fields = array(
         "id",
         "name",
+        "large",
         "slug",
         "locale",
         "active",

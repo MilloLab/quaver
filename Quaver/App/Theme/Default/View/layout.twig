@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" type="image" href="//millolab.com/app/resources/img/favicon.ico.png">
 
-    <title>{% block title %}Welcome to Quaver{% endblock %}</title>
+    <title>{% block title %}{{ ('welcome')|t }}{% endblock %}</title>
 
     <!-- CSS -->
     <link href="{{ qv.css }}/bootstrap.min.css?{{ qv.randomVar }}" rel="stylesheet">

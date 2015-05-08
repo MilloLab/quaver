@@ -4,9 +4,9 @@
 
   <div class="container">
     <div class="jumbotron centered">
-      <h1>Welcome to Quaver {{ qv.version }}</h1>
-      <p>Local Lang: {{ qv.language.locale|replace('_', '-') }}</p>
-      <p>Sample String: hello_world = {{ 'hello_world'|t }}</p>
+      <h1>{{ ('welcome')|t }} {{ qv.version }}</h1>
+      <p>{{ ('local-lang')|t }}: {{ qv.language.locale|replace('_', '-') }}</p>
+      <p>{{ ('sample-string')|t }}: hello_world = {{ 'hello_world'|t }}</p>
 
       <h2>Routing</h2>
       <p>Actual Path: {{ qv.url.path }}</p>
@@ -14,16 +14,15 @@
         <p>URI {{loop.index}}: {{ uri }}</p>
       {% endfor %}
 
-      <h2>Install</h2>
+      <h2>{{ ('important')|t }}</h2>
       <ul>
-        <li>Download latest version with composer: <strong>composer create-project millolab/quaver path/</strong></li>
-      <li>Import <strong>quaver.sql</strong> to your database</li>
-      <li>Check <strong>Quaver/Config.php</strong> and <strong>Quaver/Routes.yml</strong></li>
+      <li>{{ ('import')|t }} <strong>quaver.sql</strong> {{ ('to-your-database')|t }}</li>
+      <li>{{ ('check')|t }} <strong>Quaver/Config.php</strong> {{ ('and')|t }} <strong>Quaver/Routes.yml</strong></li>
       </ul>
 
       <h2>Quaver Dashboard</h2>
-      <p><a href="/register">Create a user</a> and select "admin" type.</p>
-      <p><a href="/login">Login</a> and go to <a href="/admin">Quaver Dashboard</a></p>
+      <p><a href="/register">{{ ('create-a-user')|t }}</a> {{ ('and-select-admin-type')|t }}.</p>
+      <p><a href="/login">{{ ('login')|t }}</a> {{ ('and-go-to')|t }} <a href="/admin">Quaver Dashboard</a>.</p>
     </div>
   </div>
 

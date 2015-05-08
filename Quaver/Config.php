@@ -24,6 +24,7 @@ define('COOKIE_PATH', '/');
 define('HTTP_MODE', 'http://');
 define('MAINTENANCE_MODE', false);
 define('DEV_MODE', true);
+define('LOG_ENABLED', true);
 
 // Random variable to front files
 define('RANDOM_VAR', 'YYYYMMDD'); // format YYYYMMDD
