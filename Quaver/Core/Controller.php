@@ -122,7 +122,7 @@ abstract class Controller
     public function getGlobalTwigVars()
     {
         // Language
-        $this->addTwigVars("language", $GLOBALS['_lang']);
+        $this->addTwigVars("language", $GLOBALS['_lang']); // legacy support
 
         // Languages
         $languageVars = array();
@@ -211,6 +211,4 @@ abstract class Controller
         $this->configVars[$_key] = $_array;
         $this->addTwigVars('qv', $this->configVars);
     }
-    
-    
 }
