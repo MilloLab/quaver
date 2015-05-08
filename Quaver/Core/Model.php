@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -7,34 +8,33 @@
 
 namespace Quaver\Core;
 
-use Quaver\Core\DB;
-
 /**
- * Model class
- * @package Core
+ * Model class.
  */
 abstract class Model
 {
-
     public $id,
         $language;
 
     protected $table;
 
     /**
-     * Get language when start the object 
+     * Get language when start the object.
+     *
      * @return type
      */
     public function __construct()
     {
         if (isset($GLOBALS['_lang'])) {
-            $this->language = $GLOBALS['_lang']->id;    
+            $this->language = $GLOBALS['_lang']->id;
         }
     }
 
     /**
-     * Setter
-     * @param type $_item 
+     * Setter.
+     *
+     * @param type $_item
+     *
      * @return type
      */
     public function setItem($_item)
@@ -47,7 +47,8 @@ abstract class Model
     }
 
     /**
-     * Getter
+     * Getter.
+     *
      * @return type
      */
     public function getItem()
@@ -56,18 +57,21 @@ abstract class Model
         foreach ($this->_fields as $field) {
             $item[$field] = $this->$field;
         }
+
         return $item;
     }
 
     /**
-     * Get object from ID
-     * @param type $_id 
+     * Get object from ID.
+     *
+     * @param type $_id
+     *
      * @return type
      */
     public function getFromId($_id)
     {
-        $db = new DB;
-        $_id = (int)$_id;
+        $db = new DB();
+        $_id = (int) $_id;
         $_table = $this->table;
 
         $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
@@ -82,15 +86,14 @@ abstract class Model
     }
 
     /**
-     * Save data to DB
+     * Save data to DB.
+     *
      * @return type
      */
     public function save()
     {
-
         try {
-
-            $db = new DB;
+            $db = new DB();
 
             $set = '';
             $values = array();
@@ -100,16 +103,16 @@ abstract class Model
                 if ($set != '') {
                     $set .= ', ';
                 }
-                
+
                 $set .= "`$field` = :$field";
                 $values[":$field"] = $this->$field;
             }
 
             if (empty($this->id)) {
-                $sql = "INSERT INTO $_table SET " . $set;
+                $sql = "INSERT INTO $_table SET ".$set;
             } else {
                 $values[':id'] = $this->id;
-                $sql = "UPDATE $_table SET " . $set . " WHERE id = :id";
+                $sql = "UPDATE $_table SET ".$set.' WHERE id = :id';
             }
 
             $db->query($sql, $values);
@@ -119,30 +122,26 @@ abstract class Model
             }
 
             return true;
-
         } catch (PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
-
-
     }
 
     /**
-     * Delete object (DB) 
+     * Delete object (DB).
+     *
      * @return type
      */
     public function delete()
     {
-
         try {
+            $db = new DB();
 
-            $db = new DB;
-
-            $_id = (int)$this->id;
+            $_id = (int) $this->id;
             $_table = $this->table;
 
             $sql = "DELETE FROM $_table WHERE id = :id";
-            if ($db->query($sql, array(':id'=>$_id))) {
+            if ($db->query($sql, array(':id' => $_id))) {
                 return true;
             } else {
                 return false;
@@ -153,7 +152,8 @@ abstract class Model
     }
 
     /**
-     * Convert all to Array
+     * Convert all to Array.
+     *
      * @return type
      */
     public function toArray()
@@ -176,7 +176,8 @@ abstract class Model
     }
 
     /**
-     * Encode to JSON
+     * Encode to JSON.
+     *
      * @return type
      */
     public function toJson()
@@ -185,7 +186,8 @@ abstract class Model
             $return = json_encode($this->toArray());
         } else {
             $return = false;
-        } 
+        }
+
         return $return;
     }
 }

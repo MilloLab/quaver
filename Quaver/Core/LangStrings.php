@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -7,19 +8,16 @@
 
 namespace Quaver\Core;
 
-use Quaver\Core\DB;
-
 /**
- * LangStrings class
- * @package Core
+ * LangStrings class.
  */
 class LangStrings extends \Quaver\Core\Model
 {
     public $_fields = array(
-        "id",
-        "language",
-        "label",
-        "text",
+        'id',
+        'language',
+        'label',
+        'text',
     );
 
     public $_languages;
@@ -28,12 +26,13 @@ class LangStrings extends \Quaver\Core\Model
 
 
     /**
-     * Get language list
+     * Get language list.
+     *
      * @return type
      */
     public static function getList()
     {
-        $db = new DB;
+        $db = new DB();
         $_table = 'lang_strings';
         $return = null;
 
@@ -51,24 +50,22 @@ class LangStrings extends \Quaver\Core\Model
 
         if ($result) {
             foreach ($result as $item) {
-                $l = new LangStrings;
+                $l = new self();
                 $return[] = $l->getFromId($item['id']);
             }
         }
 
         return $return;
     }
-    
+
     /**
-     * Get string from label
-     * 
-     * @access public
+     * Get string from label.
+     *
      * @param mixed $_label
-     * @return void
      */
     public function getFromLabel($_label)
     {
-        $db = new DB;        
+        $db = new DB();
         $_table = $this->table;
         $return = null;
 
@@ -78,29 +75,24 @@ class LangStrings extends \Quaver\Core\Model
 
         if ($result) {
             foreach ($result as $item) {
-                $l = new LangStrings;
+                $l = new self();
                 $return[] = $l->getFromId($item['id']);
             }
         }
 
         return $return;
     }
-    
-   
-    
+
     /**
-     * Save all strings
-     * 
-     * @access public
-     * @return void
+     * Save all strings.
      */
     public function saveAll()
     {
         // Other languages
         if (isset($this->_languages)) {
             foreach ($this->_languages as $item) {
-                $lang = new LangStrings;
-                $lang->setItem((array)$item);
+                $lang = new self();
+                $lang->setItem((array) $item);
                 $lang->save();
             }
 
@@ -109,35 +101,33 @@ class LangStrings extends \Quaver\Core\Model
     }
 
     /**
-     * Delete all strings
-     * 
-     * @access public
-     * @return void
+     * Delete all strings.
      */
     public function deleteAll()
     {
         // Other languages
         if (isset($this->_languages)) {
             foreach ($this->_languages as $item) {
-                $lang = new LangStrings;
-                $lang->setItem((array)$item);
+                $lang = new self();
+                $lang->setItem((array) $item);
                 $lang->delete();
             }
 
             return true;
-        }  
+        }
     }
-    
 
     /**
-     * Language string setter
-     * @param type $_item 
+     * Language string setter.
+     *
+     * @param type $_item
+     *
      * @return type
      */
     public function setItem($_item)
     {
         foreach ($this->_fields as $field) {
-            if (isset($_item[$field])){
+            if (isset($_item[$field])) {
                 $this->$field = $_item[$field];
             }
         }

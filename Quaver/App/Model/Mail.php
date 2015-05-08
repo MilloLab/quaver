@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -8,12 +9,10 @@
 namespace Quaver\App\Model;
 
 /**
- * Mail class
- * @package App
+ * Mail class.
  */
 class Mail
 {
-
     private $type; // "mandril"
 
     public $action;
@@ -32,20 +31,22 @@ class Mail
         $language;
 
     /**
-     * Mail constructor
-     * @param type $type 
+     * Mail constructor.
+     *
+     * @param type $type
+     *
      * @return type
      */
     public function __construct($type = '')
     {
-        if (isset($type)){
+        if (isset($type)) {
             $this->type = $type;
         }
     }
 
-
     /**
-     * Configure email
+     * Configure email.
+     *
      * @return type
      */
     public function prepare()
@@ -54,13 +55,12 @@ class Mail
         // Set language
         if (!isset($this->language)) {
             if (isset($GLOBALS['_lang'])) {
-                $this->language = $GLOBALS['_lang']->id;    
+                $this->language = $GLOBALS['_lang']->id;
             }
         }
 
         // Render subject and body
         if (isset($this->template)) {
-
             if ($this->htmlMode === true) {
 
                 // Start twig env
@@ -70,15 +70,13 @@ class Mail
                 $twig = new \Twig_Environment($loader, $twig_options);
 
                 $template = htmlspecialchars_decode($this->template, ENT_QUOTES);
-                
+
                 if (isset($this->templateVars)) {
                     // Render twig template
-                    $this->body = $twig->render($template, $this->templateVars);    
+                    $this->body = $twig->render($template, $this->templateVars);
                 } else {
                     $this->subject = sprintf($this->subject, $this->subjectVars);
                 }
-                
-                
             } else {
                 $this->body = $this->template;
                 $this->subject = sprintf($this->subject, $this->subjectVars);
@@ -95,27 +93,23 @@ class Mail
             }
 
             $this->send();
-
         }
-
     }
 
     /**
-     * Send email
+     * Send email.
+     *
      * @return type
      */
     public function send()
-    {   
+    {
         // Check if mail enabled to block send
         if (defined('MAIL_ENABLED') && MAIL_ENABLED === true) {
-            
-            $return = false;      
-     
-            //Check type         
-            if ($this->type == 'mandrill'){
+            $return = false;
 
-                if (defined('MANDRILL') && MANDRILL === true){
-
+            //Check type
+            if ($this->type == 'mandrill') {
+                if (defined('MANDRILL') && MANDRILL === true) {
                     try {
                         $mandrill = new \Mandrill(MANDRILL_APIKEY);
 
@@ -129,16 +123,16 @@ class Mail
                                     array(
                                         'email' => $this->to,
                                         'name' => $this->toName,
-                                        'type' => 'to'
-                                    )
+                                        'type' => 'to',
+                                    ),
                                 ),
-                                "attachments" => array(
+                                'attachments' => array(
                                     array(
                                         'content' => $this->attachments['file_base64'],
                                         'type' => $this->attachments['type'], // for example application/pdf
                                         'name' => $this->attachments['name'],
                                     ),
-                                )
+                                ),
                             );
                         } else {
                             $message = array(
@@ -150,29 +144,24 @@ class Mail
                                     array(
                                         'email' => $this->to,
                                         'name' => $this->toName,
-                                        'type' => 'to'
-                                    )
-                                )
+                                        'type' => 'to',
+                                    ),
+                                ),
                             );
                         }
-                        
+
                         $async = false;
                         $return = $mandrill->messages->send($message, $async);
-                        
-                    } catch(\Mandrill_Error $e) {
+                    } catch (\Mandrill_Error $e) {
 
                         // Mandrill errors are thrown as exceptions
-                        throw new \Quaver\Core\Exception('A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage());
-                        
+                        throw new \Quaver\Core\Exception('A mandrill error occurred: '.get_class($e).' - '.$e->getMessage());
                     }
 
                     return $return;
-
-                }  
-                
+                }
             } else {
-                
-                $mail = new \PHPMailer;
+                $mail = new \PHPMailer();
 
                 $mail->From = $this->from;
                 $mail->FromName = $this->fromName;
@@ -181,8 +170,8 @@ class Mail
                 $mail->isHTML(true); // Set email format to HTML
 
                 $mail->Subject = $this->subject;
-                $mail->Body    = $this->body;
-                
+                $mail->Body = $this->body;
+
                 try {
                     $return = $mail->Send();
                 } catch (\phpmailerException $e) {
@@ -190,12 +179,9 @@ class Mail
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
-        
-                return $return;         
 
+                return $return;
             }
-
         }
-    
     }
 }

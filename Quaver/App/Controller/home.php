@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -11,23 +12,24 @@ use Quaver\Core\Controller;
 use Quaver\Core\Lang;
 
 /**
- * Home controller (language, maintenance and index)
- * @package App
+ * Home controller (language, maintenance and index).
  */
 class home extends Controller
-{   
+{
     /**
-     * Show homepage
+     * Show homepage.
+     *
      * @return type
      */
     public function homeAction()
-    {   
-        $this->addTwigVars('siteTitle', "Welcome to Quaver" . ' - ' . BRAND_NAME);
+    {
+        $this->addTwigVars('siteTitle', 'Welcome to Quaver'.' - '.BRAND_NAME);
         $this->render();
     }
 
     /**
-     * Show maintenance page
+     * Show maintenance page.
+     *
      * @return type
      */
     public function maintenanceAction()
@@ -36,27 +38,28 @@ class home extends Controller
             $this->render();
             exit;
         } else {
-            header("Location: /");
+            header('Location: /');
             exit;
         }
     }
 
     /**
-     * Change language
+     * Change language.
+     *
      * @return type
      */
     public function languageAction()
     {
-        $language = new Lang;
+        $language = new Lang();
         $language->getFromSlug($this->router->getUrlPart(0));
 
         if ($language) {
             $language->setCookie();
-            if (!empty($_SERVER['HTTP_REFERER'])){
-                header("Location: " . $_SERVER['HTTP_REFERER']);
+            if (!empty($_SERVER['HTTP_REFERER'])) {
+                header('Location: '.$_SERVER['HTTP_REFERER']);
                 exit;
-            } else{
-                header("Location: /");
+            } else {
+                header('Location: /');
                 exit;
             }
         } else {
@@ -65,5 +68,3 @@ class home extends Controller
         }
     }
 }
-
-

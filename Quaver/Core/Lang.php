@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -7,24 +8,19 @@
 
 namespace Quaver\Core;
 
-use Quaver\Core\DB;
-use Quaver\Core\LangStrings;
-
 /**
- * Lang class
- * @package Core
+ * Lang class.
  */
 class Lang extends \Quaver\Core\Model
 {
-
     public $_fields = array(
-        "id",
-        "name",
-        "large",
-        "slug",
-        "locale",
-        "active",
-        "priority",
+        'id',
+        'name',
+        'large',
+        'slug',
+        'locale',
+        'active',
+        'priority',
     );
 
     public $strings;
@@ -32,14 +28,16 @@ class Lang extends \Quaver\Core\Model
     protected $table_strings = 'lang_strings';
 
     /**
-     * Get object from ID
-     * @param type $_id 
+     * Get object from ID.
+     *
+     * @param type $_id
+     *
      * @return type
      */
     public function getFromId($_id)
     {
-        $db = new DB;
-        $_id = (int)$_id;
+        $db = new DB();
+        $_id = (int) $_id;
         $_table = $this->table;
 
         $item = $db->query("SELECT * FROM $_table WHERE id = '$_id'");
@@ -47,7 +45,7 @@ class Lang extends \Quaver\Core\Model
 
         if ($result) {
             $this->setItem($result[0]);
-            
+
             $_table_strings = $this->table_strings;
             $_idSet = $this->id;
 
@@ -66,20 +64,17 @@ class Lang extends \Quaver\Core\Model
         return $this;
     }
 
-
     /**
-     * Get site language
+     * Get site language.
+     *
      * @return type
      */
     public function getSiteLanguage()
     {
-
         $return = $this->getLanguageFromCookie();
 
         if (!$return) {
-
             if (defined('LANG_FORCE')) {
-                
                 if (LANG_FORCE === true) {
                     $this->getFromId(LANG);
                 } else {
@@ -93,21 +88,21 @@ class Lang extends \Quaver\Core\Model
             }
 
             $return = $this;
-
-        }        
+        }
 
         return $return;
     }
 
     /**
-     * Get language from cookie
+     * Get language from cookie.
+     *
      * @return type
      */
     public function getLanguageFromCookie()
     {
         $return = false;
-        if (!empty($_COOKIE[COOKIE_NAME . "_lang"])) {
-            $language = $_COOKIE[COOKIE_NAME . "_lang"];
+        if (!empty($_COOKIE[COOKIE_NAME.'_lang'])) {
+            $language = $_COOKIE[COOKIE_NAME.'_lang'];
             $return = $this->getFromId($language);
         }
 
@@ -115,29 +110,32 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * Language cookie setter
+     * Language cookie setter.
+     *
      * @return type
      */
     public function setCookie()
     {
         if (!empty($this->id)) {
-            setcookie(COOKIE_NAME . "_lang",
+            setcookie(COOKIE_NAME.'_lang',
                       $this->id,
-                      time()+60*60*24*7,
+                      time() + 60 * 60 * 24 * 7,
                       COOKIE_PATH,
                       COOKIE_DOMAIN);
         }
     }
 
     /**
-     * Get object from slug
-     * @param type $_slug 
-     * @param type $_short 
+     * Get object from slug.
+     *
+     * @param type $_slug
+     * @param type $_short
+     *
      * @return type
      */
     public function getFromSlug($_slug, $_short = false)
     {
-        $db = new DB;
+        $db = new DB();
 
         $return = LANG;
         $_table = $this->table;
@@ -160,12 +158,13 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * Get all languages
+     * Get all languages.
+     *
      * @return type
      */
     public function getLanguages()
     {
-        $db = new DB;
+        $db = new DB();
         $return = null;
         $_table = 'lang';
 
@@ -173,7 +172,7 @@ class Lang extends \Quaver\Core\Model
         $result = $items->fetchAll();
 
         foreach ($result as $l) {
-            $ob_lang = new Lang;
+            $ob_lang = new self();
             $return[] = $ob_lang->getFromId($l['id']);
         }
 
@@ -181,15 +180,16 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * Get languages list
-     * @param type $_all 
-     * @param type $_byPriority 
+     * Get languages list.
+     *
+     * @param type $_all
+     * @param type $_byPriority
+     *
      * @return type
      */
     public static function getList($_all = true, $_byPriority = false)
     {
-
-        $db = new DB;
+        $db = new DB();
         $return = null;
         $_table = 'lang';
 
@@ -201,15 +201,15 @@ class Lang extends \Quaver\Core\Model
         }
 
         if ($_all) {
-            $where = "WHERE active = 1";
+            $where = 'WHERE active = 1';
         }
 
         $items = $db->query("SELECT id FROM $_table $where $order");
 
-        if ($items){
+        if ($items) {
             $result = $items->fetchAll();
             foreach ($result as $item) {
-                $ob_lang = new Lang;
+                $ob_lang = new self();
                 $return[] = $ob_lang->getFromId($item['id']);
             }
         }
@@ -218,9 +218,11 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * Convert string to real text
-     * @param type $_label 
-     * @param type $_utf8 
+     * Convert string to real text.
+     *
+     * @param type $_label
+     * @param type $_utf8
+     *
      * @return type
      */
     public function typeFormat($_label, $_utf8 = '')
@@ -236,8 +238,7 @@ class Lang extends \Quaver\Core\Model
                     break;
             }
         } else {
-
-            $newString = new LangStrings;
+            $newString = new LangStrings();
             $newString->language = $this->id;
             $newString->label = $_label;
             $newString->text = "#$_label#";
@@ -251,13 +252,14 @@ class Lang extends \Quaver\Core\Model
     }
 
     /**
-     * TypeFormat shortener
-     * @param type $_label 
+     * TypeFormat shortener.
+     *
+     * @param type $_label
+     *
      * @return type
      */
     public function l($_label)
     {
         return $this->typeFormat($_label, 'd');
     }
-
 }

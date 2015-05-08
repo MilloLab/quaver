@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.3] - 2015-05-08
+### Changed
+ - Refactor and improvements
+
+
 ## [0.9.2] - 2015-05-08
 ### Added
  - Log system with panel

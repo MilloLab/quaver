@@ -59,9 +59,9 @@
             <thead>
             <tr>
                 <th class="center">ID</th>
-                <th class="left">{{ ('active')|t }}</th>
-                <th class="left">{{ ('level')|t }}</th>
                 <th class="left">Email</th>
+                <th class="left">{{ ('level')|t }}</th>
+                <th class="left">{{ ('active')|t }}</th> 
                 <th class="left">{{ ('register')|t }}</th>
                 <th class="left">{{ ('last-login')|t }}</th>
                 <th class="left">{{ ('options')|t }}</th>                
@@ -69,11 +69,12 @@
             </thead>
             <tbody>
               {% for item in items %}
-                         <tr class="row-{{ item.id }}" id="row-{{ item.id }}">
+                <tr class="row-{{ item.id }}" id="row-{{ item.id }}">
                 <td class="center">{{ item.id }}</td>
-                <td class="center">{% if item.active == 1 %}{{ ('enabled')|t }}{% else %}{{ ('disabled')|t }}{% endif %}</td>
-                <td class="center">{{ item.level }}</td>
                 <td class="center">{{ item.email }}</td>
+                <td class="center">{{ item.level }}</td>
+                <td class="center">{% if item.active == 1 %}{{ ('enabled')|t }}{% else %}{{ ('disabled')|t }}{% endif %}</td>
+              
                 <td class="center">{{ item.dateRegister }}</td>
                 <td class="center">{{ item.dateLastLogin }}</td>
                 <td class="center options">

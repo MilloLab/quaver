@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -11,19 +12,18 @@ use Quaver\Core\DB;
 use Quaver\Core\Model;
 
 /**
- * User class
- * @package App
+ * User class.
  */
 class User extends Model
 {
     public $_fields = array(
-      "id",
-      "active",
-      "level", 
-      "email",
-      "password",
-      "dateRegister",
-      "dateLastLogin"
+      'id',
+      'active',
+      'level',
+      'email',
+      'password',
+      'dateRegister',
+      'dateLastLogin',
     );
 
     public $cookie = '';
@@ -33,16 +33,12 @@ class User extends Model
 
 
     /**
-    * Get users list
-    * 
-    * @access public
-    * @return void
-    */
+     * Get users list.
+     */
     public function getList()
     {
         try {
-
-            $db = new DB;
+            $db = new DB();
             $_table = $this->table;
             $return = false;
 
@@ -52,25 +48,21 @@ class User extends Model
 
             if ($result) {
                 foreach ($result as $item) {
-                    $user = new User;
+                    $user = new self();
                     $return[] = $user->getFromId($item['id']);
                 }
             }
 
             return $return;
-
         } catch (PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
     }
 
     /**
-    * Check if user is active
-    * 
-    * @access public
-    * @return void
-    */
-    public function isActive() 
+     * Check if user is active.
+     */
+    public function isActive()
     {
         if ($this->id > 0) {
             return ($this->active == 1);
@@ -78,26 +70,20 @@ class User extends Model
     }
 
     /**
-    * Check if user is admin
-    * 
-    * @access public
-    * @return void
-    */
+     * Check if user is admin.
+     */
     public function isAdmin()
     {
         if ($this->id > 0) {
-            return ($this->level == "admin");    
+            return ($this->level == 'admin');
         }
-        
     }
 
     /**
-    * Cookie setter
-    * 
-    * @access public
-    * @param string $_cookie (default: '')
-    * @return void
-    */
+     * Cookie setter.
+     *
+     * @param string $_cookie (default: '')
+     */
     public function setCookie($_cookie = '')
     {
         if (!empty($_cookie)) {
@@ -105,51 +91,42 @@ class User extends Model
         }
 
         if (!empty($this->cookie)) {
-            setCookie(COOKIE_NAME . "_log", $this->cookie, time() + 60 * 60 * 24 * 30, COOKIE_PATH, COOKIE_DOMAIN);    
+            setCookie(COOKIE_NAME.'_log', $this->cookie, time() + 60 * 60 * 24 * 30, COOKIE_PATH, COOKIE_DOMAIN);
         }
     }
 
     /**
-    * Unset user cookie
-    * 
-    * @access public
-    * @return void
-    */
+     * Unset user cookie.
+     */
     public function unsetCookie()
     {
-        setCookie(COOKIE_NAME . "_log", "", time()-1, COOKIE_PATH, COOKIE_DOMAIN);
-        setCookie("PHPSESSID", "", time()-1, COOKIE_PATH);
+        setCookie(COOKIE_NAME.'_log', '', time() - 1, COOKIE_PATH, COOKIE_DOMAIN);
+        setCookie('PHPSESSID', '', time() - 1, COOKIE_PATH);
 
-        $this->logged = false; 
+        $this->logged = false;
     }
 
     /**
-    * Create new cookie
-    * 
-    * @access public
-    * @return void
-    */
+     * Create new cookie.
+     */
     public function cookie()
     {
         if (empty($this->cookie) && !empty($this->id)) {
-            $this->cookie = sha1($this->email . md5($this->id));
+            $this->cookie = sha1($this->email.md5($this->id));
         }
 
         return $this->cookie;
     }
 
     /**
-    * Get user from cookie
-    * 
-    * @access public
-    * @param mixed $_cookie
-    * @return void
-    */
+     * Get user from cookie.
+     *
+     * @param mixed $_cookie
+     */
     public function getFromCookie($_cookie)
     {
         try {
-
-            $db = new DB;
+            $db = new DB();
 
             $this->cookie = substr($_cookie, 0, 40);
             $_table = $this->table;
@@ -177,19 +154,14 @@ class User extends Model
             }
 
             return $return;
-
         } catch (PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
-
     }
 
     /**
-    * Update last login (date)
-    * 
-    * @access public
-    * @return void
-    */
+     * Update last login (date).
+     */
     public function updateLastLogin()
     {
         if ($this->id > 0) {
@@ -199,32 +171,26 @@ class User extends Model
     }
 
     /**
-    * Hash user password
-    * 
-    * @access public
-    * @return void
-    */
+     * Hash user password.
+     */
     public function hashPassword($_pass)
     {
-        if (!empty($_pass)){
-            return md5(sha1($_pass));  
-        } 
+        if (!empty($_pass)) {
+            return md5(sha1($_pass));
+        }
     }
 
     /**
-    * Check if email is registered
-    * 
-    * @access public
-    * @param mixed $_email
-    * @return void
-    */
+     * Check if email is registered.
+     *
+     * @param mixed $_email
+     */
     public function isEmailRegistered($_email)
     {
         try {
-
-            $db = new DB;
+            $db = new DB();
             $_table = $this->table;
-            $return = NULL;
+            $return = null;
 
             $item = $db->query("SELECT id
                   FROM $_table
@@ -239,35 +205,30 @@ class User extends Model
             }
 
             return $return;
-
         } catch (PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
     }
 
     /**
-    * Get user from email and password
-    * 
-    * @access public
-    * @param mixed $_email
-    * @param mixed $_password
-    * @return void
-    */
+     * Get user from email and password.
+     *
+     * @param mixed $_email
+     * @param mixed $_password
+     */
     public function getFromEmailPassword($_email, $_password)
     {
         try {
-
-            $db = new DB;
+            $db = new DB();
             $_table = $this->table;
-            $return = NULL;
+            $return = null;
 
-            if (!empty($_email) && !empty($_password)){
-
+            if (!empty($_email) && !empty($_password)) {
                 $item = $db->query("
                     SELECT id
                     FROM $_table
-                    WHERE email = '" . $_email . "'
-                    AND password  = MD5(SHA1('" . $_password . "'))");
+                    WHERE email = '".$_email."'
+                    AND password  = MD5(SHA1('".$_password."'))");
 
                 $result = $item->fetchColumn(0);
 
@@ -280,14 +241,11 @@ class User extends Model
                 } else {
                     $return = false;
                 }
-
             }
 
             return $return;
-
         } catch (PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
-    
     }
-} 
+}

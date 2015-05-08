@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -8,10 +9,8 @@
 namespace Quaver\Core;
 
 /**
- * Excepcion class
- * @package Core
+ * Excepcion class.
  */
 class Exception extends \Exception
 {
-    
 }

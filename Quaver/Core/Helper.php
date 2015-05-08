@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -8,14 +9,13 @@
 namespace Quaver\Core;
 
 /**
- * Helper class
- * @package Core
+ * Helper class.
  */
 class Helper
 {
-    
     /**
-     * Get browser language
+     * Get browser language.
+     *
      * @return type
      */
     public static function getBrowserLanguage()
@@ -24,7 +24,8 @@ class Helper
     }
 
     /**
-     * Function to get the client IP address
+     * Function to get the client IP address.
+     *
      * @return type
      */
     public static function getClientIP()
@@ -32,79 +33,87 @@ class Helper
         $ipaddress = '';
         if ($_SERVER['HTTP_CLIENT_IP']) {
             $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-        } else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+        } elseif ($_SERVER['HTTP_X_FORWARDED_FOR']) {
             $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else if ($_SERVER['HTTP_X_FORWARDED']) {
+        } elseif ($_SERVER['HTTP_X_FORWARDED']) {
             $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-        } else if ($_SERVER['HTTP_FORWARDED_FOR']) {
+        } elseif ($_SERVER['HTTP_FORWARDED_FOR']) {
             $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-        } else if ($_SERVER['HTTP_FORWARDED']) {
+        } elseif ($_SERVER['HTTP_FORWARDED']) {
             $ipaddress = $_SERVER['HTTP_FORWARDED'];
-        } else if ($_SERVER['REMOTE_ADDR']) {
+        } elseif ($_SERVER['REMOTE_ADDR']) {
             $ipaddress = $_SERVER['REMOTE_ADDR'];
         } else {
             $ipaddress = 'UNKNOWN';
         }
+
         return $ipaddress;
     }
-    
+
     /**
-     * Cipher data with CYPHER_KEY constant and mcrypt
-     * @param type $_value 
+     * Cipher data with CYPHER_KEY constant and mcrypt.
+     *
+     * @param type $_value
+     *
      * @return type
      */
-    public static function cipher($_value) {
+    public static function cipher($_value)
+    {
         $_value = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, CIPHER_KEY, $_value, MCRYPT_MODE_ECB));
+
         return $_value;
     }
 
     /**
-     * Decipher data with CYPHER_KEY constant and mcrypt
-     * @param type $_value 
+     * Decipher data with CYPHER_KEY constant and mcrypt.
+     *
+     * @param type $_value
+     *
      * @return type
      */
-    public static function decipher($_value) {
+    public static function decipher($_value)
+    {
         $decode = base64_decode($_value);
         $_value = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, CIPHER_KEY, $decode, MCRYPT_MODE_ECB));
+
         return $_value;
     }
 
     /**
-     * Translate actual day name to spanish
+     * Translate actual day name to spanish.
+     *
      * @return type
      */
     public static function getDay()
     {
-        $day = date("l");
+        $day = date('l');
 
         if (isset($GLOBALS['_lang'])) {
-            
             if ($GLOBALS['_lang'] ==  2) {
-
                 switch ($day) {
-                    case "Monday":
-                        $day = "Lunes";
+                    case 'Monday':
+                        $day = 'Lunes';
                         break;
-                    case "Tuesday":
-                        $day = "Martes";
+                    case 'Tuesday':
+                        $day = 'Martes';
                         break;
-                    case "Wednesday":
-                        $day = "Miércoles";
+                    case 'Wednesday':
+                        $day = 'Miércoles';
                         break;
-                    case "Thursday":
-                        $day = "Jueves";
+                    case 'Thursday':
+                        $day = 'Jueves';
                         break;
-                    case "Friday":
-                        $day = "Viernes";
+                    case 'Friday':
+                        $day = 'Viernes';
                         break;
-                    case "Saturday":
-                        $day = "Sábado";
+                    case 'Saturday':
+                        $day = 'Sábado';
                         break;
-                    case "Sunday":
-                        $day = "Domingo";
+                    case 'Sunday':
+                        $day = 'Domingo';
                         break;
                     default:
-                        $day = "Unknown";
+                        $day = 'Unknown';
                         break;
                 }
             }
@@ -114,45 +123,54 @@ class Helper
     }
 
     /**
-     * Change date to spanish format
-     * @param type $_time 
+     * Change date to spanish format.
+     *
+     * @param type $_time
+     *
      * @return type
      */
     public static function formatDate($_time)
-    {    
-        return date("d-m-Y H:i:s", $_time);
+    {
+        return date('d-m-Y H:i:s', $_time);
     }
 
     /**
-     * Change percentage to spanish format
-     * @param type $n 
+     * Change percentage to spanish format.
+     *
+     * @param type $n
+     *
      * @return type
      */
     public static function formatPercentage($n)
     {
-        $n = str_replace(',','.', $n);
+        $n = str_replace(',', '.', $n);
+
         return $n;
     }
 
     /**
-     * (Legacy) Clean integers puntuation
-     * @param type $s 
+     * (Legacy) Clean integers puntuation.
+     *
+     * @param type $s
+     *
      * @return type
      */
     public static function cleanInt($s)
     {
-        $s = str_replace('"','', $s);
-        $s = str_replace(':','', $s);
-        $s = str_replace('.','', $s);
-        $s = str_replace(',','', $s);
-        $s = str_replace(';','', $s);
+        $s = str_replace('"', '', $s);
+        $s = str_replace(':', '', $s);
+        $s = str_replace('.', '', $s);
+        $s = str_replace(',', '', $s);
+        $s = str_replace(';', '', $s);
 
         return $s;
     }
 
     /**
-     * (Legacy) Clean format string
-     * @param type $_str 
+     * (Legacy) Clean format string.
+     *
+     * @param type $_str
+     *
      * @return type
      */
     public static function cleanString($_str)
@@ -171,7 +189,7 @@ class Helper
             'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ',
             'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ',
             'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ',
-            'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', '!', '?', '\\', '.', '&', ',', ':', '(', ')', ';', '^', '¡', '¿', '//', '"', '@');
+            'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', '!', '?', '\\', '.', '&', ',', ':', '(', ')', ';', '^', '¡', '¿', '//', '"', '@', );
         // ...in this other...
         $o = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I',
             'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's',
@@ -186,10 +204,9 @@ class Helper
             'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w',
             'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A',
             'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A',
-            'a', 'AE', 'ae', 'O', 'o', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+            'a', 'AE', 'ae', 'O', 'o', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', );
         $str = str_replace($i, $o, $_str);
         // Replace more
         return strtolower(preg_replace(array('/[^a-zA-Z0-9 -_\/]/', '/[ -]+/', '/[ _]+/', '/[ \/]+/', '/^-|-$/'), array('', '-', '_', '/', ''), $str));
     }
 }
-

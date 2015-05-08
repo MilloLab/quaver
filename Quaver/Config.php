@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2014 Alberto González
  * Distributed under MIT License
@@ -6,9 +7,9 @@
  */
 
 // Core Path
-define('MODEL_PATH', GLOBAL_PATH . '/Quaver/App/Model');
-define('CONTROLLER_PATH', GLOBAL_PATH . '/Quaver/App/Controller');
-define('VENDOR_PATH', GLOBAL_PATH . '/vendor');
+define('MODEL_PATH', GLOBAL_PATH.'/Quaver/App/Model');
+define('CONTROLLER_PATH', GLOBAL_PATH.'/Quaver/App/Controller');
+define('VENDOR_PATH', GLOBAL_PATH.'/vendor');
 
 // Resource Path
 define('FILES_PATH', './files');
