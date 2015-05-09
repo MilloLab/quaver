@@ -23,7 +23,6 @@ class home extends Controller
      */
     public function homeAction()
     {
-        $this->addTwigVars('siteTitle', 'Welcome to Quaver'.' - '.BRAND_NAME);
         $this->render();
     }
 

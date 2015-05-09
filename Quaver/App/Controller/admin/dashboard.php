@@ -36,6 +36,7 @@ class dashboard extends Controller
 
         // Set up menu action
         $this->addTwigVars('section', '');
+
         $this->setView('admin/main');
         $this->render();
     }
@@ -347,6 +348,50 @@ class dashboard extends Controller
                 exit;
         }
 
+        $this->render();
+    }
+
+    /**
+     * Plugins manager.
+     *
+     * @return type
+     */
+    public function pluginsAction()
+    {
+        global $_user;
+
+        // Check privileges
+        if (!$_user->logged || !$_user->isAdmin()) {
+            header('Location: /login');
+            exit;
+        }
+
+        // Set up menu action
+        $this->addTwigVars('section', 'plugins');
+
+        $this->setView('admin/plugins-List');
+        $this->render();
+    }
+
+    /**
+     * Routing manager.
+     *
+     * @return type
+     */
+    public function routingAction()
+    {
+        global $_user;
+
+        // Check privileges
+        if (!$_user->logged || !$_user->isAdmin()) {
+            header('Location: /login');
+            exit;
+        }
+
+        // Set up menu action
+        $this->addTwigVars('section', 'routing');
+
+        $this->setView('admin/routing-List');
         $this->render();
     }
 }

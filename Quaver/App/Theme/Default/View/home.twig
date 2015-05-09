@@ -14,6 +14,13 @@
         <p>URI {{loop.index}}: {{ uri }}</p>
       {% endfor %}
 
+      {% if qv.dev %}
+      <h2>Benchmark</h2>
+      <p><span class="label label-success">{{ qv.dev.final_time }}</span></p>
+      <p><span class="label label-primary">{{ qv.dev.memory_usage }}</span></p>
+      <p><pre>{{ qv.dev.twigProfiler }}</pre></p>
+      {% endif %}
+
       <h2>{{ ('important')|t }}</h2>
       <ul>
       <li>{{ ('import')|t }} <strong>quaver.sql</strong> {{ ('to-your-database')|t }}</li>

@@ -9,20 +9,20 @@
         <a class="btn btn-default" href="/admin/languages"> {{ ('back')|t }}</a>
         <button class="btn btn-success" name="{{ typePOST }}" type="submit"> {{ ('save')|t }}</button>
     </div>
-    
+
     <h1 class="page-header">String: <a><b>{{ item[0].label }}</b></a> </h1>
-    
+
     <div class="form-group">
             <label for="label">Label</label>
             <input class="form-control" type="text" id="label" name="label" value="{{ item[0].label }}">
         </div>
 
     {% for tab in languages %}
-            
+
             <input type="hidden" name="idL[]" id="idL" value="{{ item[tab.id-1].id }}" />
-            
+
             <h2 class="page-subheader">{{ tab.locale }} </h2>
-        
+
             <div class="form-group">
                 <label for="language">Idioma</label>
                 {% if typePOST == 'add' %}
@@ -41,7 +41,7 @@
             <hr/>
 
         {% endfor %}
-    
+
 
 
         {% if item.id %}
@@ -49,11 +49,8 @@
         {% endif %}
 
         </form>
-        
+
         </div>
 
 
 {% endblock %}
-
-
-

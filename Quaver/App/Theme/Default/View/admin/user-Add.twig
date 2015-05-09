@@ -9,9 +9,9 @@
         <a class="btn btn-default" href="/admin/users"> {{ ('back')|t }}</a>
         <button class="btn btn-success" name="{{ typePOST }}" type="submit"> {{ ('save')|t }}</button>
     </div>
-    
+
     <h1 class="page-header">{{ ('user')|t }}: <a><b>{{ item.id }}</b></a> </h1>
-    
+
     <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" type="email" id="email" name="email" value="{{ item.email }}">
@@ -48,11 +48,8 @@
         {% endif %}
 
         </form>
-        
+
         </div>
 
 
 {% endblock %}
-
-
-

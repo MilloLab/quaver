@@ -55,6 +55,18 @@ admin_languages:
     controller: dashboard
     action: languages
 
+admin_plugins:
+    url: /admin/plugins/
+    path: admin
+    controller: dashboard
+    action: plugins
+
+admin_routing:
+    url: /admin/routing/
+    path: admin
+    controller: dashboard
+    action: routing
+
 admin_lang:
     url: /admin/lang/([a-zA-Z0-9-_]+)?[/]?([a-zA-Z0-9-_]+)?[/]?
     path: admin
@@ -72,4 +84,3 @@ admin_users:
     path: admin
     controller: dashboard
     action: users
-

@@ -4,20 +4,26 @@
 
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
- 
+
     <h1 class="page-header">{{ ('hi')|t }} {{ qv.user.email }}</h1>
-    
+
     <div class="jumbotron centered">
       <h1>{{ ('welcome')|t }} {{ qv.version }}</h1>
       <p>{{ ('local-lang')|t }}: {{ qv.language.locale|replace('_', '-') }}</p>
       <p>{{ ('sample-string')|t }}: hello_world = {{ 'hello_world'|t }}</p>
-
 
       <h2>Routing</h2>
       <p>Path: {{ qv.url.path }}</p>
       {% for uri in qv.url.uri %}
         <p>URI {{loop.index}}: {{ uri }}</p>
       {% endfor %}
+
+      {% if qv.dev %}
+      <h2>Benchmark</h2>
+      <p><span class="label label-success">{{ qv.dev.final_time }}</span></p>
+      <p><span class="label label-primary">{{ qv.dev.memory_usage }}</span></p>
+      <p><pre>{{ qv.dev.twigProfiler }}</pre></p>
+      {% endif %}
 
       <h2>{{ ('important')|t }}</h2>
       <ul>
@@ -26,7 +32,7 @@
       </ul>
 
     </div>
-  
+
 </div>
 
 {% endblock %}

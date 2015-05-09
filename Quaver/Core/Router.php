@@ -9,14 +9,15 @@
 namespace Quaver\Core;
 
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException; use Quaver\App\Model\User;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Quaver\App\Model\User;
 
 /**
  * Router class.
  */
 class Router
 {
-    public $version = '0.9.3';
+    public $version = '0.9.4';
     public $routes;
     public $modules;
 
@@ -26,6 +27,9 @@ class Router
     // URL management
     public $url;
     public $queryString;
+
+    // DevMode
+    public $dev = array();
 
     /**
      * Router constructor.
@@ -346,5 +350,34 @@ class Router
         if (!empty($qs)) {
             parse_str($qs, $this->queryString);
         }
+    }
+
+    /**
+     * Start benchmarking.
+     *
+     * @param type $set
+     *
+     * @return type
+     */
+    public function startBenchProcess($set = true)
+    {
+        if ($set) {
+            $start_time = microtime(true);
+            $this->dev['start_time'] = $start_time;
+        }
+    }
+
+    /**
+     * Finish benchmarking.
+     *
+     * @return type
+     */
+    public function finishBenchProcess()
+    {
+        $end_time = microtime(true);
+
+        $this->dev['end_time'] = $end_time;
+        $this->dev['final_time'] = ($end_time - $this->dev['start_time']).' ms';
+        $this->dev['memory_usage'] = 'memory: '.(memory_get_peak_usage() / 1024 / 1024).' MB';
     }
 }

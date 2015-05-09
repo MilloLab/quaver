@@ -48,5 +48,10 @@ $router->addPath('/', GLOBAL_PATH.'/Quaver/Routes.yml');
 // Add modules
 $router->addModule('HelloWorld', 'millolab/quaver-helloworld');
 
+// DevMode
+if (defined('DEV_MODE') && DEV_MODE) {
+    $router->startBenchProcess(); //false argument to stop under dev mode
+}
+
 $bootstrap->router = $router;
 $bootstrap->run();

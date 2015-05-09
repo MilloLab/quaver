@@ -12,39 +12,7 @@
           </button>
           <a class="navbar-brand" href="/">Quaver</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://github.com/MilloLab/quaver" target="_blank"> <i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://quaver.millolab.com" target="_blank"> <i class="fa fa-millolab "></i> Quaver Site</a></li>
-            
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ qv.language.name[:2] }} <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                {% for lang in qv.languages %}
-                  {% if lang.id == qv.language.id %}
-                    <li class="disabled"><a href="#">{{ lang.large }}</a></li>
-                  {% else %}
-                    <li><a href="/language/{{ lang.name }}">{{ lang.large }}</a></li>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            </li>
-            
-            {% if qv.user.logged %}
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ qv.user.email }} <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="/admin">Dashboard</a></li>
-                  <li class="divider"></li>
-                  <li><a href="/logout">{{ ('logout')|t }}</a></li>
-                </ul>
-              </li>
-            {% else %}
-              <li><a href="/register">{{ ('register')|t }}</a></li>
-              <li><a href="/login">{{ ('login')|t }}</a></li>
-            {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
+        {% include 'admin/navContent.twig' %}
       </div>
     </div>
 

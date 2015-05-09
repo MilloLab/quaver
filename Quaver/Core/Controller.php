@@ -19,6 +19,7 @@ abstract class Controller
     public $template;
     public $twig = null;
     public $twigVars = array();
+    public $twigProfiler;
     public $configVars = array();
 
     /**
@@ -78,6 +79,11 @@ abstract class Controller
         });
         $this->twig->addFilter($filter);
 
+        if (defined('DEV_MODE') && DEV_MODE) {
+            $this->twigProfiler = new \Twig_Profiler_Profile();
+            $this->twig->addExtension(new \Twig_Extension_Profiler($this->twigProfiler));
+        }
+
         // Clear Twig cache
         if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {
             if (isset($this->router->queryString['clearCache'])) {
@@ -111,7 +117,21 @@ abstract class Controller
      */
     public function render()
     {
-        echo $this->template->render($this->twigVars);
+        $showTemplate = $this->template->render($this->twigVars);
+
+        if (defined('DEV_MODE') && DEV_MODE && $this->router->dev) {
+            $this->router->finishBenchProcess();
+
+            $dumper = new \Twig_Profiler_Dumper_Text();
+            $this->router->dev['twigProfiler'] = $dumper->dump($this->twigProfiler);
+
+            $this->addQuaverTwigVars('dev', $this->router->dev);
+            $this->addTwigVars('qv', $this->configVars);
+
+            $showTemplate = $this->template->render($this->twigVars);
+        }
+
+        echo $showTemplate;
     }
 
     /**
@@ -161,6 +181,7 @@ abstract class Controller
             'js' => JS_PATH,
             'img' => IMG_PATH,
             'env' => DEV_MODE ? 'development' : 'production',
+            'dev' => $this->router->dev,
             'version' => $this->router->version,
             'url' => $this->router->url,
             'language' => $GLOBALS['_lang'],

@@ -143,7 +143,9 @@ INSERT INTO `lang_strings` (`id`, `language`, `label`, `text`) VALUES
 (88, 1, 'last-login', 'Last login'),
 (89, 1, 'options', 'Options'),
 (90, 1, 'user', 'User'),
-(92, 2, 'title-404', 'Error 404');
+(92, 2, 'title-404', 'Error 404'),
+(93, 1, 'plugins', 'Plugins'),
+(94, 2, 'plugins', 'Extensiones');
 
 -- --------------------------------------------------------
 

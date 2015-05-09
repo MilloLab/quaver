@@ -1,6 +1,6 @@
 {% extends "admin/aLayout.twig" %}
 
-{% block title %}Log - Quaver Dashboard{% endblock %}
+{% block title %}Routing - Quaver Dashboard{% endblock %}
 
     {% block head %}
 
@@ -41,32 +41,34 @@
 
       </div>
 
-          <h1 class="page-header">Log</h1>
+          <h1 class="page-header">Routing</h1>
 
           <div class="table-responsive">
              <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-hover" id="items">
             <thead>
             <tr>
-                <th class="left">Id</th>
-                <th class="center">User</th>
+                <th class="left">Access</th>
+                <th class="left">Route</th>
+                <th class="center">Url</th>
+                <th class="center">Controller</th>
                 <th class="center">Action</th>
-                <th class="center">Model name</th>
-                <th class="center">Model id</th>
-                <th class="center">Model title</th>
-                <th class="center">Fecha</th>
+                <th class="center">View</th>
+                <th class="center">Path</th>
             </tr>
             </thead>
             <tbody>
-              {% for item in items %}
-              <tr class="row-{{ item.id }}" id="row-{{ item.id }}" data-id="{{ item.id }}">
-                <td class="center">{{ item.id }}</td>
-                <td class="center">{{ item.user_email }}</td>
-                <td class="center">{{ item.action }}</td>
-                <td class="center">{{ item.model }}</td>
-                <td class="center">{{ item.model_id }}</td>
-                <td class="center">{{ item.model_title }}</td>
-                <td class="center">{{ item.date|date('d/M/Y H:i:s') }}</td>
-              </tr>
+              {% for key, param in qv.routes %}
+                {% for subKey, item in param %}
+                  <tr class="row-{{ loop.index }}" id="row-{{ loop.index }}">
+                    <td class="center">{{ key }}</td>
+                    <td class="center">{{ subKey }}</td>
+                    <td class="center">{{ item.url }}</td>
+                    <td class="center">{{ item.controller }}</td>
+                    <td class="center">{{ item.action }}</td>
+                    <td class="center">{{ item.view }}</td>
+                    <td class="center">{{ item.path }}</td>
+                  </tr>
+                {% endfor %}
               {% endfor %}
             </tbody>
         </table>

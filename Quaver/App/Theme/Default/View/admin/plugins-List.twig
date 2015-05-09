@@ -19,13 +19,12 @@
                         {},
                         {},
                         {},
-                        {},
                         {}
                     ],
                     //"bFilter": false,
-                    "aaSorting": [
-                        [6, 'desc']
-                    ],
+                    // "aaSorting": [
+                    //     [6, 'desc']
+                    // ],
                     "bStateSave": true,
                     "bAutoWidth": false,
                 });
@@ -41,33 +40,33 @@
 
       </div>
 
-          <h1 class="page-header">Log</h1>
+          <h1 class="page-header">{{ ('plugins')|t }}</h1>
 
           <div class="table-responsive">
              <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-hover" id="items">
             <thead>
             <tr>
-                <th class="left">Id</th>
-                <th class="center">User</th>
-                <th class="center">Action</th>
-                <th class="center">Model name</th>
-                <th class="center">Model id</th>
-                <th class="center">Model title</th>
-                <th class="center">Fecha</th>
+                <th class="left">Module</th>
+                <th class="center">Author</th>
+                <th class="center">Version</th>
+                <th class="center">Last Modified</th>
+                <th class="center">Namespace</th>
+                <th class="center">Theme</th>
             </tr>
             </thead>
             <tbody>
-              {% for item in items %}
-              <tr class="row-{{ item.id }}" id="row-{{ item.id }}" data-id="{{ item.id }}">
-                <td class="center">{{ item.id }}</td>
-                <td class="center">{{ item.user_email }}</td>
-                <td class="center">{{ item.action }}</td>
-                <td class="center">{{ item.model }}</td>
-                <td class="center">{{ item.model_id }}</td>
-                <td class="center">{{ item.model_title }}</td>
-                <td class="center">{{ item.date|date('d/M/Y H:i:s') }}</td>
-              </tr>
-              {% endfor %}
+                {% for key, item in qv.modules %}
+
+                  <tr class="row-{{ loop.index }}" id="row-{{ loop.index }}">
+                    <td class="center">{{ key }}</td>
+                    <td class="center">{{ item.params.author }}</td>
+                    <td class="center">{{ item.params.version }}</td>
+                    <td class="center">{{ item.params.dateLastUpdate }}</td>
+                    <td class="center">{{ item.namespace }}</td>
+                    <td class="center">{{ item.params.theme }}</td>
+                  </tr>
+                {% endfor %}
+
             </tbody>
         </table>
           </div>
