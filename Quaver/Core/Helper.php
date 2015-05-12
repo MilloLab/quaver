@@ -14,6 +14,56 @@ namespace Quaver\Core;
 class Helper
 {
     /**
+     * uniqid.
+     *
+     * Generate a unique ID
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public static function uniqid($length)
+    {
+        $uniqid = uniqid();
+
+        while (strlen($uniqid) < $length) {
+            $uniqid .= base64_encode(mt_rand());
+        }
+
+        return substr($uniqid, 0, $length);
+    }
+
+    /**
+     * download_send_headers.
+     *
+     * @param type $filename
+     *
+     * @return type
+     */
+    public function download_send_headers($filename, $ContentType = '', $source = '')
+    {
+        // disable caching
+        $now = gmdate('D, d M Y H:i:s');
+        header('Expires: Tue, 03 Jul 2001 06:00:00 GMT');
+        header('Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate');
+        header("Last-Modified: {$now} GMT");
+
+        if (!empty($ContentType)) {
+            header("Content-Type: $ContentType");
+        }
+        header('Content-Type: application/force-download');
+        header('Content-Type: application/octet-stream');
+        header('Content-Type: application/download');
+
+        // disposition / encoding on response body
+        header("Content-Disposition: attachment;filename={$filename}");
+        header('Content-Transfer-Encoding: binary');
+        if (!empty($source)) {
+            readfile($source);
+        }
+    }
+
+    /**
      * Get browser language.
      *
      * @return type

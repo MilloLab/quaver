@@ -176,6 +176,7 @@ abstract class Controller
         // Extra parametres
         $config = array(
             'theme' => THEME_QUAVER,
+            'brandName' => BRAND_NAME,
             'randomVar' => RANDOM_VAR,
             'css' => CSS_PATH,
             'js' => JS_PATH,
