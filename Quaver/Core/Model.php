@@ -40,7 +40,7 @@ abstract class Model
     public function setItem($_item)
     {
         foreach ($this->_fields as $field) {
-            if (isset($_item[$field])) {
+            if (array_key_exists($field, $_item)) {
                 $this->$field = $_item[$field];
             }
         }
