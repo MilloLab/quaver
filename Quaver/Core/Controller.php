@@ -194,14 +194,7 @@ abstract class Controller
         );
 
         if (strstr($this->router->url['path'], '/admin/')) {
-            if (defined('DEV_MODE') && DEV_MODE == false) {
-                $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)'
-                    --abbrev-commit $(git merge-base local-master master)");
-            } else {
-                $build = shell_exec("git log -1 --pretty=format:'%h - %s (%ci)'
-                    --abbrev-commit $(git merge-base local-dev dev)");
-            }
-
+            $build = shell_exec("git log -1 --pretty=format:'%H (%aD)'");
             $config['build'] = $build;
         }
 

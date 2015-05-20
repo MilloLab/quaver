@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.5] - 2015-05-20
+### Changed
+ - Improvements
+
+
 ## [0.9.4a/b] - 2015-05-11
 ### Fixed
  - Improvements
