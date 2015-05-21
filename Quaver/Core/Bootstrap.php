@@ -27,6 +27,16 @@ class Bootstrap
         // Check important folders
         $this->checkFiles();
 
+        // Load language
+        $GLOBALS['_lang'] = new Lang();
+        if (isset($_GET['lang'])) {
+            $lang_slug = substr($_GET['lang'], 0, 3);
+            $GLOBALS['_lang']->getFromSlug($lang_slug);
+            $GLOBALS['_lang']->setCookie();
+        } else {
+            $GLOBALS['_lang']->getSiteLanguage();
+        }
+
         // Load user
         $GLOBALS['_user'] = new User();
         if (isset($_COOKIE[COOKIE_NAME.'_log'])) {
@@ -38,16 +48,6 @@ class Bootstrap
             if ($_SESSION['logged'] == true && $_SESSION['uID'] != 0) {
                 $GLOBALS['_user']->getFromId($_SESSION['uID']);
             }
-        }
-
-        // Load language
-        $GLOBALS['_lang'] = new Lang();
-        if (isset($_GET['lang'])) {
-            $lang_slug = substr($_GET['lang'], 0, 3);
-            $GLOBALS['_lang']->getFromSlug($lang_slug);
-            $GLOBALS['_lang']->setCookie();
-        } else {
-            $GLOBALS['_lang']->getSiteLanguage();
         }
 
         // Maintenance mode
