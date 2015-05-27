@@ -10,59 +10,65 @@ namespace Quaver\Core;
 
 use PDO;
 
-/**
- * DB class.
- */
 class DB
 {
     private $conn = null;
 
     /**
-     * DB constructor.
-     *
-     * @return type
+     * constructor.
      */
     public function __construct()
     {
-
-        // Connecting to mysql
-        if (!defined('DB_USERNAME')
-            || !defined('DB_PASSWORD')
-            || !defined('DB_DATABASE')
-        ) {
-            die('Database parameters needed.');
-        } else {
-            try {
-                // Config mysql link
-                $this->conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE.';port='.DB_PORT, DB_USERNAME, DB_PASSWORD);
-                $this->conn->exec('SET CHARACTER SET utf8');
-
-                if (defined('DEV_MODE') && DEV_MODE === true) {
-                    $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                }
-            } catch (\PDOException $e) {
-                throw new \Quaver\Core\Exception($e->getMessage());
-            }
-        }
+        $this->conn = $this->getConnection();
     }
 
     /**
-     * Run database queries.
+     * getConnection.
      *
-     * @param type $query
-     * @param type $params
+     * @return <type>
+     */
+    public function getConnection()
+    {
+        static $conn;
+
+        if (!$conn) {
+
+            // Connecting to mysql
+            if (!defined('DB_USERNAME')
+                || !defined('DB_PASSWORD')
+                || !defined('DB_DATABASE')
+                || !defined('DB_PORT')
+            ) {
+                die('Database parameters needed.');
+            } else {
+                try {
+                    // Config mysql link
+                    $conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE.';port='.DB_PORT, DB_USERNAME, DB_PASSWORD);
+                    $conn->exec('SET CHARACTER SET utf8');
+
+                    if (defined('DEV_MODE') && DEV_MODE === true) {
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    }
+                } catch (\PDOException $e) {
+                    throw new \Quaver\Core\Exception($e->getMessage());
+                }
+            }
+        }
+
+        return $conn;
+    }
+
+    /**
+     * @param $query
+     * @param null $params
      *
-     * @return type
+     * @return mixed
      *
      * @throws Exception
      */
     public function query($query, $params = null)
     {
-        static $db = null;
-
-        if ($db === null) {
-            $db = $this->conn;
-        }
+        $db = $this->getConnection();
 
         $params = func_num_args() === 2 && is_array($params) ? $params : array_slice(func_get_args(), 1);
 
@@ -78,9 +84,7 @@ class DB
     }
 
     /**
-     * Get last insert ID.
-     *
-     * @return type
+     * @return int
      */
     public function insertId()
     {

@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.6] - 2015-05-27
+### Changed
+ - DB class updated
+
+
 ## [0.9.5a] - 2015-05-21
 ### Fixes
  - Now the lang is loaded before the user
