@@ -17,7 +17,7 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    public $version = '0.9.6b';
+    public $version = '0.9.7';
     public $routes;
     public $modules;
 
@@ -123,8 +123,13 @@ class Router
             $this->modules[$moduleName]['realPath'] = $modulePath ? $modulePath.'/'.$packageName : VENDOR_PATH.'/'.$packageName;
 
             // Load routes of module
-            !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml') : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml');
-        } catch (ParseException $e) {
+            
+            if ($newModule->useRoutes) {
+                !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml') : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml');
+            }
+            
+            
+        } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception("Unable to load module: $moduleName", $e->getMessage());
         }
     }
@@ -324,7 +329,7 @@ class Router
                             $controllerNamespace = $moduleNamespace.$pathNamespace.'\\Controller\\'.$controllerName;
                             $controller = new $controllerNamespace($this);
 
-                            if (isset($controllerView) && $controllerView != 'none') {
+                            if (isset($controllerView) && $controllerView != 'none' && $module['useViews'] === true) {
                                 $controller->setView($controllerView);
                             }
 
@@ -333,7 +338,7 @@ class Router
                     }
                 }
             }
-        } catch (ParseException $e) {
+        } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception('Unable to load controller: '.$controller['controller'], $e->getMessage());
         }
     }

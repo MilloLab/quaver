@@ -55,7 +55,7 @@ abstract class Controller
         // Add paths of modules
         if ($this->router->modules) {
             foreach ($this->router->modules as $module) {
-                if (isset($module['params']->theme) && !empty($module['params']->theme)) {
+                if ($module['params']->useViews === true && isset($module['params']->theme) && !empty($module['params']->theme)) {
                     $loader->addPath($module['realPath'].$module['namespacePath'].'/Theme/'.$module['params']->theme.'/View');
                 }
             }
@@ -139,7 +139,7 @@ abstract class Controller
      *
      * @return type
      */
-    public function getGlobalTwigVars()
+    protected function getGlobalTwigVars()
     {
         // Language
         $this->addTwigVars('language', $GLOBALS['_lang']); // legacy support

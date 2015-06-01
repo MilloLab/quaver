@@ -47,21 +47,5 @@ define('DB_PASSWORD', 'root');
 define('DB_DATABASE', 'qv');
 define('DB_PORT', '3306');
 
-/*
- * External
- */
-
-// Enabled mailing model
-define('MAIL_ENABLED', true);
-
-// Contact mail
-define('CONTACT_EMAIL', 'info@mydomain.com');
-define('CONTACT_NAME', 'My Company Name');
-
-// MANDRILL
-define('MANDRILL', false);
-define('MANDRILL_USERNAME', '');
-define('MANDRILL_APIKEY', '');
-
 // Cypher KEY
 define('CIPHER_KEY', ''); // 8 digits

@@ -2,13 +2,21 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.7] - 2015-06-01
+### Changed
+ - Mail model removed (see [Quaver Mail](https://github.com/MilloLab/quaver-module-mail))
+ - Improvements
+
+
 ## [0.9.6b] - 2015-06-01
 ### Fixes
  - Fix function getDay
 
+
 ## [0.9.6a] - 2015-06-01
 ### Fixes
  - Fix duplicate strings creation
+
 
 ## [0.9.6] - 2015-05-27
 ### Changed

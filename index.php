@@ -47,6 +47,7 @@ $router->addPath('/', GLOBAL_PATH.'/Quaver/Routes.yml');
 
 // Add modules
 $router->addModule('HelloWorld', 'millolab/quaver-helloworld');
+$router->addModule('Mail', 'millolab/quaver-mail');
 
 // DevMode
 if (defined('DEV_MODE') && DEV_MODE) {
