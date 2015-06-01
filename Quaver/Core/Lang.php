@@ -238,13 +238,14 @@ class Lang extends \Quaver\Core\Model
                     break;
             }
         } else {
+            $return = "#$_label#";
             $newString = new LangStrings();
             $newString->language = $this->id;
             $newString->label = $_label;
-            $newString->text = "#$_label#";
+            $newString->text = $return;
 
             if ($newString->save()) {
-                $return = "#$_label#";
+                $this->strings[$_label] = $return;
             }
         }
 
