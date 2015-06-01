@@ -139,7 +139,7 @@ class Helper
         $day = date('l');
 
         if (isset($GLOBALS['_lang'])) {
-            if ($GLOBALS['_lang'] ==  2) {
+            if ($GLOBALS['_lang']->id ==  2) {
                 switch ($day) {
                     case 'Monday':
                         $day = 'Lunes';

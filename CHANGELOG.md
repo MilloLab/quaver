@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.9.6a] - 2015-05-27
+## [0.9.6b] - 2015-06-01
+### Fixes
+ - Fix function getDay
+
+## [0.9.6a] - 2015-06-01
 ### Fixes
  - Fix duplicate strings creation
 

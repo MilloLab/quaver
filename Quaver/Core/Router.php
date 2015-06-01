@@ -17,7 +17,7 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    public $version = '0.9.6a';
+    public $version = '0.9.6b';
     public $routes;
     public $modules;
 
