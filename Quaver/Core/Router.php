@@ -17,7 +17,7 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    public $version = '0.9.7';
+    public $version = '0.9.8';
     public $routes;
     public $modules;
 
@@ -72,18 +72,23 @@ class Router
     }
 
     /**
-     * Add new paths (yml).
+     * Add new paths (YAML).
      *
      * @param type $container
      * @param type $path
+     * @param type $_moduleRoute
      *
      * @return type
      */
-    public function addPath($container, $path)
+    public function addPath($container, $path, $_moduleRoute = false)
     {
         try {
             $yaml = new Parser();
             $elements = $yaml->parse(file_get_contents($path));
+
+            if ($_moduleRoute) {
+                $elements[key($elements)]['moduleRoute'] = $_moduleRoute;
+            }
 
             // Asign each routes
             isset($this->routes[$container]) ? $this->routes[$container] += $elements : $this->routes[$container] = $elements;
@@ -123,12 +128,10 @@ class Router
             $this->modules[$moduleName]['realPath'] = $modulePath ? $modulePath.'/'.$packageName : VENDOR_PATH.'/'.$packageName;
 
             // Load routes of module
-            
+
             if ($newModule->useRoutes) {
-                !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml') : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml');
+                !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true) : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true);
             }
-            
-            
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception("Unable to load module: $moduleName", $e->getMessage());
         }
@@ -231,7 +234,7 @@ class Router
      *
      * @return type
      */
-    public function getController($_url)
+    protected function getController($_url)
     {
         $return = false;
         $controller = false;
@@ -280,67 +283,91 @@ class Router
         global $_lang, $_user;
 
         try {
+
+            // Special controllers
             if ($controller == 'e404') {
                 $controller = $this->routes['/']['404'];
             }
-
             if ($controller == 'maintenance') {
                 $controller = $this->routes['/']['maintenance'];
             }
 
-            if ($controller) {
-                if (isset($controller['path'])) {
-                    $controllerPath = $controller['path'];
-                    $pathNamespace = $controllerPath.'\\';
-                } else {
-                    $controllerPath = '';
-                    $pathNamespace = '';
-                }
+            // Set controller data
+            $controllerData = $this->setControllerData($controller);
 
-                if (isset($controller['view'])) {
-                    $controllerView = $controller['view'];
-                }
+            // Dispatch controller or module controller
+            if ($controllerData['moduleRoute']) {
+                foreach ($this->modules as $module) {
+                    $moduleNamespace = $module['namespace'];
+                    $realModulePath = !empty($controllerData['controllerPath']) ? $module['realPath'].$module['namespacePath'].'/Controller/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : $module['realPath'].$module['namespacePath'].'/Controller/'.$controllerData['controllerName'].'.php';
 
-                $defaultNamespace = '\\Quaver\\App\\Controller\\';
+                    // Try to load module controller
+                    if (file_exists($realModulePath)) {
+                        $controllerData['controllerNamespace'] = $moduleNamespace.$controllerData['pathNamespace'].'\\Controller\\'.$controllerData['controllerName'];
+                        $controllerLoader = new $controllerData['controllerNamespace']($this);
 
-                $controllerURL = $controller['url'];
-                $controllerName = $controller['controller'];
-                $controllerNamespace = $defaultNamespace.$pathNamespace.$controllerName;
-                $actionName = isset($controller['action']) ? $controller['action'].'Action' : 'indexAction';
-
-                $realPath = !empty($controllerPath) ? CONTROLLER_PATH.'/'.$controllerPath.'/'.$controllerName.'.php' : CONTROLLER_PATH.'/'.$controllerName.'.php';
-
-                // Try to load controller
-                if (file_exists($realPath)) {
-                    $controller = new $controllerNamespace($this);
-
-                    if (isset($controllerView) && $controllerView != 'none') {
-                        $controller->setView($controllerView);
-                    }
-
-                    $controller->$actionName();
-                } else {
-                    foreach ($this->modules as $module) {
-                        $moduleNamespace = $module['namespace'];
-                        $realModulePath = !empty($controllerPath) ? $module['realPath'].$module['namespacePath'].'/Controller/'.$controllerPath.'/'.$controllerName.'.php' : $module['realPath'].$module['namespacePath'].'/Controller/'.$controllerName.'.php';
-
-                        // Try to load module controller
-                        if (file_exists($realModulePath)) {
-                            $controllerNamespace = $moduleNamespace.$pathNamespace.'\\Controller\\'.$controllerName;
-                            $controller = new $controllerNamespace($this);
-
-                            if (isset($controllerView) && $controllerView != 'none' && $module['useViews'] === true) {
-                                $controller->setView($controllerView);
-                            }
-
-                            $controller->$actionName();
+                        if (isset($controllerData['controllerView']) && $controllerData['controllerView'] != 'none' && $module['params']->useViews === true) {
+                            $controllerLoader->setView($controllerData['controllerView']);
                         }
+
+                        $controllerLoader->$controllerData['actionName']();
                     }
+                }
+            } else {
+                // Try to load controller
+                if (file_exists($controllerData['realPath'])) {
+                    $controllerLoader = new $controllerData['controllerNamespace']($this);
+
+                    if (isset($controllerData['controllerView']) && $controllerData['controllerView'] != 'none') {
+                        $controllerLoader->setView($controllerData['controllerView']);
+                    }
+
+                    $controllerLoader->$controllerData['actionName']();
                 }
             }
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception('Unable to load controller: '.$controller['controller'], $e->getMessage());
         }
+    }
+
+    /**
+     * Set all info to manage controller dispatch.
+     *
+     * @param type $controller
+     *
+     * @return type
+     */
+    protected function setControllerData($controller)
+    {
+        $controllerData = array();
+
+        // Set module route
+        isset($controller['moduleRoute']) ? $controllerData['moduleRoute'] = true : $controllerData['moduleRoute'] = false;
+
+        if (isset($controller['path'])) {
+            $controllerData['controllerPath'] = $controller['path'];
+            $pathNamespace = $controllerData['controllerPath'].'\\';
+        } else {
+            $controllerData['controllerPath'] = '';
+            $pathNamespace = '';
+        }
+
+        if (isset($controller['view'])) {
+            $controllerData['controllerView'] = $controller['view'];
+        }
+
+        $defaultNamespace = '\\Quaver\\App\\Controller\\';
+
+        $controllerData['controllerURL'] = $controller['url'];
+        $controllerData['controllerName'] = $controller['controller'];
+        $controllerData['controllerNamespace'] = $defaultNamespace.$pathNamespace.$controllerData['controllerName'];
+        $controllerData['actionName'] = isset($controller['action']) ? $controller['action'].'Action' : 'indexAction';
+        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? CONTROLLER_PATH.'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : CONTROLLER_PATH.'/'.$controllerData['controllerName'].'.php';
+
+        // USE ONLY TO MODULES
+        $controllerData['pathNamespace'] = $pathNamespace;
+
+        return $controllerData;
     }
 
     /**
