@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.9] - 2015-07-09
+### Changed
+ - New methods to improve URL system with first array and base elements
+ 
+
 ## [0.9.8] - 2015-06-02
 ### Changed
  - Module system: Refactor and improvements 

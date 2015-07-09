@@ -17,7 +17,7 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    public $version = '0.9.8';
+    public $version = '0.9.9';
     public $routes;
     public $modules;
 
@@ -34,7 +34,6 @@ class Router
     /**
      * Router constructor.
      *
-     * @return type
      */
     public function __construct()
     {
@@ -230,9 +229,9 @@ class Router
     /**
      * Get asociate controller.
      *
-     * @param type $url
+     * @param string $url
      *
-     * @return type
+     * @return array
      */
     protected function getController($_url)
     {
@@ -251,10 +250,13 @@ class Router
                     if ($match) {
                         $this->url = array(
                             'uri' => array_splice($match, 1),
+                            'first' => $this->getFirstPath($item['url']),
+                            'base' => $this->getBasePath($item['url']),
                             'path' => $match[0],
                             'host' => $_SERVER['HTTP_HOST'],
                             'protocol' => empty($_SERVER['HTTPS']) ? 'http://' : 'https://',
                         );
+
                         $controller = $item;
                         break;
                     }
@@ -269,6 +271,32 @@ class Router
         }
 
         return $return;
+    }
+
+    /**
+     * Get first path
+     * 
+     * @param string $path
+     * 
+     * @return array
+     */
+    public function getFirstPath($path)
+    {
+        $firstPath = explode('(', $path);
+        return array_filter(explode('/', $firstPath[0]));
+    }
+
+    /**
+     * Get base path
+     * 
+     * @param string $path 
+     * 
+     * @return string
+     */
+    public function getBasePath($path)
+    {
+        $firstPath = explode('(', $path);
+        return $firstPath[0];
     }
 
     /**
