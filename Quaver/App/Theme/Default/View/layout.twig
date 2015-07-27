@@ -12,8 +12,8 @@
     <title>{% block title %}{{ ('welcome')|t }}{% endblock %}</title>
 
     <!-- CSS -->
-    <link href="{{ qv.css }}/bootstrap.min.css?{{ qv.randomVar }}" rel="stylesheet">
-    <link href="{{ qv.css }}/style.min.css?{{ qv.randomVar }}" rel="stylesheet">
+    <link href="{{ qv.r.map('bootstrap.css', 'css') }}" rel="stylesheet">
+    <link href="{{ qv.r.map('style.css', 'css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,7 +52,7 @@
   {% endblock %}
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="{{ qv.js }}/bootstrap.min.js?{{ qv.randomVar }}"></script>
+    <script src="{{ qv.r.map('bootstrap.js', 'js') }}"></script>
 
     {% block footerJS %}{% endblock %}
   </body>

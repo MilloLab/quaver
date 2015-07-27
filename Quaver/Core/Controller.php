@@ -25,9 +25,9 @@ abstract class Controller
     /**
      * Router constructor.
      *
-     * @param type $router
+     * @param class $router
      *
-     * @return type
+     * @return mixed
      */
     public function __construct($router)
     {
@@ -36,15 +36,22 @@ abstract class Controller
         $this->router = $router;
 
         // Theme system
-        define('VIEW_PATH', GLOBAL_PATH.'/Quaver/App/Theme/'.THEME_QUAVER.'/View');
-        define('RES_PATH', '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources');
-        define('CSS_PATH', RES_PATH.'/css');
-        define('JS_PATH', RES_PATH.'/js');
-        define('IMG_PATH', RES_PATH.'/img');
-        define('FONT_PATH', RES_PATH.'/fonts');
+        $viewPath = GLOBAL_PATH.'/Quaver/App/Theme/'.THEME_QUAVER.'/View';
+        $resPath = array(
+            'view' => $viewPath,
+            'res' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources',
+            'css' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/css',
+            'js' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/js',
+            'img' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/img',
+            'font' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/fonts',
+            'theme' => THEME_QUAVER,
+            'randomVar' => RANDOM_VAR,
+        );
+        $r = new Resources($resPath);
+        $this->r = $r;
 
         // Getting all directories in /template
-        $templatesDir = array(VIEW_PATH);
+        $templatesDir = array($viewPath);
 
         // Get query string from URL to core var
         $this->router->getQueryString();
@@ -175,12 +182,11 @@ abstract class Controller
 
         // Extra parametres
         $config = array(
-            'theme' => THEME_QUAVER,
-            'brandName' => BRAND_NAME,
+            'extra' => array(
+                'brandName' => BRAND_NAME,
+            ),
             'randomVar' => RANDOM_VAR,
-            'css' => CSS_PATH,
-            'js' => JS_PATH,
-            'img' => IMG_PATH,
+            'r' => $this->r,
             'env' => DEV_MODE ? 'development' : 'production',
             'dev' => $this->router->dev,
             'version' => $this->router->version,
@@ -190,7 +196,6 @@ abstract class Controller
             'user' => $GLOBALS['_user'],
             'modules' => $this->router->modules,
             'routes' => $this->router->routes,
-
         );
 
         if (strstr($this->router->url['path'], '/admin/')) {
