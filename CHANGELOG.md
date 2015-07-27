@@ -4,7 +4,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [0.9.10] - 2015-07-27
 ### Added
- - Resources class to better managment of resources
+ - Resources class for better managment of resources
 
 
 ## [0.9.9] - 2015-07-09
