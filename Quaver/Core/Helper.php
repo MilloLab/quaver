@@ -36,9 +36,9 @@ class Helper
     /**
      * download_send_headers.
      *
-     * @param type $filename
+     * @param string $filename
      *
-     * @return type
+     * @return file
      */
     public function download_send_headers($filename, $ContentType = '', $source = '')
     {
@@ -66,7 +66,7 @@ class Helper
     /**
      * Get browser language.
      *
-     * @return type
+     * @return string
      */
     public static function getBrowserLanguage()
     {
@@ -76,7 +76,7 @@ class Helper
     /**
      * Function to get the client IP address.
      *
-     * @return type
+     * @return string
      */
     public static function getClientIP()
     {
@@ -103,9 +103,9 @@ class Helper
     /**
      * Cipher data with CYPHER_KEY constant and mcrypt.
      *
-     * @param type $_value
+     * @param string $_value
      *
-     * @return type
+     * @return string
      */
     public static function cipher($_value)
     {
@@ -117,9 +117,9 @@ class Helper
     /**
      * Decipher data with CYPHER_KEY constant and mcrypt.
      *
-     * @param type $_value
+     * @param string $_value
      *
-     * @return type
+     * @return string
      */
     public static function decipher($_value)
     {
@@ -132,7 +132,7 @@ class Helper
     /**
      * Translate actual day name to spanish.
      *
-     * @return type
+     * @return string
      */
     public static function getDay()
     {
@@ -175,9 +175,9 @@ class Helper
     /**
      * Change date to spanish format.
      *
-     * @param type $_time
+     * @param string $_time
      *
-     * @return type
+     * @return string
      */
     public static function formatDate($_time)
     {
@@ -187,9 +187,9 @@ class Helper
     /**
      * Change percentage to spanish format.
      *
-     * @param type $n
+     * @param string $n
      *
-     * @return type
+     * @return string
      */
     public static function formatPercentage($n)
     {
@@ -201,9 +201,9 @@ class Helper
     /**
      * (Legacy) Clean integers puntuation.
      *
-     * @param type $s
+     * @param string $s
      *
-     * @return type
+     * @return string
      */
     public static function cleanInt($s)
     {
@@ -219,9 +219,9 @@ class Helper
     /**
      * (Legacy) Clean format string.
      *
-     * @param type $_str
+     * @param string $_str
      *
-     * @return type
+     * @return string
      */
     public static function cleanString($_str)
     {

@@ -107,10 +107,10 @@ abstract class Controller
     /**
      * Asociate views to render.
      *
-     * @param type $path
-     * @param type $extension
+     * @param string $path
+     * @param string $extension
      *
-     * @return type
+     * @return mixed
      */
     public function setView($path, $extension = 'twig')
     {
@@ -120,7 +120,7 @@ abstract class Controller
     /**
      * Render views.
      *
-     * @return type
+     * @return mixed
      */
     public function render()
     {
@@ -143,8 +143,6 @@ abstract class Controller
 
     /**
      * Set main twig variables.
-     *
-     * @return type
      */
     protected function getGlobalTwigVars()
     {
@@ -210,10 +208,9 @@ abstract class Controller
     /**
      * Add vars to twig.
      *
-     * @param type $_key
-     * @param type $_array
+     * @param string $_key
+     * @param array $_array
      *
-     * @return type
      */
     public function addTwigVars($_key, $_array)
     {
@@ -223,10 +220,9 @@ abstract class Controller
     /**
      * Extend qv object for twig.
      *
-     * @param type $_key
-     * @param type $_array
+     * @param string $_key
+     * @param array $_array
      *
-     * @return type
      */
     public function addQuaverTwigVars($_key, $_array)
     {

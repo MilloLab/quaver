@@ -12,9 +12,9 @@ namespace Quaver;
 /**
  * load file.
  *
- * @param type $namespace
+ * @param string $namespace
  *
- * @return type
+ * @return mixed
  */
 function load($namespace)
 {
@@ -51,9 +51,8 @@ function load($namespace)
 /**
  * loadPath.
  *
- * @param type $absPath
+ * @param string $absPath
  *
- * @return type
  */
 function loadPath($absPath)
 {

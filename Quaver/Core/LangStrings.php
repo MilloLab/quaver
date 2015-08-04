@@ -28,7 +28,7 @@ class LangStrings extends \Quaver\Core\Model
     /**
      * Get language list.
      *
-     * @return type
+     * @return array
      */
     public static function getList()
     {
@@ -120,9 +120,9 @@ class LangStrings extends \Quaver\Core\Model
     /**
      * Language string setter.
      *
-     * @param type $_item
+     * @param array $_item
      *
-     * @return type
+     * @return self[]
      */
     public function setItem($_item)
     {

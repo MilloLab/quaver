@@ -19,7 +19,7 @@ class auth extends Controller
     /**
      * User login.
      *
-     * @return type
+     * @return mixed
      */
     public function loginAction()
     {
@@ -82,7 +82,7 @@ class auth extends Controller
     /**
      * User logout.
      *
-     * @return type
+     * @return mixed
      */
     public function logoutAction()
     {
@@ -115,7 +115,7 @@ class auth extends Controller
     /**
      * User register.
      *
-     * @return type
+     * @return mixed
      */
     public function registerAction()
     {

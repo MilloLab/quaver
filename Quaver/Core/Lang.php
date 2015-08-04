@@ -30,9 +30,9 @@ class Lang extends \Quaver\Core\Model
     /**
      * Get object from ID.
      *
-     * @param type $_id
+     * @param ind $_id
      *
-     * @return type
+     * @return self[]
      */
     public function getFromId($_id)
     {
@@ -67,7 +67,7 @@ class Lang extends \Quaver\Core\Model
     /**
      * Get site language.
      *
-     * @return type
+     * @return self[]
      */
     public function getSiteLanguage()
     {
@@ -96,7 +96,7 @@ class Lang extends \Quaver\Core\Model
     /**
      * Get language from cookie.
      *
-     * @return type
+     * @return self[]
      */
     public function getLanguageFromCookie()
     {
@@ -111,8 +111,6 @@ class Lang extends \Quaver\Core\Model
 
     /**
      * Language cookie setter.
-     *
-     * @return type
      */
     public function setCookie()
     {
@@ -128,10 +126,10 @@ class Lang extends \Quaver\Core\Model
     /**
      * Get object from slug.
      *
-     * @param type $_slug
-     * @param type $_short
+     * @param string $_slug
+     * @param bool $_short
      *
-     * @return type
+     * @return object
      */
     public function getFromSlug($_slug, $_short = false)
     {
@@ -160,7 +158,7 @@ class Lang extends \Quaver\Core\Model
     /**
      * Get all languages.
      *
-     * @return type
+     * @return array
      */
     public function getLanguages()
     {
@@ -182,10 +180,10 @@ class Lang extends \Quaver\Core\Model
     /**
      * Get languages list.
      *
-     * @param type $_all
-     * @param type $_byPriority
+     * @param bool $_all
+     * @param bool $_byPriority
      *
-     * @return type
+     * @return object
      */
     public static function getList($_all = true, $_byPriority = false)
     {
@@ -220,10 +218,10 @@ class Lang extends \Quaver\Core\Model
     /**
      * Convert string to real text.
      *
-     * @param type $_label
-     * @param type $_utf8
+     * @param string $_label
+     * @param string $_utf8
      *
-     * @return type
+     * @return string
      */
     public function typeFormat($_label, $_utf8 = '')
     {
@@ -255,9 +253,9 @@ class Lang extends \Quaver\Core\Model
     /**
      * TypeFormat shortener.
      *
-     * @param type $_label
+     * @param string $_label
      *
-     * @return type
+     * @return string
      */
     public function l($_label)
     {

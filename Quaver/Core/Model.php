@@ -20,8 +20,6 @@ abstract class Model
 
     /**
      * Get language when start the object.
-     *
-     * @return type
      */
     public function __construct()
     {
@@ -33,9 +31,8 @@ abstract class Model
     /**
      * Setter.
      *
-     * @param type $_item
+     * @param array $_item
      *
-     * @return type
      */
     public function setItem($_item)
     {
@@ -49,7 +46,7 @@ abstract class Model
     /**
      * Getter.
      *
-     * @return type
+     * @return array
      */
     public function getItem()
     {
@@ -62,11 +59,65 @@ abstract class Model
     }
 
     /**
+     * Get values by custom select
+     * @param array|string $_value 
+     * @param array|string $_where 
+     * @param string $_order 
+     * @return array
+     */
+    public function getValues($_value, $_where = '', $_order = '')
+    {
+        $db = new DB();
+        $_table = $this->table;
+
+        // Set params
+        $values = '';
+        if (is_array($_value)) {
+            foreach ($_value as $field) {
+                if ($values != '') {
+                    $values .= ', ';
+                }
+
+                $values .= "$field";
+            }
+        } else {
+            $values = $_value;
+        }
+
+        // Set conditions
+        $where = '';
+        $params = '';
+        if (is_array($_where)) {
+            foreach ($_where as $key => $field) {
+                $where[] = "$key = :$key";
+                $params[":$key"] = $field;
+            }
+            $where = count($where) ? 'WHERE ('.implode(') AND (', $where).')' : '';
+        } else {
+            $where = "WHERE $_where";
+            $params = ':$_where';
+        }
+
+        // Set order
+        $order = "ORDER BY $_order";
+        
+        try {     
+            $sql = "SELECT $values FROM $_table $where $order";
+            $items = $db->query($sql, $params);
+            return $items->fetchAll();
+
+        } catch (PDOException $e) {
+            throw new \Quaver\Core\Exception($e->getMessage());
+        }
+
+    }
+
+    /**
      * Get object from ID.
      *
-     * @param type $_id
+     * @param int $_id
      *
-     * @return type
+     * @return self[]
      */
     public function getFromId($_id)
     {
@@ -88,7 +139,7 @@ abstract class Model
     /**
      * Save data to DB.
      *
-     * @return type
+     * @return bool
      */
     public function save()
     {
@@ -130,7 +181,7 @@ abstract class Model
     /**
      * Delete object (DB).
      *
-     * @return type
+     * @return bool
      */
     public function delete()
     {
@@ -154,7 +205,7 @@ abstract class Model
     /**
      * Convert all to Array.
      *
-     * @return type
+     * @return array|bool
      */
     public function toArray()
     {
@@ -178,7 +229,7 @@ abstract class Model
     /**
      * Encode to JSON.
      *
-     * @return type
+     * @return string|bool
      */
     public function toJson()
     {

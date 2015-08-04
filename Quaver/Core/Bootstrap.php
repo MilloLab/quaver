@@ -19,8 +19,6 @@ class Bootstrap
 
     /**
      * Run instance.
-     *
-     * @return type
      */
     public function run()
     {
@@ -66,8 +64,6 @@ class Bootstrap
 
     /**
      * Check if exists some folders.
-     *
-     * @return type
      */
     public function checkFiles()
     {

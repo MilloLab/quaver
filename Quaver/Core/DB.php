@@ -25,7 +25,7 @@ class DB
     /**
      * getConnection.
      *
-     * @return <type>
+     * @return object
      */
     public function getConnection()
     {

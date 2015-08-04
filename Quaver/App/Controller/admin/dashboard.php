@@ -22,7 +22,7 @@ class dashboard extends Controller
     /**
      * Show home.
      *
-     * @return type
+     * @return mixed
      */
     public function homeAction()
     {
@@ -44,7 +44,7 @@ class dashboard extends Controller
     /**
      * Manage languages.
      *
-     * @return type
+     * @return mixed
      */
     public function languagesAction()
     {
@@ -143,7 +143,7 @@ class dashboard extends Controller
     /**
      * Manage users.
      *
-     * @return type
+     * @return mixed
      */
     public function usersAction()
     {
@@ -239,7 +239,7 @@ class dashboard extends Controller
     /**
      * Manage lang table.
      *
-     * @return type
+     * @return mixed
      */
     public function langAction()
     {
@@ -328,7 +328,7 @@ class dashboard extends Controller
     /**
      * See log table.
      *
-     * @return type
+     * @return mixed
      */
     public function logAction()
     {
@@ -354,7 +354,7 @@ class dashboard extends Controller
     /**
      * Plugins manager.
      *
-     * @return type
+     * @return mixed
      */
     public function pluginsAction()
     {
@@ -376,7 +376,7 @@ class dashboard extends Controller
     /**
      * Routing manager.
      *
-     * @return type
+     * @return mixed
      */
     public function routingAction()
     {

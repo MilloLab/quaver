@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.9.11] - 2015-08-04
+### Added
+ - New Model method: getValues. Get values with custom select
+
+### Changed
+ - Documentation updated
+
+
 ## [0.9.10] - 2015-07-27
 ### Added
  - Resources class for better managment of resources

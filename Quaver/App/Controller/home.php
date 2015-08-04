@@ -19,7 +19,7 @@ class home extends Controller
     /**
      * Show homepage.
      *
-     * @return type
+     * @return mixed
      */
     public function homeAction()
     {
@@ -29,7 +29,7 @@ class home extends Controller
     /**
      * Show maintenance page.
      *
-     * @return type
+     * @return mixed
      */
     public function maintenanceAction()
     {
@@ -45,7 +45,7 @@ class home extends Controller
     /**
      * Change language.
      *
-     * @return type
+     * @return mixed
      */
     public function languageAction()
     {

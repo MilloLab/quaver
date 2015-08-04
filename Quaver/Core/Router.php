@@ -57,7 +57,7 @@ class Router
     /**
      * Routing flow.
      *
-     * @return type
+     * @return mixed
      */
     public function route()
     {
@@ -73,11 +73,11 @@ class Router
     /**
      * Add new paths (YAML).
      *
-     * @param type $container
-     * @param type $path
-     * @param type $_moduleRoute
+     * @param string $container
+     * @param string $path
+     * @param bool $_moduleRoute
      *
-     * @return type
+     * @return array
      */
     public function addPath($container, $path, $_moduleRoute = false)
     {
@@ -99,12 +99,12 @@ class Router
     /**
      * Add modules to Quaver.
      *
-     * @param type $moduleName
-     * @param type $packageName
-     * @param type $modulePath
-     * @param type $moduleRoute
+     * @param string $moduleName
+     * @param string $packageName
+     * @param string $modulePath
+     * @param string $moduleRoute
      *
-     * @return type
+     * @return array
      */
     public function addModule($moduleName, $packageName, $modulePath = '', $moduleRoute = '/')
     {
@@ -139,9 +139,9 @@ class Router
     /**
      * Get actual URI.
      *
-     * @param type $position
+     * @param int $position
      *
-     * @return type
+     * @return string
      */
     public function getUrlPart($position)
     {
@@ -155,9 +155,9 @@ class Router
     /**
      * Get current URL/URI.
      *
-     * @param type $position
+     * @param int $position
      *
-     * @return type
+     * @return string
      */
     public function getCurrentURL($position = 0)
     {
@@ -184,7 +184,7 @@ class Router
     /**
      * Get current action to route.
      *
-     * @return type
+     * @return string
      */
     public function getCurrentRoute()
     {
@@ -200,9 +200,9 @@ class Router
     /**
      * Fix trailing slash.
      *
-     * @param type $_url
+     * @param string $_url
      *
-     * @return type
+     * @return mixed
      */
     public function fixTrailingSlash($_url)
     {
@@ -215,9 +215,9 @@ class Router
     /**
      * Remove slash.
      *
-     * @param type $_url
+     * @param string $_url
      *
-     * @return type
+     * @return string
      */
     public function removeSlash($_url)
     {
@@ -302,9 +302,9 @@ class Router
     /**
      * Dispatch action.
      *
-     * @param type $controller
+     * @param array $controller
      *
-     * @return type
+     * @return class
      */
     public function dispatch($controller)
     {
@@ -361,9 +361,9 @@ class Router
     /**
      * Set all info to manage controller dispatch.
      *
-     * @param type $controller
+     * @param array $controller
      *
-     * @return type
+     * @return array
      */
     protected function setControllerData($controller)
     {
@@ -400,8 +400,6 @@ class Router
 
     /**
      * Get query string from URI.
-     *
-     * @return type
      */
     public function getQueryString()
     {
@@ -415,9 +413,9 @@ class Router
     /**
      * Start benchmarking.
      *
-     * @param type $set
+     * @param bool $set
      *
-     * @return type
+     * @return self[]
      */
     public function startBenchProcess($set = true)
     {
@@ -430,7 +428,7 @@ class Router
     /**
      * Finish benchmarking.
      *
-     * @return type
+     * @return self[]
      */
     public function finishBenchProcess()
     {
