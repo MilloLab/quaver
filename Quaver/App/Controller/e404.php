@@ -25,7 +25,7 @@ class e404 extends Controller
         trigger_error("[404] $url", E_USER_WARNING);
 
         if (!defined('AJAX_METHOD')) {
-            $this->addTwigVars('siteTitle', $_lang->l('title-404').' - '.BRAND_NAME);
+            $this->addTwigVars('siteTitle', $_lang->l('title-404').' - '.$cookieName = $this->router->config->app['brandName']);
             $this->render();
         }
     }

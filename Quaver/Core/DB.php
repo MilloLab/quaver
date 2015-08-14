@@ -46,7 +46,7 @@ class DB
                     $conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE.';port='.DB_PORT, DB_USERNAME, DB_PASSWORD);
                     $conn->exec('SET CHARACTER SET utf8');
 
-                    if (defined('DEV_MODE') && DEV_MODE === true) {
+                    if (defined('DB_DEV_MODE') && DB_DEV_MODE === true) {
                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     }
                 } catch (\PDOException $e) {

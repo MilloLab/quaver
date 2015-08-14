@@ -17,9 +17,10 @@ use Quaver\App\Model\User;
  */
 class Router
 {
-    public $version = '0.9.9';
+    public $version = '0.10';
     public $routes;
     public $modules;
+    public $config;
 
     // Language system
     public $language;
@@ -127,7 +128,6 @@ class Router
             $this->modules[$moduleName]['realPath'] = $modulePath ? $modulePath.'/'.$packageName : VENDOR_PATH.'/'.$packageName;
 
             // Load routes of module
-
             if ($newModule->useRoutes) {
                 !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true) : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true);
             }
@@ -390,7 +390,7 @@ class Router
         $controllerData['controllerName'] = $controller['controller'];
         $controllerData['controllerNamespace'] = $defaultNamespace.$pathNamespace.$controllerData['controllerName'];
         $controllerData['actionName'] = isset($controller['action']) ? $controller['action'].'Action' : 'indexAction';
-        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? CONTROLLER_PATH.'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : CONTROLLER_PATH.'/'.$controllerData['controllerName'].'.php';
+        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? $this->config->core['controllerPath'].'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : $this->config->core['controllerPath'].'/'.$controllerData['controllerName'].'.php';
 
         // USE ONLY TO MODULES
         $controllerData['pathNamespace'] = $pathNamespace;

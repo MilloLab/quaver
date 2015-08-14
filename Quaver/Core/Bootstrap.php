@@ -16,6 +16,7 @@ use Quaver\App\Model\User;
 class Bootstrap
 {
     public $router;
+    public $config;
 
     /**
      * Run instance.
@@ -23,16 +24,16 @@ class Bootstrap
     public function run()
     {
         // Check important folders
-        $this->checkFiles();
+        $this->checkFiles(array('Cache', 'Ajax', 'files'));
 
         // Load language
         $GLOBALS['_lang'] = new Lang();
         if (isset($_GET['lang'])) {
             $lang_slug = substr($_GET['lang'], 0, 3);
-            $GLOBALS['_lang']->getFromSlug($lang_slug);
+            $GLOBALS['_lang']->getFromSlug($lang_slug, false, $this->config->core['defaultLang']);
             $GLOBALS['_lang']->setCookie();
         } else {
-            $GLOBALS['_lang']->getSiteLanguage();
+            $GLOBALS['_lang']->getSiteLanguage($this->config->core['defaultLang'], $this->config->core['forcedLang']);
         }
 
         // Load user
@@ -48,15 +49,17 @@ class Bootstrap
             }
         }
 
-        // Maintenance mode
-        if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
-            && (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE)
-        ) {
-            if ($this->router) {
+        // Routing
+        if ($this->router) {
+            $this->router->config = $this->config;
+
+            if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
+                && ($this->config->core['maintenance'])
+            ) {
+                // Maintenance mode
                 $this->router->dispatch('maintenance');
-            }
-        } else {
-            if ($this->router) {
+            } else {
+                // Start routing
                 $this->router->route();
             }
         }
@@ -65,18 +68,12 @@ class Bootstrap
     /**
      * Check if exists some folders.
      */
-    public function checkFiles()
+    public function checkFiles($folders)
     {
-        if (!file_exists(GLOBAL_PATH.'/Cache/')) {
-            mkdir(GLOBAL_PATH.'/Cache/', 0777, true);
-        }
-
-        if (!file_exists(GLOBAL_PATH.'/files/')) {
-            mkdir(GLOBAL_PATH.'/files/', 0777, true);
-        }
-
-        if (!file_exists(GLOBAL_PATH.'/Ajax/')) {
-            mkdir(GLOBAL_PATH.'/Ajax/', 0777, true);
+        foreach ($folders as $folder) {
+            if (!file_exists(GLOBAL_PATH.'/'.$folder.'/')) {
+                mkdir(GLOBAL_PATH.'/'.$folder.'/', 0777, true);
+            }
         }
     }
 }

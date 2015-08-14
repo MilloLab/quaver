@@ -1,0 +1,32 @@
+# Config file with all vars
+core:
+    modelPath: /Quaver/App/Model
+    controllerPath: /Quaver/App/Controller
+    filesPath: ./files
+    maintenance: false
+    devMode: true
+    benchMark: true
+    logEnabled: true
+    templateCache: false
+    cacheAutoReload: true
+    defaultLang: 1
+    forcedLang: false
+
+app:
+    theme: Default
+    brandName: My company name
+    randomVar: YYYYMMDD
+
+cookies:
+    cookieName: quaver
+    cookieDomain: server
+    cookiePath: /
+
+db:
+    hostname: localhost
+    username: root
+    password: root
+    database: qv
+    port: 3306
+    devMode: true
+    cypherKey: 12345678

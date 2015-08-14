@@ -66,25 +66,25 @@ class Lang extends \Quaver\Core\Model
 
     /**
      * Get site language.
-     *
+     * @param int $defaultLang
+     * @param bool $forcedLang
      * @return self[]
      */
-    public function getSiteLanguage()
+    public function getSiteLanguage($defaultLang = 1, $forcedLang = false)
     {
         $return = $this->getLanguageFromCookie();
 
         if (!$return) {
-            if (defined('LANG_FORCE')) {
-                if (LANG_FORCE === true) {
-                    $this->getFromId(LANG);
-                } else {
-                    $language_slug = \Quaver\Core\Helper::getBrowserLanguage();
-                    $this->getFromSlug($language_slug, true);
-                }
+            
+            if ($forcedLang) {
+                $this->getFromId($defaultLang);
+            } else {
+                $language_slug = \Quaver\Core\Helper::getBrowserLanguage();
+                $this->getFromSlug($language_slug, true);
             }
-
+            
             if (empty($this->slug)) {
-                $this->getFromId(LANG);
+                $this->getFromId($defaultLang);
             }
 
             $return = $this;
@@ -128,14 +128,14 @@ class Lang extends \Quaver\Core\Model
      *
      * @param string $_slug
      * @param bool $_short
-     *
+     * @param int $defaultLang
      * @return object
      */
-    public function getFromSlug($_slug, $_short = false)
+    public function getFromSlug($_slug, $_short = false, $defaultLang = 1)
     {
         $db = new DB();
 
-        $return = LANG;
+        $return = $defaultLang;
         $_table = $this->table;
 
         $slug_where = 'slug';
