@@ -45,8 +45,11 @@ use Quaver\Core\Router;
 use Quaver\Core\Config;
 
 $bootstrap = new Bootstrap();
-$bootstrap->config = Config::setEnvironment();
 $router = new Router();
+
+// Start config
+$config = Config::getInstance();
+$config->setEnvironment();
 
 // Add paths
 $router->addPath('/', GLOBAL_PATH.'/Quaver/Routes.yml');
@@ -56,7 +59,7 @@ $router->addModule('HelloWorld', 'millolab/quaver-helloworld');
 $router->addModule('Mail', 'millolab/quaver-mail');
 
 // DevMode
-if ($bootstrap->config->core['devMode'] && $bootstrap->config->core['benchMark']) {
+if ($config->params->core['devMode'] && $config->params->core['benchMark']) {
     $router->startBenchProcess(); //false argument to stop
 }
 

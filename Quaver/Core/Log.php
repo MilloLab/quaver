@@ -126,7 +126,7 @@ class Log extends \Quaver\Core\Model
      */
     public function getList()
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_table = $this->table;
 
         if (empty($_table)) {

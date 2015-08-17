@@ -32,7 +32,7 @@ class LangStrings extends \Quaver\Core\Model
      */
     public static function getList()
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_table = 'lang_strings';
         $return = null;
 
@@ -65,7 +65,7 @@ class LangStrings extends \Quaver\Core\Model
      */
     public function getFromLabel($_label)
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_table = $this->table;
         $return = null;
 

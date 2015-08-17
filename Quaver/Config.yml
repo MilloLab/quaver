@@ -1,4 +1,4 @@
-# Config file with all vars
+# Config file with all params
 core:
     modelPath: /Quaver/App/Model
     controllerPath: /Quaver/App/Controller
@@ -30,3 +30,8 @@ db:
     port: 3306
     devMode: true
     cypherKey: 12345678
+
+folders:
+    - Cache
+    - Ajax
+    - files

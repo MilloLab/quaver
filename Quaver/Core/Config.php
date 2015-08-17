@@ -16,12 +16,30 @@ use Symfony\Component\Yaml\Exception\ParseException;
  */
 class Config
 {   
+    public $db = NULL;
+    public $cookies = NULL;
+    public $params = NULL;
+    private static $instance = NULL;
+   
+    private function __construct() { }
+ 
+    public function __clone() { }
+
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
     /**
      * Read yml file to load config vars
      * @param string $file 
      * @return array
      */
-    public static function setEnvironment($file = '')
+    public function setEnvironment($file = '')
     {
         try {
             $yaml = new Parser();
@@ -32,15 +50,17 @@ class Config
             $elements = $yaml->parse(file_get_contents($file));
 
             // Set DB/Cookie constants
-            self::setDatabaseParams($elements['db']);
-            self::setCookieParams($elements['cookies']);
+            $this->db = $this->setDatabaseParams($elements['db']);
             unset($elements['db']);
+
+            $this->cookies = $this->setCookieParams($elements['cookies']);
             unset($elements['cookies']);
 
             $configObj = (object) $elements;
             $configObj->core['modelPath'] = GLOBAL_PATH.$configObj->core['modelPath'];  
             $configObj->core['controllerPath'] = GLOBAL_PATH.$configObj->core['controllerPath'];
 
+            $this->params = $configObj;
             return $configObj;
             
         } catch (ParseException $e) {
@@ -52,25 +72,29 @@ class Config
      * Set database constants
      * @param array $params
      */
-    private static function setDatabaseParams($params)
+    private function setDatabaseParams($params)
     {
-        define('DB_HOSTNAME', $params['hostname']? $params['hostname'] : 'localhost'); 
-        define('DB_USERNAME', $params['username']? $params['username']: 'root');
-        define('DB_PASSWORD', $params['password']? $params['password']: 'root');
-        define('DB_DATABASE', $params['database']? $params['database']: 'qv');
-        define('DB_PORT', $params['port']? $params['port']: 3306);
-        define('DB_DEV_MODE', $params['devMode']? $params['devMode']: true);
-        define('CIPHER_KEY', $params['cypherKey']? $params['cypherKey']: '');
+        $params['hostname'] = $params['hostname']? $params['hostname']: 'localhost'; 
+        $params['username'] = $params['username']? $params['username']: 'root';
+        $params['password'] = $params['password']? $params['password']: 'root';
+        $params['database'] = $params['database']? $params['database']: 'qv';
+        $params['port'] = $params['port']? $params['port']: 3306;
+        $params['devMode'] = $params['devMode']? $params['devMode']: true;
+        $params['cypherKey'] = $params['cypherKey']? $params['cypherKey']: '';
+
+        return $params;
     }
 
     /**
      * Set cookie constants
      * @param array $params
      */
-    private static function setCookieParams($params)
+    private function setCookieParams($params)
     {
-        define('COOKIE_NAME', $params['cookieName']? $params['cookieName'] : 'quaver');
-        define('COOKIE_DOMAIN', $params['cookieDomain'] != 'server'? $params['cookieDomain']: $_SERVER['HTTP_HOST']);
-        define('COOKIE_PATH', $params['cookiePath']? $params['cookiePath'] : '/');
+        $params['cookieName'] = $params['cookieName']? $params['cookieName'] : 'quaver';
+        $params['cookieDomain'] = $params['cookieDomain'] != 'server'? $params['cookieDomain']: $_SERVER['HTTP_HOST'];
+        $params['cookiePath'] = $params['cookiePath']? $params['cookiePath'] : '/';
+
+        return $params;
     }
 }

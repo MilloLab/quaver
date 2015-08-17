@@ -16,32 +16,38 @@ use Quaver\App\Model\User;
 class Bootstrap
 {
     public $router;
-    public $config;
 
     /**
      * Run instance.
      */
     public function run()
     {
-        // Check important folders
-        $this->checkFiles(array('Cache', 'Ajax', 'files'));
+        $config = Config::getInstance();
+        
+        // Start db
+        $db = DB::getInstance();
+        $db->setConnection();
 
+        // Create if not exist
+        $this->checkFiles($config->params->folders);
+        
         // Load language
         $GLOBALS['_lang'] = new Lang();
         if (isset($_GET['lang'])) {
             $lang_slug = substr($_GET['lang'], 0, 3);
-            $GLOBALS['_lang']->getFromSlug($lang_slug, false, $this->config->core['defaultLang']);
+            $GLOBALS['_lang']->getFromSlug($lang_slug, false, $config->params->core['defaultLang']);
             $GLOBALS['_lang']->setCookie();
         } else {
-            $GLOBALS['_lang']->getSiteLanguage($this->config->core['defaultLang'], $this->config->core['forcedLang']);
+            $GLOBALS['_lang']->getSiteLanguage($config->params->core['defaultLang'], $config->params->core['forcedLang']);
         }
 
         // Load user
         $GLOBALS['_user'] = new User();
-        if (isset($_COOKIE[COOKIE_NAME.'_log'])) {
-            $GLOBALS['_user']->getFromCookie($_COOKIE[COOKIE_NAME.'_log']);
+        if (isset($_COOKIE[$config->cookies['cookieName'].'_log'])) {
+            $GLOBALS['_user']->getFromCookie($_COOKIE[$config->cookies['cookieName'].'_log']);
         }
 
+        // Session
         session_start();
         if (isset($_SESSION['logged'])) {
             if ($_SESSION['logged'] == true && $_SESSION['uID'] != 0) {
@@ -51,10 +57,8 @@ class Bootstrap
 
         // Routing
         if ($this->router) {
-            $this->router->config = $this->config;
-
             if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
-                && ($this->config->core['maintenance'])
+                && ($config->params->core['maintenance'])
             ) {
                 // Maintenance mode
                 $this->router->dispatch('maintenance');
@@ -68,7 +72,7 @@ class Bootstrap
     /**
      * Check if exists some folders.
      */
-    public function checkFiles($folders)
+    private function checkFiles($folders)
     {
         foreach ($folders as $folder) {
             if (!file_exists(GLOBAL_PATH.'/'.$folder.'/')) {

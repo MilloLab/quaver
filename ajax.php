@@ -43,5 +43,9 @@ use Quaver\Core\Bootstrap;
 use Quaver\Core\Config;
 
 $bootstrap = new Bootstrap();
-$bootstrap->config = Config::setEnvironment();
+
+// Start config
+$config = Config::getInstance();
+$config->setEnvironment();
+
 $bootstrap->run();

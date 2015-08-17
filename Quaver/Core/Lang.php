@@ -36,7 +36,7 @@ class Lang extends \Quaver\Core\Model
      */
     public function getFromId($_id)
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_id = (int) $_id;
         $_table = $this->table;
 
@@ -100,9 +100,11 @@ class Lang extends \Quaver\Core\Model
      */
     public function getLanguageFromCookie()
     {
+        $config = Config::getInstance();
+
         $return = false;
-        if (!empty($_COOKIE[COOKIE_NAME.'_lang'])) {
-            $language = $_COOKIE[COOKIE_NAME.'_lang'];
+        if (!empty($_COOKIE[$config->cookies['cookieName'].'_lang'])) {
+            $language = $_COOKIE[$config->cookies['cookieName'].'_lang'];
             $return = $this->getFromId($language);
         }
 
@@ -114,12 +116,14 @@ class Lang extends \Quaver\Core\Model
      */
     public function setCookie()
     {
+        $config = Config::getInstance();
+
         if (!empty($this->id)) {
-            setcookie(COOKIE_NAME.'_lang',
+            setcookie($config->cookies['cookieName'].'_lang',
                       $this->id,
                       time() + 60 * 60 * 24 * 7,
-                      COOKIE_PATH,
-                      COOKIE_DOMAIN);
+                      $config->cookies['cookiePath'],
+                      $config->cookies['cookieDomain']);
         }
     }
 
@@ -133,7 +137,7 @@ class Lang extends \Quaver\Core\Model
      */
     public function getFromSlug($_slug, $_short = false, $defaultLang = 1)
     {
-        $db = new DB();
+        $db = DB::getInstance();
 
         $return = $defaultLang;
         $_table = $this->table;
@@ -162,7 +166,7 @@ class Lang extends \Quaver\Core\Model
      */
     public function getLanguages()
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $return = null;
         $_table = 'lang';
 
@@ -187,7 +191,7 @@ class Lang extends \Quaver\Core\Model
      */
     public static function getList($_all = true, $_byPriority = false)
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $return = null;
         $_table = 'lang';
 

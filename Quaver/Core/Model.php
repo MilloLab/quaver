@@ -67,7 +67,7 @@ abstract class Model
      */
     public function getValues($_value, $_where = '', $_order = '')
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_table = $this->table;
 
         // Set params
@@ -121,7 +121,7 @@ abstract class Model
      */
     public function getFromId($_id)
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_id = (int) $_id;
         $_table = $this->table;
 
@@ -144,7 +144,7 @@ abstract class Model
     public function save()
     {
         try {
-            $db = new DB();
+            $db = DB::getInstance();
 
             $set = '';
             $values = array();
@@ -186,7 +186,7 @@ abstract class Model
     public function delete()
     {
         try {
-            $db = new DB();
+            $db = DB::getInstance();
 
             $_id = (int) $this->id;
             $_table = $this->table;

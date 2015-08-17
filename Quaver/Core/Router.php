@@ -18,9 +18,8 @@ use Quaver\App\Model\User;
 class Router
 {
     public $version = '0.10';
-    public $routes;
-    public $modules;
-    public $config;
+    public $routes = null;
+    public $modules = null;
 
     // Language system
     public $language;
@@ -367,6 +366,7 @@ class Router
      */
     protected function setControllerData($controller)
     {
+        $config = Config::getInstance();
         $controllerData = array();
 
         // Set module route
@@ -390,7 +390,7 @@ class Router
         $controllerData['controllerName'] = $controller['controller'];
         $controllerData['controllerNamespace'] = $defaultNamespace.$pathNamespace.$controllerData['controllerName'];
         $controllerData['actionName'] = isset($controller['action']) ? $controller['action'].'Action' : 'indexAction';
-        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? $this->config->core['controllerPath'].'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : $this->config->core['controllerPath'].'/'.$controllerData['controllerName'].'.php';
+        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? $config->params->core['controllerPath'].'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : $config->params->core['controllerPath'].'/'.$controllerData['controllerName'].'.php';
 
         // USE ONLY TO MODULES
         $controllerData['pathNamespace'] = $pathNamespace;
