@@ -9,6 +9,7 @@
 namespace Quaver\App\Controller\admin;
 
 use Quaver\Core\Controller;
+use Quaver\Core\Config;
 use Quaver\Core\Log;
 use Quaver\Core\LangStrings;
 use Quaver\Core\Lang;
@@ -366,9 +367,30 @@ class dashboard extends Controller
             exit;
         }
 
+        $config = Config::getInstance();
+
+        // Selector
+        switch ($this->router->getUrlPart(0)) {
+            case('enable'):
+                $mod = $this->router->getUrlPart(1);
+                $this->router->modules[$mod]['enabled'] = true;
+                $config->setPluginsYML($this->router->modules, true);
+
+                header('Location: /admin/plugins');
+                exit;
+                break;
+            case('disable'):
+                $mod = $this->router->getUrlPart(1);
+                $this->router->modules[$mod]['enabled'] = false;
+                $config->setPluginsYML($this->router->modules, true);
+
+                header('Location: /admin/plugins');
+                exit;
+                break;
+        }
+
         // Set up menu action
         $this->addTwigVars('section', 'plugins');
-
         $this->setView('admin/plugins-List');
         $this->render();
     }
