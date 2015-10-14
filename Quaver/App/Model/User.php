@@ -9,6 +9,7 @@
 namespace Quaver\App\Model;
 
 use Quaver\Core\DB;
+use Quaver\Core\Config;
 use Quaver\Core\Model;
 
 /**
@@ -38,7 +39,7 @@ class User extends Model
     public function getList()
     {
         try {
-            $db = new DB();
+            $db = DB::getInstance();
             $_table = $this->table;
             $return = false;
 
@@ -91,7 +92,9 @@ class User extends Model
         }
 
         if (!empty($this->cookie)) {
-            setCookie(COOKIE_NAME.'_log', $this->cookie, time() + 60 * 60 * 24 * 30, COOKIE_PATH, COOKIE_DOMAIN);
+            $config = Config::getInstance();
+            
+            setCookie($config->cookies['cookieName'].'_log', $this->cookie, time() + 60 * 60 * 24 * 30, $config->cookies['cookiePath'], $config->cookies['cookieDomain']);
         }
     }
 
@@ -100,8 +103,10 @@ class User extends Model
      */
     public function unsetCookie()
     {
-        setCookie(COOKIE_NAME.'_log', '', time() - 1, COOKIE_PATH, COOKIE_DOMAIN);
-        setCookie('PHPSESSID', '', time() - 1, COOKIE_PATH);
+        $config = Config::getInstance();
+
+        setCookie($config->cookies['cookieName'].'_log', '', time() - 1, $config->cookies['cookiePath'], $config->cookies['cookieDomain']);
+        setCookie('PHPSESSID', '', time() - 1, $config->cookies['cookiePath']);
 
         $this->logged = false;
     }
@@ -126,7 +131,7 @@ class User extends Model
     public function getFromCookie($_cookie)
     {
         try {
-            $db = new DB();
+            $db = DB::getInstance();
 
             $this->cookie = substr($_cookie, 0, 40);
             $_table = $this->table;
@@ -188,7 +193,7 @@ class User extends Model
     public function isEmailRegistered($_email)
     {
         try {
-            $db = new DB();
+            $db = DB::getInstance();
             $_table = $this->table;
             $return = null;
 
@@ -219,7 +224,7 @@ class User extends Model
     public function getFromEmailPassword($_email, $_password)
     {
         try {
-            $db = new DB();
+            $db = DB::getInstance();
             $_table = $this->table;
             $return = null;
 

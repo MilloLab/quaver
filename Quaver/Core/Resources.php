@@ -15,11 +15,13 @@ class Resources
 {   
     /**
      * Constructor
-     * @param array $arrayPath 
+     * @param array $arrayPath
+     * @param bool $devMode
      */
-    public function __construct($arrayPath)
+    public function __construct($arrayPath, $devMode = true)
     {
         $this->add($arrayPath);
+        $this->devMode = $devMode;
     }
 
     /**
@@ -47,7 +49,7 @@ class Resources
         if (isset($file) && isset($type)) {
             $part = explode($type, $file);
             if ($type == 'css' || $type == 'js') {
-                $min = (defined('DEV_MODE') && DEV_MODE) ? 'min.' : '';
+                $min = $this->devMode ? 'min.' : '';
             } else {
                 $min = '';
             }

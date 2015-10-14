@@ -33,7 +33,7 @@ class home extends Controller
      */
     public function maintenanceAction()
     {
-        if (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE) {
+        if ($this->router->config->core['maintenance']) {
             $this->render();
             exit;
         } else {

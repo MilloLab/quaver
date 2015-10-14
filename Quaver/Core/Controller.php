@@ -34,20 +34,22 @@ abstract class Controller
         global $_lang, $_user;
 
         $this->router = $router;
+        $config = Config::getInstance();
 
         // Theme system
-        $viewPath = GLOBAL_PATH.'/Quaver/App/Theme/'.THEME_QUAVER.'/View';
+        $theme = $config->params->app['theme'];
+        $viewPath = GLOBAL_PATH.'/Quaver/App/Theme/'.$theme.'/View';
         $resPath = array(
             'view' => $viewPath,
-            'res' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources',
-            'css' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/css',
-            'js' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/js',
-            'img' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/img',
-            'font' => '/Quaver/App/Theme/'.THEME_QUAVER.'/Resources/fonts',
-            'theme' => THEME_QUAVER,
-            'randomVar' => RANDOM_VAR,
+            'res' => '/Quaver/App/Theme/'.$theme.'/Resources',
+            'css' => '/Quaver/App/Theme/'.$theme.'/Resources/css',
+            'js' => '/Quaver/App/Theme/'.$theme.'/Resources/js',
+            'img' => '/Quaver/App/Theme/'.$theme.'/Resources/img',
+            'font' => '/Quaver/App/Theme/'.$theme.'/Resources/fonts',
+            'theme' => $theme,
+            'randomVar' => $config->params->app['randomVar'],
         );
-        $r = new Resources($resPath);
+        $r = new Resources($resPath, $config->params->core['devMode']);
         $this->r = $r;
 
         // Getting all directories in /template
@@ -69,11 +71,11 @@ abstract class Controller
         }
 
         $twig_options = array();
-        if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {
+        if ($config->params->core['templateCache']) {
             $twig_options['cache'] = GLOBAL_PATH.'/Cache';
         }
 
-        if (defined('CACHE_AUTO_RELOAD') && CACHE_AUTO_RELOAD) {
+        if ($config->params->core['cacheAutoReload']) {
             $twig_options['auto_reload'] = true;
         }
 
@@ -86,13 +88,13 @@ abstract class Controller
         });
         $this->twig->addFilter($filter);
 
-        if (defined('DEV_MODE') && DEV_MODE) {
+        if ($config->params->core['devMode'] && $config->params->core['benchMark']) {
             $this->twigProfiler = new \Twig_Profiler_Profile();
             $this->twig->addExtension(new \Twig_Extension_Profiler($this->twigProfiler));
         }
 
         // Clear Twig cache
-        if (defined('TEMPLATE_CACHE') && TEMPLATE_CACHE) {
+        if ($config->params->core['templateCache']) {
             if (isset($this->router->queryString['clearCache'])) {
                 $this->twig->clearCacheFiles();
                 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -124,9 +126,12 @@ abstract class Controller
      */
     public function render()
     {
+        $config = Config::getInstance();
         $showTemplate = $this->template->render($this->twigVars);
 
-        if (defined('DEV_MODE') && DEV_MODE && $this->router->dev) {
+        if ($config->params->core['devMode']
+            && $config->params->core['benchMark'] && $this->router->dev) {
+
             $this->router->finishBenchProcess();
 
             $dumper = new \Twig_Profiler_Dumper_Text();
@@ -146,6 +151,8 @@ abstract class Controller
      */
     protected function getGlobalTwigVars()
     {
+        $config = Config::getInstance();
+
         // Language
         $this->addTwigVars('language', $GLOBALS['_lang']); // legacy support
 
@@ -181,11 +188,11 @@ abstract class Controller
         // Extra parametres
         $config = array(
             'extra' => array(
-                'brandName' => BRAND_NAME,
+                'brandName' => $config->params->app['brandName'],
             ),
-            'randomVar' => RANDOM_VAR,
+            'randomVar' => $config->params->app['randomVar'],
             'r' => $this->r,
-            'env' => DEV_MODE ? 'development' : 'production',
+            'env' => $config->params->core['devMode'] ? 'development' : 'production',
             'dev' => $this->router->dev,
             'version' => $this->router->version,
             'url' => $this->router->url,
@@ -194,6 +201,7 @@ abstract class Controller
             'user' => $GLOBALS['_user'],
             'modules' => $this->router->modules,
             'routes' => $this->router->routes,
+            'config' => $config->params,
         );
 
         if (strstr($this->router->url['path'], '/admin/')) {

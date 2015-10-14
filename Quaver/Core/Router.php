@@ -18,8 +18,8 @@ use Quaver\App\Model\User;
 class Router
 {
     public $version = '0.10';
-    public $routes;
-    public $modules;
+    public $routes = null;
+    public $modules = null;
 
     // Language system
     public $language;
@@ -127,10 +127,9 @@ class Router
             $this->modules[$moduleName]['realPath'] = $modulePath ? $modulePath.'/'.$packageName : VENDOR_PATH.'/'.$packageName;
 
             // Load routes of module
-
-            if ($newModule->useRoutes) {
-                !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true) : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true);
-            }
+            // if ($newModule->useRoutes) {
+            //     !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true) : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true);
+            // }
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception("Unable to load module: $moduleName", $e->getMessage());
         }
@@ -367,6 +366,7 @@ class Router
      */
     protected function setControllerData($controller)
     {
+        $config = Config::getInstance();
         $controllerData = array();
 
         // Set module route
@@ -390,7 +390,7 @@ class Router
         $controllerData['controllerName'] = $controller['controller'];
         $controllerData['controllerNamespace'] = $defaultNamespace.$pathNamespace.$controllerData['controllerName'];
         $controllerData['actionName'] = isset($controller['action']) ? $controller['action'].'Action' : 'indexAction';
-        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? CONTROLLER_PATH.'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : CONTROLLER_PATH.'/'.$controllerData['controllerName'].'.php';
+        $controllerData['realPath'] = !empty($controllerData['controllerPath']) ? $config->params->core['controllerPath'].'/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : $config->params->core['controllerPath'].'/'.$controllerData['controllerName'].'.php';
 
         // USE ONLY TO MODULES
         $controllerData['pathNamespace'] = $pathNamespace;

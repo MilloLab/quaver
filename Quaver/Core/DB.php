@@ -13,11 +13,25 @@ use PDO;
 class DB
 {
     private $conn = null;
+    private static $instance = NULL;
+    
+    private function __construct() { }
+    
+    public function __clone() { }
+
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
     /**
-     * constructor.
+     * setConnection.
      */
-    public function __construct()
+    public function setConnection()
     {
         $this->conn = $this->getConnection();
     }
@@ -33,20 +47,22 @@ class DB
 
         if (!$conn) {
 
+            $config = Config::getInstance();
+
             // Connecting to mysql
-            if (!defined('DB_USERNAME')
-                || !defined('DB_PASSWORD')
-                || !defined('DB_DATABASE')
-                || !defined('DB_PORT')
+            if (!$config->db['hostname']
+                || !$config->db['username']
+                || !$config->db['database']
+                || !$config->db['port']
             ) {
                 die('Database parameters needed.');
             } else {
                 try {
                     // Config mysql link
-                    $conn = new PDO('mysql:host='.DB_HOSTNAME.';dbname='.DB_DATABASE.';port='.DB_PORT, DB_USERNAME, DB_PASSWORD);
+                    $conn = new PDO('mysql:host='.$config->db['hostname'].';dbname='.$config->db['database'].';port='.$config->db['port'], $config->db['username'], $config->db['password']);
                     $conn->exec('SET CHARACTER SET utf8');
 
-                    if (defined('DEV_MODE') && DEV_MODE === true) {
+                    if ($config->db['devMode'] === true) {
                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     }
                 } catch (\PDOException $e) {

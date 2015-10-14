@@ -36,7 +36,7 @@ class Lang extends \Quaver\Core\Model
      */
     public function getFromId($_id)
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $_id = (int) $_id;
         $_table = $this->table;
 
@@ -66,25 +66,25 @@ class Lang extends \Quaver\Core\Model
 
     /**
      * Get site language.
-     *
+     * @param int $defaultLang
+     * @param bool $forcedLang
      * @return self[]
      */
-    public function getSiteLanguage()
+    public function getSiteLanguage($defaultLang = 1, $forcedLang = false)
     {
         $return = $this->getLanguageFromCookie();
 
         if (!$return) {
-            if (defined('LANG_FORCE')) {
-                if (LANG_FORCE === true) {
-                    $this->getFromId(LANG);
-                } else {
-                    $language_slug = \Quaver\Core\Helper::getBrowserLanguage();
-                    $this->getFromSlug($language_slug, true);
-                }
+            
+            if ($forcedLang) {
+                $this->getFromId($defaultLang);
+            } else {
+                $language_slug = \Quaver\Core\Helper::getBrowserLanguage();
+                $this->getFromSlug($language_slug, true);
             }
-
+            
             if (empty($this->slug)) {
-                $this->getFromId(LANG);
+                $this->getFromId($defaultLang);
             }
 
             $return = $this;
@@ -100,9 +100,11 @@ class Lang extends \Quaver\Core\Model
      */
     public function getLanguageFromCookie()
     {
+        $config = Config::getInstance();
+
         $return = false;
-        if (!empty($_COOKIE[COOKIE_NAME.'_lang'])) {
-            $language = $_COOKIE[COOKIE_NAME.'_lang'];
+        if (!empty($_COOKIE[$config->cookies['cookieName'].'_lang'])) {
+            $language = $_COOKIE[$config->cookies['cookieName'].'_lang'];
             $return = $this->getFromId($language);
         }
 
@@ -114,12 +116,14 @@ class Lang extends \Quaver\Core\Model
      */
     public function setCookie()
     {
+        $config = Config::getInstance();
+
         if (!empty($this->id)) {
-            setcookie(COOKIE_NAME.'_lang',
+            setcookie($config->cookies['cookieName'].'_lang',
                       $this->id,
                       time() + 60 * 60 * 24 * 7,
-                      COOKIE_PATH,
-                      COOKIE_DOMAIN);
+                      $config->cookies['cookiePath'],
+                      $config->cookies['cookieDomain']);
         }
     }
 
@@ -128,14 +132,14 @@ class Lang extends \Quaver\Core\Model
      *
      * @param string $_slug
      * @param bool $_short
-     *
+     * @param int $defaultLang
      * @return object
      */
-    public function getFromSlug($_slug, $_short = false)
+    public function getFromSlug($_slug, $_short = false, $defaultLang = 1)
     {
-        $db = new DB();
+        $db = DB::getInstance();
 
-        $return = LANG;
+        $return = $defaultLang;
         $_table = $this->table;
 
         $slug_where = 'slug';
@@ -162,7 +166,7 @@ class Lang extends \Quaver\Core\Model
      */
     public function getLanguages()
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $return = null;
         $_table = 'lang';
 
@@ -187,7 +191,7 @@ class Lang extends \Quaver\Core\Model
      */
     public static function getList($_all = true, $_byPriority = false)
     {
-        $db = new DB();
+        $db = DB::getInstance();
         $return = null;
         $_table = 'lang';
 

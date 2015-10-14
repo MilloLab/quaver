@@ -2,12 +2,18 @@
   <ul class="nav navbar-nav navbar-right">
 
     <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Quaver <span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-info-circle"></i> <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="http://quaver.millolab.com/docs/" target="_blank"> <span class="label label-default">beta</span> API (0.9)</a></li>
-        <li class="divider"></li>
-        <li><a href="https://github.com/MilloLab/quaver" target="_blank"> <i class="fa fa-github"></i> GitHub</a></li>
-        <li><a href="http://quaver.millolab.com" target="_blank"> <i class="fa fa-millolab "></i> Quaver Site</a></li>
+        <li><a href="#">{{ qv.build }}</a></li>
+      </ul>
+    </li>
+
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-bar-chart"></i> <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#"> <span style="font-size: 14px;" class="label label-success">{{ qv.dev.final_time }}</span></a></li>
+        <li><a href="#"> <span style="font-size: 14px;" class="label label-primary">{{ qv.dev.memory_usage }}</span></a></li>
+        <li><a href="#"> <pre>{{ qv.dev.twigProfiler }}</pre></a></li>
       </ul>
     </li>
 
@@ -19,6 +25,16 @@
             <li><a href="/language/{{ lang.name }}">{{ lang.name[:2] }}</a></li>
           {% endif %}
         {% endfor %}
+      </ul>
+    </li>
+
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Links <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="http://quaver.millolab.com/docs/" target="_blank"> <span class="label label-primary">beta</span> API (0.10)</a></li>
+        <li class="divider"></li>
+        <li><a href="https://github.com/MilloLab/quaver" target="_blank"> <i class="fa fa-github"></i> GitHub</a></li>
+        <li><a href="http://quaver.millolab.com" target="_blank"> <i class="fa fa-millolab "></i> Quaver Site</a></li>
       </ul>
     </li>
 

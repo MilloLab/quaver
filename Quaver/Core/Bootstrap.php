@@ -22,25 +22,32 @@ class Bootstrap
      */
     public function run()
     {
-        // Check important folders
-        $this->checkFiles();
+        $config = Config::getInstance();
+        
+        // Start db
+        $db = DB::getInstance();
+        $db->setConnection();
 
+        // Create if not exist
+        $this->checkFiles($config->params->folders);
+        
         // Load language
         $GLOBALS['_lang'] = new Lang();
         if (isset($_GET['lang'])) {
             $lang_slug = substr($_GET['lang'], 0, 3);
-            $GLOBALS['_lang']->getFromSlug($lang_slug);
+            $GLOBALS['_lang']->getFromSlug($lang_slug, false, $config->params->core['defaultLang']);
             $GLOBALS['_lang']->setCookie();
         } else {
-            $GLOBALS['_lang']->getSiteLanguage();
+            $GLOBALS['_lang']->getSiteLanguage($config->params->core['defaultLang'], $config->params->core['forcedLang']);
         }
 
         // Load user
         $GLOBALS['_user'] = new User();
-        if (isset($_COOKIE[COOKIE_NAME.'_log'])) {
-            $GLOBALS['_user']->getFromCookie($_COOKIE[COOKIE_NAME.'_log']);
+        if (isset($_COOKIE[$config->cookies['cookieName'].'_log'])) {
+            $GLOBALS['_user']->getFromCookie($_COOKIE[$config->cookies['cookieName'].'_log']);
         }
 
+        // Session
         session_start();
         if (isset($_SESSION['logged'])) {
             if ($_SESSION['logged'] == true && $_SESSION['uID'] != 0) {
@@ -48,15 +55,15 @@ class Bootstrap
             }
         }
 
-        // Maintenance mode
-        if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
-            && (defined('MAINTENANCE_MODE') && MAINTENANCE_MODE)
-        ) {
-            if ($this->router) {
+        // Routing
+        if ($this->router) {
+            if ((!$GLOBALS['_user']->logged || $GLOBALS['_user']->logged && !$GLOBALS['_user']->isAdmin())
+                && ($config->params->core['maintenance'])
+            ) {
+                // Maintenance mode
                 $this->router->dispatch('maintenance');
-            }
-        } else {
-            if ($this->router) {
+            } else {
+                // Start routing
                 $this->router->route();
             }
         }
@@ -65,18 +72,12 @@ class Bootstrap
     /**
      * Check if exists some folders.
      */
-    public function checkFiles()
+    private function checkFiles($folders)
     {
-        if (!file_exists(GLOBAL_PATH.'/Cache/')) {
-            mkdir(GLOBAL_PATH.'/Cache/', 0777, true);
-        }
-
-        if (!file_exists(GLOBAL_PATH.'/files/')) {
-            mkdir(GLOBAL_PATH.'/files/', 0777, true);
-        }
-
-        if (!file_exists(GLOBAL_PATH.'/Ajax/')) {
-            mkdir(GLOBAL_PATH.'/Ajax/', 0777, true);
+        foreach ($folders as $folder) {
+            if (!file_exists(GLOBAL_PATH.'/'.$folder.'/')) {
+                mkdir(GLOBAL_PATH.'/'.$folder.'/', 0777, true);
+            }
         }
     }
 }
