@@ -17,7 +17,7 @@
             <input class="form-control" type="text" id="label" name="label" value="{{ item[0].label }}">
         </div>
 
-    {% for tab in languages %}
+    {% for tab in qv.languages %}
 
             <input type="hidden" name="idL[]" id="idL" value="{{ item[tab.id-1].id }}" />
 

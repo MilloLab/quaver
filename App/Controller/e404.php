@@ -8,6 +8,7 @@
 
 namespace Quaver\App\Controller;
 
+use Quaver\Core\Config;
 use Quaver\Core\Controller;
 
 /**
@@ -25,7 +26,9 @@ class e404 extends Controller
         trigger_error("[404] $url", E_USER_WARNING);
 
         if (!defined('AJAX_METHOD')) {
-            $this->addTwigVars('siteTitle', $_lang->l('title-404').' - '.$cookieName = $this->router->config->app['brandName']);
+            $config = Config::getInstance();
+
+            $this->addTwigVars('siteTitle', $_lang->l('title-404').' - '.$cookieName = $config->params->app['brandName']);
             $this->render();
         }
     }

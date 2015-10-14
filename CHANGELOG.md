@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.10] - 2015-10-14
+### Added
+ - New Model method: getArrayList
+ - New plugin manager (beta)
+ - New structure with public and App folders
+
+### Changed
+ - htaccess improvements
+ - Remove cli
+
+
 ## [0.9.11] - 2015-08-04
 ### Added
  - New Model method: getValues. Get values with custom select

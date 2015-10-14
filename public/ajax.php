@@ -9,7 +9,7 @@
 namespace Quaver;
 
 define('GLOBAL_PATH', dirname(__FILE__));
-define('VENDOR_PATH', GLOBAL_PATH.'/vendor');
+define('VENDOR_PATH', GLOBAL_PATH.'/../vendor');
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL | E_STRICT);
@@ -24,7 +24,7 @@ ini_set('log_errors', 'On');
 date_default_timezone_set('Europe/Madrid');
 
 // Check config file
-if (!file_exists(GLOBAL_PATH.'/Quaver/Config.yml')) {
+if (!file_exists(GLOBAL_PATH.'/Config.yml')) {
     $msg = "This instance of app doesn't seem to be configured,
     please read the deployment guide, configure and try again.";
     error_log($msg);
@@ -33,7 +33,7 @@ if (!file_exists(GLOBAL_PATH.'/Quaver/Config.yml')) {
 }
 
 // Autoloader
-require_once GLOBAL_PATH.'/Quaver/Core/Autoloader.php';
+require_once GLOBAL_PATH.'/../Quaver/Core/Autoloader.php';
 
 // Set template system
 require_once VENDOR_PATH.'/autoload.php';
@@ -50,16 +50,5 @@ $router = new Router();
 // Start config
 $config = Config::getInstance();
 $config->setEnvironment();
-if ($config->params->core['devMode'] && $config->params->core['benchMark']) {
-    $router->startBenchProcess(); //false argument to stop
-}
 
-$router->addPath('/', GLOBAL_PATH.'/Quaver/Routes.yml');
-
-// Add plugins
-$router->addModule('HelloWorld', 'millolab/quaver-helloworld');
-$router->addModule('Mail', 'millolab/quaver-mail');
-
-// Set router and run!
-$bootstrap->router = $router;
 $bootstrap->run();

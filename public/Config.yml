@@ -1,7 +1,8 @@
 # Config file with all params
 core:
-    modelPath: /Quaver/App/Model
-    controllerPath: /Quaver/App/Controller
+    modelPath: /../App/Model
+    controllerPath: /../App/Controller
+    themePath: /../App/Theme
     filesPath: ./files
     maintenance: false
     devMode: true
@@ -32,6 +33,6 @@ db:
     cypherKey: 12345678
 
 folders:
-    - Cache
+    - cache
     - Ajax
     - files

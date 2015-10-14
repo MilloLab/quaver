@@ -42,7 +42,12 @@ function load($namespace)
     if (!$firstword) {
         $fullpath = __DIR__.'/..'.$path.DIRECTORY_SEPARATOR.$name.'.php';
 
+        if (!file_exists($fullpath)) {
+            $fullpath = __DIR__.'/../..'.$path.DIRECTORY_SEPARATOR.$name.'.php';   
+        }
+
         return include_once $fullpath;
+        
     }
 
     return false;

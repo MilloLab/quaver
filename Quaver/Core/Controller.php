@@ -38,14 +38,15 @@ abstract class Controller
 
         // Theme system
         $theme = $config->params->app['theme'];
-        $viewPath = GLOBAL_PATH.'/Quaver/App/Theme/'.$theme.'/View';
+        $themePath = $config->params->core['themePath'];
+        $viewPath = GLOBAL_PATH.$themePath.'/'.$theme.'/View';
         $resPath = array(
             'view' => $viewPath,
-            'res' => '/Quaver/App/Theme/'.$theme.'/Resources',
-            'css' => '/Quaver/App/Theme/'.$theme.'/Resources/css',
-            'js' => '/Quaver/App/Theme/'.$theme.'/Resources/js',
-            'img' => '/Quaver/App/Theme/'.$theme.'/Resources/img',
-            'font' => '/Quaver/App/Theme/'.$theme.'/Resources/fonts',
+            'res' => $themePath.'/'.$theme.'/Resources',
+            'css' => $themePath.'/'.$theme.'/Resources/css',
+            'js' => $themePath.'/'.$theme.'/Resources/js',
+            'img' => $themePath.'/'.$theme.'/Resources/img',
+            'font' => $themePath.'/'.$theme.'/Resources/fonts',
             'theme' => $theme,
             'randomVar' => $config->params->app['randomVar'],
         );
@@ -72,7 +73,7 @@ abstract class Controller
 
         $twig_options = array();
         if ($config->params->core['templateCache']) {
-            $twig_options['cache'] = GLOBAL_PATH.'/Cache';
+            $twig_options['cache'] = GLOBAL_PATH.'/../cache';
         }
 
         if ($config->params->core['cacheAutoReload']) {
@@ -171,10 +172,6 @@ abstract class Controller
             );
             array_push($languageVars, $item);
         }
-        $this->addTwigVars('languages', $languageVars); // legacy support
-
-        // Load user data
-        $this->addTwigVars('_user', $GLOBALS['_user']); // legacy support
 
         // Login errors
         if (isset($this->router->queryString['login-error'])) {

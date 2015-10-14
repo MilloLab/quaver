@@ -8,4 +8,4 @@
 define('AJAX_PATH', dirname( __FILE__ ));
 define('AJAX_METHOD', true);
 
-require(AJAX_PATH . "/../ajax.php");
+require(AJAX_PATH . "/../public/ajax.php");

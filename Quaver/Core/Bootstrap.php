@@ -84,8 +84,8 @@ class Bootstrap
     private function checkFiles($folders)
     {
         foreach ($folders as $folder) {
-            if (!file_exists(GLOBAL_PATH.'/'.$folder.'/')) {
-                mkdir(GLOBAL_PATH.'/'.$folder.'/', 0777, true);
+            if (!file_exists(GLOBAL_PATH.'/../'.$folder.'/')) {
+                mkdir(GLOBAL_PATH.'/../'.$folder.'/', 0777, true);
             }
         }
     }
