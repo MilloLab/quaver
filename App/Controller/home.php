@@ -10,6 +10,7 @@ namespace Quaver\App\Controller;
 
 use Quaver\Core\Controller;
 use Quaver\Core\Lang;
+use Quaver\Core\Config;
 
 /**
  * Home controller (language, maintenance and index).
@@ -32,8 +33,9 @@ class home extends Controller
      * @return mixed
      */
     public function maintenanceAction()
-    {
-        if ($this->router->config->core['maintenance']) {
+    {   
+        $config = Config::getInstance();
+        if ($config->params->core['maintenance']) {
             $this->render();
             exit;
         } else {

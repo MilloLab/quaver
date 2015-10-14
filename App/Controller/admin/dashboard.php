@@ -371,6 +371,12 @@ class dashboard extends Controller
 
         // Selector
         switch ($this->router->getUrlPart(0)) {
+            case('refresh'):
+                $config->setPluginsYML($this->router->modules, true);
+
+                header('Location: /admin/plugins');
+                exit;
+                break;
             case('enable'):
                 $mod = $this->router->getUrlPart(1);
                 $this->router->modules[$mod]['enabled'] = true;

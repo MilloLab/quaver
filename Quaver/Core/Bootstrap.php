@@ -28,15 +28,20 @@ class Bootstrap
         $db = DB::getInstance();
         $db->setConnection();
 
-        // Create if not exist
-        $this->checkFiles($config->params->folders);
+        if (!defined('AJAX_METHOD')) {
+            // Create if not exist
+            $this->checkFiles($config->params->folders);
 
-        // Start plugins
-        $config->setPluginsYML($this->router->modules);
-        // Load routes of module
-        foreach ($config->plugins as $key => $plugin) {
-            if ($plugin['enabled'] && $plugin['params']['useRoutes']) {
-                $this->router->addPath('/', VENDOR_PATH.'/'.$plugin['packageName'].'/'.$plugin['namespacePath'].'/'.'Routes.yml', true);
+            // Start plugins
+            $config->setPluginsYML($this->router->modules);
+
+            // Load routes of module
+            foreach ($config->plugins as $key => $plugin) {
+                if ($plugin['enabled']) {
+                    if ($plugin['params']['useRoutes']) {
+                        $this->router->addPath('/', VENDOR_PATH.'/'.$plugin['packageName'].'/'.$plugin['namespacePath'].'/'.'Routes.yml', true);
+                    }
+                }
             }
         }
         

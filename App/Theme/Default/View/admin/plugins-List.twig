@@ -9,7 +9,8 @@
 
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
+  <div class="btn-group pull-right">
+         <a class="btn btn-info" href="{{qv.url.base}}refresh"> Refresh </a></div>
 
           <h1 class="page-header">{{ ('plugins')|t }}</h1>
 
@@ -31,9 +32,9 @@
                     <li><strong>Use Views:</strong> {{ items.params.useViews?'Yes':'No' }}</li>
                 </ul>
                 {% if items.enabled %}
-                  <a href="/admin/plugins/disable/{{key}}" class="btn btn-danger">Desactivar</a>
+                  <a href="{{qv.url.base}}disable/{{key}}" class="btn btn-danger">Desactivar</a>
                 {% else %}
-                  <a href="/admin/plugins/enable/{{key}}" class="btn btn-primary">Activar</a>
+                  <a href="{{qv.url.base}}enable/{{key}}" class="btn btn-primary">Activar</a>
                 {% endif %}
             </div>
           </div>

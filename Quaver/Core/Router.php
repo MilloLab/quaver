@@ -138,6 +138,15 @@ class Router
     }
 
     /**
+     * Remove module
+     * @param string $moduleName 
+     */
+    public function removeModule($moduleName)
+    {
+        unset($this->modules[$moduleName]);
+    }
+
+    /**
      * Get actual URI.
      *
      * @param int $position
