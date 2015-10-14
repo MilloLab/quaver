@@ -1,8 +1,8 @@
-public/ajax.log
-public/script_errors.log
+ajax.log
+script_errors.log
 cli/script_errors.log
 files/
 cache/
 vendor/
 composer.lock
-public/Plugins.yml
+Plugins.yml
