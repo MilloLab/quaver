@@ -137,6 +137,34 @@ abstract class Model
     }
 
     /**
+     * Get array list
+     * 
+     * @return array
+     */
+    public function getList()
+    {
+        $_table = $this->table;
+        if (!$_table) {
+            return false;
+        }
+
+        $db = new DB();
+        $return = null;
+
+        $item = $db->query("SELECT id FROM $_table");
+        $result = $item->fetchAll();
+
+        if ($result) {
+            foreach ($result as $item) {
+                $class = new self();
+                $return[] = $class->getFromId($item['id']);
+            }
+        }
+
+        return $return;
+    }
+
+    /**
      * Save data to DB.
      *
      * @return bool

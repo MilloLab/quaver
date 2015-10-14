@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.4.0",
         "symfony/yaml": "~2.8",
-        "twig/twig": "1.18.1",
+        "twig/twig": "1.22.3",
         "millolab/quaver-helloworld": "0.2.*@dev",
         "millolab/quaver-mail": "0.1.*@dev"
     },
