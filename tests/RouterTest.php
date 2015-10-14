@@ -22,7 +22,7 @@ class Router extends \PHPUnit_Framework_TestCase
 
         try {
             $yaml = new Parser();
-            $routes = $yaml->parse(file_get_contents(__DIR__ . '/../Quaver/Routes.yml'));
+            $routes = $yaml->parse(file_get_contents(__DIR__ . '/../public/Routes.yml'));
         } catch (ParseException $e) {
             throw new \Quaver\Core\Exception("Unable to parse the YAML string: %s", $e->getMessage());
         }

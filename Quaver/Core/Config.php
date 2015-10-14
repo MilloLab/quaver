@@ -47,7 +47,7 @@ class Config
             $yaml = new Parser();
 
             if (empty($file)) {
-                $file = GLOBAL_PATH.'/Config.yml';
+                $file = GLOBAL_PATH.'/../Config.yml';
             }
             $elements = $yaml->parse(file_get_contents($file));
 
@@ -109,7 +109,7 @@ class Config
     public function setPluginsYML($modules, $force = false)
     {
         
-        if (!file_exists(GLOBAL_PATH.'/Plugins.yml') || $force) {
+        if (!file_exists(GLOBAL_PATH.'/../Plugins.yml') || $force) {
             
             try {
 
@@ -120,7 +120,7 @@ class Config
         
                 $dumper = new Dumper();
                 $yaml = $dumper->dump($dumpModules);
-                file_put_contents(GLOBAL_PATH.'/Plugins.yml', $yaml);
+                file_put_contents(GLOBAL_PATH.'/../Plugins.yml', $yaml);
 
             } catch (DumpException $e) {
                 throw new \Quaver\Core\Exception('Unable to dump the YAML string: %s', $e->getMessage());
@@ -138,7 +138,7 @@ class Config
     {
         try {
             $yaml = new Parser();
-            $elements = $yaml->parse(file_get_contents(GLOBAL_PATH.'/Plugins.yml'));
+            $elements = $yaml->parse(file_get_contents(GLOBAL_PATH.'/../Plugins.yml'));
 
             $this->plugins = (object) $elements;
         } catch (ParseException $e) {

@@ -10,7 +10,7 @@ Installation
 ------------
 * Download latest version with composer: `composer create-project millolab/quaver path/`
 * Import `quaver.sql` to your database
-* Check your `Quaver/Config.yml` and `Quaver/Routes.yml` to start!
+* Check your `Config.yml` and `Routes.yml` to start!
 
 
 Requeriments

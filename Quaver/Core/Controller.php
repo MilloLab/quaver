@@ -42,11 +42,11 @@ abstract class Controller
         $viewPath = GLOBAL_PATH.$themePath.'/'.$theme.'/View';
         $resPath = array(
             'view' => $viewPath,
-            'res' => $themePath.'/'.$theme.'/Resources',
-            'css' => $themePath.'/'.$theme.'/Resources/css',
-            'js' => $themePath.'/'.$theme.'/Resources/js',
-            'img' => $themePath.'/'.$theme.'/Resources/img',
-            'font' => $themePath.'/'.$theme.'/Resources/fonts',
+            'res' => '/Theme/'.$theme.'/Resources',
+            'css' => '/Theme/'.$theme.'/Resources/css',
+            'js' => '/Theme/'.$theme.'/Resources/js',
+            'img' => '/Theme/'.$theme.'/Resources/img',
+            'font' => '/Theme/'.$theme.'/Resources/fonts',
             'theme' => $theme,
             'randomVar' => $config->params->app['randomVar'],
         );

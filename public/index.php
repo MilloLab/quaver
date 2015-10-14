@@ -13,8 +13,8 @@ define('VENDOR_PATH', GLOBAL_PATH.'/../vendor');
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL | E_STRICT);
-if (!file_exists(GLOBAL_PATH.'/script_errors.log')) {
-    $logFile = fopen('script_errors.log', 'w') or die('Unable to open file!');
+if (!file_exists(GLOBAL_PATH.'/../script_errors.log')) {
+    $logFile = fopen(GLOBAL_PATH.'/../script_errors.log', 'w') or die('Unable to open file!');
     fwrite($logFile, '');
     fclose($logFile);
 }
@@ -24,7 +24,7 @@ ini_set('log_errors', 'On');
 date_default_timezone_set('Europe/Madrid');
 
 // Check config file
-if (!file_exists(GLOBAL_PATH.'/Config.yml')) {
+if (!file_exists(GLOBAL_PATH.'/../Config.yml')) {
     $msg = "This instance of app doesn't seem to be configured,
     please read the deployment guide, configure and try again.";
     error_log($msg);
@@ -54,7 +54,7 @@ if ($config->params->core['devMode'] && $config->params->core['benchMark']) {
     $router->startBenchProcess(); //false argument to stop
 }
 
-$router->addPath('/', GLOBAL_PATH.'/Routes.yml');
+$router->addPath('/', GLOBAL_PATH.'/../Routes.yml');
 
 // Add plugins
 $router->addModule('HelloWorld', 'millolab/quaver-helloworld');
