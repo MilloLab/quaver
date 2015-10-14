@@ -14,9 +14,8 @@
           <h1 class="page-header">{{ ('plugins')|t }}</h1>
 
           <div class="row">
-
-          {% for key, items in qv.modules %}
-            <div class="col-md-3">
+          {% for key, items in qv.plugins %}
+            <div class="col-md-6">
           <div class="panel panel-default panel-{{key}}">
             <div class="panel-heading">
               <h3 class="panel-title">{{ items.params.name }}</h3>
@@ -31,6 +30,11 @@
                     <li><strong>Use Routes:</strong> {{ items.params.useRoutes?'Yes':'No' }}</li>
                     <li><strong>Use Views:</strong> {{ items.params.useViews?'Yes':'No' }}</li>
                 </ul>
+                {% if items.enabled %}
+                  <a href="/admin/plugins/disable/{{key}}" class="btn btn-danger">Desactivar</a>
+                {% else %}
+                  <a href="/admin/plugins/enable/{{key}}" class="btn btn-primary">Activar</a>
+                {% endif %}
             </div>
           </div>
       </div>

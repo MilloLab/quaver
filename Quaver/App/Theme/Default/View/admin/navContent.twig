@@ -1,12 +1,14 @@
 <div class="navbar-collapse collapse">
   <ul class="nav navbar-nav navbar-right">
 
+    {% if qv.url.first.1 == 'admin' %}
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-info-circle"></i> <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <li><a href="#">{{ qv.build }}</a></li>
       </ul>
     </li>
+    {% endif %}
 
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-bar-chart"></i> <span class="caret"></span></a>
@@ -38,7 +40,7 @@
       </ul>
     </li>
 
-    {% if '/admin/' in qv.url.path %}
+    {% if qv.url.first.1 == 'admin' %}
       {% if qv.user.logged %}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ qv.user.email }} <span class="caret"></span></a>

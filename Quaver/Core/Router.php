@@ -9,6 +9,7 @@
 namespace Quaver\Core;
 
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Quaver\App\Model\User;
 
@@ -125,6 +126,7 @@ class Router
             $this->modules[$moduleName]['namespacePath'] = $namespacePath;
             $this->modules[$moduleName]['packageName'] = $packageName;
             $this->modules[$moduleName]['realPath'] = $modulePath ? $modulePath.'/'.$packageName : VENDOR_PATH.'/'.$packageName;
+            $this->modules[$moduleName]['enabled'] = true;
 
             // Load routes of module
             // if ($newModule->useRoutes) {
@@ -309,6 +311,8 @@ class Router
     {
         global $_lang, $_user;
 
+        $config = Config::getInstance();
+
         try {
 
             // Special controllers
@@ -321,10 +325,10 @@ class Router
 
             // Set controller data
             $controllerData = $this->setControllerData($controller);
-
+            
             // Dispatch controller or module controller
             if ($controllerData['moduleRoute']) {
-                foreach ($this->modules as $module) {
+                foreach ($config->plugins as $module) { // $this->modules
                     $moduleNamespace = $module['namespace'];
                     $realModulePath = !empty($controllerData['controllerPath']) ? $module['realPath'].$module['namespacePath'].'/Controller/'.$controllerData['controllerPath'].'/'.$controllerData['controllerName'].'.php' : $module['realPath'].$module['namespacePath'].'/Controller/'.$controllerData['controllerName'].'.php';
 
@@ -333,7 +337,7 @@ class Router
                         $controllerData['controllerNamespace'] = $moduleNamespace.$controllerData['pathNamespace'].'\\Controller\\'.$controllerData['controllerName'];
                         $controllerLoader = new $controllerData['controllerNamespace']($this);
 
-                        if (isset($controllerData['controllerView']) && $controllerData['controllerView'] != 'none' && $module['params']->useViews === true) {
+                        if (isset($controllerData['controllerView']) && $controllerData['controllerView'] != 'none' && $module['params']['useViews'] == true) {
                             $controllerLoader->setView($controllerData['controllerView']);
                         }
 

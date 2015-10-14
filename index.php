@@ -50,18 +50,16 @@ $router = new Router();
 // Start config
 $config = Config::getInstance();
 $config->setEnvironment();
-
-// Add paths
-$router->addPath('/', GLOBAL_PATH.'/Quaver/Routes.yml');
-
-// Add modules
-$router->addModule('HelloWorld', 'millolab/quaver-helloworld');
-$router->addModule('Mail', 'millolab/quaver-mail');
-
-// DevMode
 if ($config->params->core['devMode'] && $config->params->core['benchMark']) {
     $router->startBenchProcess(); //false argument to stop
 }
 
+$router->addPath('/', GLOBAL_PATH.'/Quaver/Routes.yml');
+
+// Add plugins
+$router->addModule('HelloWorld', 'millolab/quaver-helloworld');
+$router->addModule('Mail', 'millolab/quaver-mail');
+
+// Set router and run!
 $bootstrap->router = $router;
 $bootstrap->run();

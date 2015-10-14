@@ -9,6 +9,7 @@
 namespace Quaver\Core;
 
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
@@ -19,6 +20,7 @@ class Config
     public $db = NULL;
     public $cookies = NULL;
     public $params = NULL;
+    public $plugins = NULL;
     private static $instance = NULL;
    
     private function __construct() { }
@@ -96,5 +98,51 @@ class Config
         $params['cookiePath'] = $params['cookiePath']? $params['cookiePath'] : '/';
 
         return $params;
+    }
+
+    /**
+     * setPluginsYML
+     * @param array|object $modules 
+     * @param bool $force 
+     * @return object
+     */
+    public function setPluginsYML($modules, $force = false)
+    {
+        
+        if (!file_exists(GLOBAL_PATH.'/Quaver/Plugins.yml') || $force) {
+            
+            try {
+
+                $dumpModules = $modules;
+                foreach ($dumpModules as $key => $module) {
+                    $dumpModules[$key]['params'] = get_object_vars($module['params']);
+                }
+        
+                $dumper = new Dumper();
+                $yaml = $dumper->dump($dumpModules);
+                file_put_contents(GLOBAL_PATH.'/Quaver/Plugins.yml', $yaml);
+
+            } catch (DumpException $e) {
+                throw new \Quaver\Core\Exception('Unable to dump the YAML string: %s', $e->getMessage());
+            }
+        }
+
+        $this->getPluginsYML();
+    }
+
+    /**
+     * getPluginsYML
+     * @return self
+     */
+    public function getPluginsYML()
+    {
+        try {
+            $yaml = new Parser();
+            $elements = $yaml->parse(file_get_contents(GLOBAL_PATH.'/Quaver/Plugins.yml'));
+
+            $this->plugins = (object) $elements;
+        } catch (ParseException $e) {
+            throw new \Quaver\Core\Exception('Unable to parse the YAML string: %s', $e->getMessage());
+        }
     }
 }

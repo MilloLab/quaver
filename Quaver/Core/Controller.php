@@ -62,10 +62,10 @@ abstract class Controller
         $loader = new \Twig_Loader_Filesystem($templatesDir);
 
         // Add paths of modules
-        if ($this->router->modules) {
-            foreach ($this->router->modules as $module) {
-                if ($module['params']->useViews === true && isset($module['params']->theme) && !empty($module['params']->theme)) {
-                    $loader->addPath($module['realPath'].$module['namespacePath'].'/Theme/'.$module['params']->theme.'/View');
+        if ($config->plugins) {
+            foreach ($config->plugins as $module) {
+                if ($module['params']['useViews'] == true && isset($module['params']['theme']) && !empty($module['params']['theme'])) {
+                    $loader->addPath($module['realPath'].$module['namespacePath'].'/Theme/'.$module['params']['theme'].'/View');
                 }
             }
         }
@@ -186,7 +186,7 @@ abstract class Controller
         }
 
         // Extra parametres
-        $config = array(
+        $configVars = array(
             'extra' => array(
                 'brandName' => $config->params->app['brandName'],
             ),
@@ -201,15 +201,16 @@ abstract class Controller
             'user' => $GLOBALS['_user'],
             'modules' => $this->router->modules,
             'routes' => $this->router->routes,
-            'config' => $config->params,
+            'config' => get_object_vars($config->params),
+            'plugins' => get_object_vars($config->plugins),
         );
 
         if (strstr($this->router->url['path'], '/admin/')) {
             $build = shell_exec("git log -1 --pretty=format:'%H (%aD)'");
-            $config['build'] = $build;
+            $configVars['build'] = $build;
         }
 
-        $this->configVars = $config;
+        $this->configVars = $configVars;
         $this->addTwigVars('qv', $this->configVars);
     }
 
