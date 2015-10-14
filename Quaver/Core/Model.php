@@ -141,7 +141,7 @@ abstract class Model
      * 
      * @return array
      */
-    public function getList()
+    public function getArrayList()
     {
         $_table = $this->table;
         if (!$_table) {
