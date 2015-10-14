@@ -5,3 +5,4 @@ files/
 Cache/
 vendor/
 composer.lock
+Quaver/Plugins.yml

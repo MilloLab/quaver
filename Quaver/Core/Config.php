@@ -120,7 +120,7 @@ class Config
         
                 $dumper = new Dumper();
                 $yaml = $dumper->dump($dumpModules);
-                file_put_contents(GLOBAL_PATH.'/Quaver/plugins.yml', $yaml);
+                file_put_contents(GLOBAL_PATH.'/Quaver/Plugins.yml', $yaml);
 
             } catch (DumpException $e) {
                 throw new \Quaver\Core\Exception('Unable to dump the YAML string: %s', $e->getMessage());

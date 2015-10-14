@@ -129,9 +129,9 @@ class Router
             $this->modules[$moduleName]['enabled'] = true;
 
             // Load routes of module
-            if ($newModule->useRoutes) {
-                !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true) : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true);
-            }
+            // if ($newModule->useRoutes) {
+            //     !empty($modulePath) ? $this->addPath($moduleRoute, $modulePath.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true) : $this->addPath($moduleRoute, VENDOR_PATH.'/'.$packageName.'/'.$namespacePath.'/'.'Routes.yml', true);
+            // }
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception("Unable to load module: $moduleName", $e->getMessage());
         }
