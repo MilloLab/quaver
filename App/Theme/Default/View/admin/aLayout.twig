@@ -51,6 +51,25 @@
   </div>
 
   {% block footer %}{% endblock %}
+    <script>
+      $('#testAjax').on('click', function (e) {
+        e.preventDefault();
+
+        var id = 1;
+
+        postData = {
+          id: id
+        };
+
+        $.post('/Ajax/testAjax.php', postData, function(data) {
+
+          var success = data['success'];
+          console.log(success);
+          alert(success);
+    
+        },"json");
+      });
+      </script>
   {% block JS_Footer %}{% endblock %}
   </body>
 </html>
