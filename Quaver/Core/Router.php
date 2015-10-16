@@ -331,6 +331,67 @@ class Router
     }
 
     /**
+     * Redirect URL
+     * @param string $url 
+     * @param int $status 
+     */
+    public function redirect($url, $status = 302)
+    {
+        header("Location: {$url}", TRUE, $status);
+        exit();
+    }
+
+    /**
+     * Redirect to route with params
+     * @param string $route 
+     * @param array $params 
+     * @param int $status 
+     */
+    public function redirectTo($route, $params = array(), $status = 302)
+    {
+        $this->redirect($this->getUrlFor($route, $params), $status);
+    }
+
+    /**
+     * Get url with params
+     * @param string $route 
+     * @param array $params 
+     * @return string
+     */
+    public function getUrlFor($route, $params = array())
+    {
+        $urlBase = $this->existRoute($route);
+        if (!$urlBase) {
+            throw new \Quaver\Core\Exception('Route not found for name: ' . $name);
+        }
+        
+        $urlFor = '';
+        foreach ($params as $value) {
+            $urlFor .= $value . '/';
+        }
+
+        $urlFor = $urlBase . $urlFor;
+
+        return $urlFor;
+    }
+
+    /**
+     * Check if exists route
+     * @param string $name 
+     * @return bool
+     */
+    public function existRoute($name)
+    {
+        foreach ($this->routes as $indexPath => $container) {
+            if ($container[$name]) {
+                return $this->getBasePath($container[$name]['url']);
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Dispatch action.
      *
      * @param array $controller
