@@ -41,7 +41,7 @@ class App
     /**
      * @const string
      */
-    const VERSION = '0.11';
+    const VERSION = '0.11.1';
 
     /**
      * @var \Quaver\Core\Router

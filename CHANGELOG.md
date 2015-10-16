@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.11.1] - 2015-10-16
+### Changed
+ - Added new redirect methods
+
+
 ## [0.11] - 2015-10-15
 ### Changed
  - Bootstrap model change to App
