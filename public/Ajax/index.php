@@ -5,7 +5,7 @@
  * (see README for details)
  */
 
-define('AJAX_PATH', dirname( __FILE__ ));
+define('AJAX_PATH', dirname(__FILE__));
 define('AJAX_METHOD', true);
 
-require(AJAX_PATH . "/../index.php");
+require AJAX_PATH.'/../index.php';

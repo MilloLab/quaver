@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,12 +26,10 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 /**
- * Controller base class
- * @package Quaver
+ * Controller base class.
  */
 abstract class Controller
 {
@@ -154,7 +152,6 @@ abstract class Controller
 
         if ($config->params->core['devMode']
             && $config->params->core['benchMark'] && $this->router->dev) {
-
             $this->router->finishBenchProcess();
 
             $dumper = new \Twig_Profiler_Dumper_Text();
@@ -237,8 +234,7 @@ abstract class Controller
      * Add vars to twig.
      *
      * @param string $_key
-     * @param array $_array
-     *
+     * @param array  $_array
      */
     public function addTwigVars($_key, $_array)
     {
@@ -249,8 +245,7 @@ abstract class Controller
      * Extend qv object for twig.
      *
      * @param string $_key
-     * @param array $_array
-     *
+     * @param array  $_array
      */
     public function addQuaverTwigVars($_key, $_array)
     {

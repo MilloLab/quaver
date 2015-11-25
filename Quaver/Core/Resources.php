@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,19 +26,18 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 /**
- * Resources class
- * @package Quaver
+ * Resources class.
  */
 class Resources
-{   
+{
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param array $arrayPath
-     * @param bool $devMode
+     * @param bool  $devMode
      */
     public function __construct($arrayPath, $devMode = true)
     {
@@ -47,23 +46,26 @@ class Resources
     }
 
     /**
-     * Add values to object
-     * @param array $values 
+     * Add values to object.
+     *
+     * @param array $values
      */
     protected function add($values)
-    {   
+    {
         if (isset($values)) {
             foreach ($values as $k => $v) {
                 $this->$k = $v;
-            }    
+            }
         }
     }
 
     /**
-     * Set css, js and img files
-     * @param string $file 
-     * @param string $type 
-     * @param bool $_randomVar 
+     * Set css, js and img files.
+     *
+     * @param string $file
+     * @param string $type
+     * @param bool   $_randomVar
+     *
      * @return mixed
      */
     public function map($file, $type, $_randomVar = true)
@@ -76,8 +78,8 @@ class Resources
                 $min = '';
             }
             $randomVar = $_randomVar ? '?'.$this->randomVar : '';
-            $typePath = isset($this->$type)? $this->$type : $this->img;
-            
+            $typePath = isset($this->$type) ? $this->$type : $this->img;
+
             return $typePath.'/'.$part[0].$min.$type.$randomVar;
         } else {
             return false;

@@ -33,7 +33,7 @@ class home extends Controller
      * @return mixed
      */
     public function maintenanceAction()
-    {   
+    {
         $config = Config::getInstance();
         if ($config->params->core['maintenance']) {
             $this->render();

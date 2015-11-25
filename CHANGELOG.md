@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.11.2] - 2015-11-25
+### Changed
+ - Added absolute URL to url array
+ - Improvements
+
+
 ## [0.11.1] - 2015-10-16
 ### Changed
  - Added new redirect methods

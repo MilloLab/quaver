@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,17 +26,14 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Quaver\App\Model\User;
 
 /**
- * Router class
- * @package Quaver
+ * Router class.
  */
 class Router
 {
@@ -55,7 +52,6 @@ class Router
 
     /**
      * Router constructor.
-     *
      */
     public function __construct()
     {
@@ -97,7 +93,7 @@ class Router
      *
      * @param string $container
      * @param string $path
-     * @param bool $_moduleRoute
+     * @param bool   $_moduleRoute
      *
      * @return array
      */
@@ -159,8 +155,9 @@ class Router
     }
 
     /**
-     * Remove module
-     * @param string $moduleName 
+     * Remove module.
+     *
+     * @param string $moduleName
      */
     public function removeModule($moduleName)
     {
@@ -287,6 +284,7 @@ class Router
                             'host' => $_SERVER['HTTP_HOST'],
                             'protocol' => empty($_SERVER['HTTPS']) ? 'http://' : 'https://',
                         );
+                        $this->url['absolute'] = $this->url['protocol'].$this->url['host'];
 
                         $controller = $item;
                         break;
@@ -305,7 +303,7 @@ class Router
     }
 
     /**
-     * Get first path
+     * Get first path.
      * 
      * @param string $path
      * 
@@ -314,38 +312,42 @@ class Router
     public function getFirstPath($path)
     {
         $firstPath = explode('(', $path);
+
         return array_filter(explode('/', $firstPath[0]));
     }
 
     /**
-     * Get base path
+     * Get base path.
      * 
-     * @param string $path 
+     * @param string $path
      * 
      * @return string
      */
     public function getBasePath($path)
     {
         $firstPath = explode('(', $path);
+
         return $firstPath[0];
     }
 
     /**
-     * Redirect URL
-     * @param string $url 
-     * @param int $status 
+     * Redirect URL.
+     *
+     * @param string $url
+     * @param int    $status
      */
     public function redirect($url, $status = 302)
     {
-        header("Location: {$url}", TRUE, $status);
+        header("Location: {$url}", true, $status);
         exit();
     }
 
     /**
-     * Redirect to route with params
-     * @param string $route 
-     * @param array $params 
-     * @param int $status 
+     * Redirect to route with params.
+     *
+     * @param string $route
+     * @param array  $params
+     * @param int    $status
      */
     public function redirectTo($route, $params = array(), $status = 302)
     {
@@ -353,31 +355,35 @@ class Router
     }
 
     /**
-     * Get url with params
-     * @param string $route 
-     * @param array $params 
+     * Get url with params.
+     *
+     * @param string $route
+     * @param array  $params
+     *
      * @return string
      */
     public function getUrlFor($route, $params = array())
     {
         $urlBase = $this->existRoute($route);
         if (!$urlBase) {
-            throw new \Quaver\Core\Exception('Route not found for name: ' . $name);
-        }
-        
-        $urlFor = '';
-        foreach ($params as $value) {
-            $urlFor .= $value . '/';
+            throw new \Quaver\Core\Exception('Route not found for name: '.$name);
         }
 
-        $urlFor = $urlBase . $urlFor;
+        $urlFor = '';
+        foreach ($params as $value) {
+            $urlFor .= $value.'/';
+        }
+
+        $urlFor = $urlBase.$urlFor;
 
         return $urlFor;
     }
 
     /**
-     * Check if exists route
-     * @param string $name 
+     * Check if exists route.
+     *
+     * @param string $name
+     *
      * @return bool
      */
     public function existRoute($name)
@@ -416,7 +422,7 @@ class Router
 
             // Set controller data
             $controllerData = $this->setControllerData($controller);
-            
+
             // Dispatch controller or module controller
             if ($controllerData['moduleRoute']) {
                 foreach ($config->plugins as $module) { // $this->modules

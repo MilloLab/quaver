@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,14 +26,13 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 use Quaver\App\Model\User;
 
 /**
- * App
- * @package  Quaver
+ * App.
+ *
  * @author   Alberto González
  */
 class App
@@ -41,7 +40,7 @@ class App
     /**
      * @const string
      */
-    const VERSION = '0.11.1';
+    const VERSION = '0.11.2';
 
     /**
      * @var \Quaver\Core\Router
@@ -54,7 +53,7 @@ class App
     public $modules;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -75,7 +74,7 @@ class App
      *
      * @param string $container
      * @param string $path
-     * @param bool $_moduleRoute
+     * @param bool   $_moduleRoute
      *
      * @return array
      */
@@ -100,8 +99,9 @@ class App
     }
 
     /**
-     * Remove module
-     * @param string $moduleName 
+     * Remove module.
+     *
+     * @param string $moduleName
      */
     public function removeModule($moduleName)
     {
@@ -122,7 +122,7 @@ class App
     public function run()
     {
         $config = Config::getInstance();
-        
+
         // Start db
         $db = DB::getInstance();
         $db->setConnection();
@@ -149,7 +149,7 @@ class App
                 }
             }
         }
-        
+
         // Load language
         $GLOBALS['_lang'] = new Lang();
         if (isset($_GET['lang'])) {
@@ -189,7 +189,7 @@ class App
     }
 
     /**
-     * Check if exists some folders
+     * Check if exists some folders.
      */
     private function checkFiles($folders)
     {

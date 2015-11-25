@@ -12,7 +12,7 @@ $result = array(
     'success' => false,
 );
 
-$id = (int)$_REQUEST['id'];
+$id = (int) $_REQUEST['id'];
 if ($id == 1) {
     $result['success'] = true;
 }

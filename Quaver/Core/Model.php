@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,12 +26,10 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 /**
- * Model class
- * @package Quaver
+ * Model class.
  */
 abstract class Model
 {
@@ -54,7 +52,6 @@ abstract class Model
      * Setter.
      *
      * @param array $_item
-     *
      */
     public function setItem($_item)
     {
@@ -81,10 +78,12 @@ abstract class Model
     }
 
     /**
-     * Get values by custom select
-     * @param array|string $_value 
-     * @param array|string $_where 
-     * @param string $_order 
+     * Get values by custom select.
+     *
+     * @param array|string $_value
+     * @param array|string $_where
+     * @param string       $_order
+     *
      * @return array
      */
     public function getValues($_value, $_where = '', $_order = '')
@@ -122,16 +121,15 @@ abstract class Model
 
         // Set order
         $order = "ORDER BY $_order";
-        
-        try {     
+
+        try {
             $sql = "SELECT $values FROM $_table $where $order";
             $items = $db->query($sql, $params);
-            return $items->fetchAll();
 
+            return $items->fetchAll();
         } catch (PDOException $e) {
             throw new \Quaver\Core\Exception($e->getMessage());
         }
-
     }
 
     /**
@@ -159,7 +157,7 @@ abstract class Model
     }
 
     /**
-     * Get array list
+     * Get array list.
      * 
      * @return array
      */

@@ -93,7 +93,7 @@ class User extends Model
 
         if (!empty($this->cookie)) {
             $config = Config::getInstance();
-            
+
             setCookie($config->cookies['cookieName'].'_log', $this->cookie, time() + 60 * 60 * 24 * 30, $config->cookies['cookiePath'], $config->cookies['cookieDomain']);
         }
     }

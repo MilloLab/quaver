@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,12 +26,10 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 /**
- * Lang class
- * @package Quaver
+ * Lang class.
  */
 class Lang extends \Quaver\Core\Model
 {
@@ -88,8 +86,10 @@ class Lang extends \Quaver\Core\Model
 
     /**
      * Get site language.
-     * @param int $defaultLang
+     *
+     * @param int  $defaultLang
      * @param bool $forcedLang
+     *
      * @return self[]
      */
     public function getSiteLanguage($defaultLang = 1, $forcedLang = false)
@@ -97,14 +97,13 @@ class Lang extends \Quaver\Core\Model
         $return = $this->getLanguageFromCookie();
 
         if (!$return) {
-            
             if ($forcedLang) {
                 $this->getFromId($defaultLang);
             } else {
                 $language_slug = \Quaver\Core\Helper::getBrowserLanguage();
                 $this->getFromSlug($language_slug, true);
             }
-            
+
             if (empty($this->slug)) {
                 $this->getFromId($defaultLang);
             }
@@ -153,8 +152,9 @@ class Lang extends \Quaver\Core\Model
      * Get object from slug.
      *
      * @param string $_slug
-     * @param bool $_short
-     * @param int $defaultLang
+     * @param bool   $_short
+     * @param int    $defaultLang
+     *
      * @return object
      */
     public function getFromSlug($_slug, $_short = false, $defaultLang = 1)

@@ -1,6 +1,6 @@
 <?php
 
-require_once('bootstrap.php');
+require_once 'bootstrap.php';
 
 $app = new \Quaver\Core\App();
 

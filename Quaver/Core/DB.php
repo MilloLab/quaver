@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,23 +26,25 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 use PDO;
 
 /**
- * DB class
- * @package Quaver
+ * DB class.
  */
 class DB
 {
     private $conn = null;
-    private static $instance = NULL;
-    
-    private function __construct() { }
-    
-    public function __clone() { }
+    private static $instance = null;
+
+    private function __construct()
+    {
+    }
+
+    public function __clone()
+    {
+    }
 
     public static function getInstance()
     {
@@ -71,7 +73,6 @@ class DB
         static $conn;
 
         if (!$conn) {
-
             $config = Config::getInstance();
 
             // Connecting to mysql

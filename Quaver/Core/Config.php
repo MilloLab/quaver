@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González
@@ -26,7 +26,6 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver\Core;
 
 use Symfony\Component\Yaml\Parser;
@@ -34,20 +33,23 @@ use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
- * Config class
- * @package Quaver
+ * Config class.
  */
 class Config
-{   
-    public $db = NULL;
-    public $cookies = NULL;
-    public $params = NULL;
-    public $plugins = NULL;
-    private static $instance = NULL;
-   
-    private function __construct() { }
- 
-    public function __clone() { }
+{
+    public $db = null;
+    public $cookies = null;
+    public $params = null;
+    public $plugins = null;
+    private static $instance = null;
+
+    private function __construct()
+    {
+    }
+
+    public function __clone()
+    {
+    }
 
     public static function getInstance()
     {
@@ -59,8 +61,10 @@ class Config
     }
 
     /**
-     * Read yml file to load config vars
-     * @param string $file 
+     * Read yml file to load config vars.
+     *
+     * @param string $file
+     *
      * @return array
      */
     public function setEnvironment($file = '')
@@ -81,69 +85,69 @@ class Config
             unset($elements['cookies']);
 
             $configObj = (object) $elements;
-            $configObj->core['modelPath'] = GLOBAL_PATH.$configObj->core['modelPath'];  
+            $configObj->core['modelPath'] = GLOBAL_PATH.$configObj->core['modelPath'];
             $configObj->core['controllerPath'] = GLOBAL_PATH.$configObj->core['controllerPath'];
 
             $this->params = $configObj;
+
             return $configObj;
-            
         } catch (ParseException $e) {
             throw new \Quaver\Core\Exception('Unable to parse the YAML string: %s', $e->getMessage());
         }
     }
 
     /**
-     * Set database constants
+     * Set database constants.
+     *
      * @param array $params
      */
     private function setDatabaseParams($params)
     {
-        $params['hostname'] = $params['hostname']? $params['hostname']: 'localhost'; 
-        $params['username'] = $params['username']? $params['username']: 'root';
-        $params['password'] = $params['password']? $params['password']: 'root';
-        $params['database'] = $params['database']? $params['database']: 'qv';
-        $params['port'] = $params['port']? $params['port']: 3306;
-        $params['devMode'] = $params['devMode']? $params['devMode']: true;
-        $params['cypherKey'] = $params['cypherKey']? $params['cypherKey']: '';
+        $params['hostname'] = $params['hostname'] ? $params['hostname'] : 'localhost';
+        $params['username'] = $params['username'] ? $params['username'] : 'root';
+        $params['password'] = $params['password'] ? $params['password'] : 'root';
+        $params['database'] = $params['database'] ? $params['database'] : 'qv';
+        $params['port'] = $params['port'] ? $params['port'] : 3306;
+        $params['devMode'] = $params['devMode'] ? $params['devMode'] : true;
+        $params['cypherKey'] = $params['cypherKey'] ? $params['cypherKey'] : '';
 
         return $params;
     }
 
     /**
-     * Set cookie constants
+     * Set cookie constants.
+     *
      * @param array $params
      */
     private function setCookieParams($params)
     {
-        $params['cookieName'] = $params['cookieName']? $params['cookieName'] : 'quaver';
-        $params['cookieDomain'] = $params['cookieDomain'] != 'server'? $params['cookieDomain']: $_SERVER['HTTP_HOST'];
-        $params['cookiePath'] = $params['cookiePath']? $params['cookiePath'] : '/';
+        $params['cookieName'] = $params['cookieName'] ? $params['cookieName'] : 'quaver';
+        $params['cookieDomain'] = $params['cookieDomain'] != 'server' ? $params['cookieDomain'] : $_SERVER['HTTP_HOST'];
+        $params['cookiePath'] = $params['cookiePath'] ? $params['cookiePath'] : '/';
 
         return $params;
     }
 
     /**
-     * setPluginsYML
-     * @param array|object $modules 
-     * @param bool $force 
+     * setPluginsYML.
+     *
+     * @param array|object $modules
+     * @param bool         $force
+     *
      * @return object
      */
     public function setPluginsYML($modules, $force = false)
     {
-        
         if (!file_exists(GLOBAL_PATH.'/../Plugins.yml') || $force) {
-            
             try {
-
                 $dumpModules = $modules;
                 foreach ($dumpModules as $key => $module) {
                     $dumpModules[$key]['params'] = get_object_vars($module['params']);
                 }
-        
+
                 $dumper = new Dumper();
                 $yaml = $dumper->dump($dumpModules);
                 file_put_contents(GLOBAL_PATH.'/../Plugins.yml', $yaml);
-
             } catch (DumpException $e) {
                 throw new \Quaver\Core\Exception('Unable to dump the YAML string: %s', $e->getMessage());
             }
@@ -153,7 +157,8 @@ class Config
     }
 
     /**
-     * getPluginsYML
+     * getPluginsYML.
+     *
      * @return self
      */
     public function getPluginsYML()

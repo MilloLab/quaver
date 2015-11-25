@@ -1,6 +1,6 @@
 <?php
 /**
- * Quaver Framework
+ * Quaver Framework.
  *
  * @author      Alberto González <quaver@millolab.com>
  * @copyright   2014 Alberto González (Based on AwesomezGuy autoloader)
@@ -26,7 +26,6 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 namespace Quaver;
 
 /**
@@ -44,7 +43,7 @@ function load($namespace)
     $firstword = true;
     $countSplitPath = count($splitpath);
 
-    for ($i = 0; $i < $countSplitPath; $i++) {
+    for ($i = 0; $i < $countSplitPath; ++$i) {
         if ($splitpath[$i] && !$firstword) {
             if ($i == count($splitpath) - 1) {
                 $name = $splitpath[$i];
@@ -63,11 +62,10 @@ function load($namespace)
         $fullpath = __DIR__.'/..'.$path.DIRECTORY_SEPARATOR.$name.'.php';
 
         if (!file_exists($fullpath)) {
-            $fullpath = __DIR__.'/../..'.$path.DIRECTORY_SEPARATOR.$name.'.php';   
+            $fullpath = __DIR__.'/../..'.$path.DIRECTORY_SEPARATOR.$name.'.php';
         }
 
         return include_once $fullpath;
-        
     }
 
     return false;
@@ -77,7 +75,6 @@ function load($namespace)
  * loadPath.
  *
  * @param string $absPath
- *
  */
 function loadPath($absPath)
 {
