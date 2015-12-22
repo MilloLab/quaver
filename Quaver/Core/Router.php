@@ -449,11 +449,7 @@ class Router
                 }
             }
 
-            # PHP7 
-            return ($controllerLoader->$controllerData)['actionName']();
-             
-            # PHP5
-            # return $controllerLoader->$controllerData['actionName']();
+            return $controllerLoader->{$controllerData['actionName']}();
 
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception('Unable to load controller: '.$controller['controller'], $e->getMessage());
