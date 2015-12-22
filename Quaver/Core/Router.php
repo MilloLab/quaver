@@ -338,8 +338,7 @@ class Router
      */
     public function redirect($url, $status = 302)
     {
-        header("Location: {$url}", true, $status);
-        exit();
+        exit(header("Location: {$url}", true, $status));
     }
 
     /**
@@ -437,8 +436,6 @@ class Router
                         if (isset($controllerData['controllerView']) && $controllerData['controllerView'] != 'none' && $module['params']['useViews'] == true) {
                             $controllerLoader->setView($controllerData['controllerView']);
                         }
-
-                        return $controllerLoader->$controllerData['actionName']();
                     }
                 }
             } else {
@@ -449,10 +446,11 @@ class Router
                     if (isset($controllerData['controllerView']) && $controllerData['controllerView'] != 'none') {
                         $controllerLoader->setView($controllerData['controllerView']);
                     }
-
-                    return $controllerLoader->$controllerData['actionName']();
                 }
             }
+
+            return $controllerLoader->{$controllerData['actionName']}();
+
         } catch (\Quaver\Core\Exception $e) {
             throw new \Quaver\Core\Exception('Unable to load controller: '.$controller['controller'], $e->getMessage());
         }
