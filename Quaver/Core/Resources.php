@@ -73,12 +73,24 @@ class Resources
         if (isset($file) && isset($type)) {
             $part = explode($type, $file);
             if ($type == 'css' || $type == 'js') {
-                $min = $this->devMode ? 'min.' : '';
+                $min = !$this->devMode ? 'min.' : '';
             } else {
                 $min = '';
             }
             $randomVar = $_randomVar ? '?'.$this->randomVar : '';
             $typePath = isset($this->$type) ? $this->$type : $this->img;
+
+            if ($type == 'css' || $type == 'js') {
+                if (!empty($min)) {
+                    if (!file_exists(GLOBAL_PATH . $typePath.'/'.$part[0].$min.$type)) {
+                        $min = '';
+                    }    
+                } else {
+                    if (!file_exists(GLOBAL_PATH . $typePath.'/'.$part[0].$type)) {
+                        $min = 'min.';
+                    }
+                }
+            }
 
             return $typePath.'/'.$part[0].$min.$type.$randomVar;
         } else {
