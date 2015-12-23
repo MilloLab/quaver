@@ -108,7 +108,7 @@ class Config
         $params['password'] = $params['password'] ? $params['password'] : 'root';
         $params['database'] = $params['database'] ? $params['database'] : 'qv';
         $params['port'] = $params['port'] ? $params['port'] : 3306;
-        $params['devMode'] = $params['devMode'] ? $params['devMode'] : true;
+        $params['debug'] = $params['debug'] ? $params['debug'] : true;
         $params['cypherKey'] = $params['cypherKey'] ? $params['cypherKey'] : '';
 
         return $params;

@@ -2,6 +2,7 @@
 core:
     modelPath: /../App/Model
     controllerPath: /../App/Controller
+    libPath: /../App/Lib
     themePath: /../App/Theme
     filesPath: ./files
     maintenance: false
@@ -29,7 +30,7 @@ db:
     password: root
     database: qv
     port: 3306
-    devMode: true
+    debug: true
     cypherKey: 12345678
 
 folders:
