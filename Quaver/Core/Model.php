@@ -168,7 +168,7 @@ abstract class Model
             return false;
         }
 
-        $db = new DB();
+        $db = DB::getInstance();
         $return = null;
 
         $item = $db->query("SELECT id FROM $_table");
@@ -176,7 +176,7 @@ abstract class Model
 
         if ($result) {
             foreach ($result as $item) {
-                $class = new self();
+                $class = new static();
                 $return[] = $class->getFromId($item['id']);
             }
         }
