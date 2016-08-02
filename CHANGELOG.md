@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.20.1] - 2016-08-02
+## Fixes
+ - Fix launching bugs
+
+
 ## [0.20] - 2016-08-02
 ### Added
  - NEW version released with new major improvements and redesign!!!

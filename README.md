@@ -9,7 +9,7 @@ Quaver Framework is developed by [MilloLab](http://millolab.com), and distribute
 Installation
 ------------
 * Download latest version with composer: `composer create-project millolab/quaver myproject/`
-* Use Quaver CLI to start 
+* Use Quaver CLI to start: `./quaver start`
 * Check your `App/Config.yml` and `App/Theme/Default/Routes.yml` to customize
 
 Requeriments
