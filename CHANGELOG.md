@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.20] - 2016-08-02
+### Added
+ - NEW version released with new major improvements and redesign!!!
+ - CSRF protection
+ - New core-App system
+ - Redesign AJAX controllers
+ - Prepare to API apps (comming to v0.30)
+ - New public folder
+ - Redesign themes system
+ - Config is now YML
+ - Added new Mailing system
+
+### Changes
+ - Quaver now separate at three side projects: Quaver-Core, Quaver-CLI, Quaver (current)
+
+## Fixes
+ - A lot of bugs and improvements
+
+
 ## [0.11.5] - 2015-12-23
 ### Changes
  - Change debug DB variable
