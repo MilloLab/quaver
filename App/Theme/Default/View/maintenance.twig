@@ -1,13 +1,11 @@
-{%  extends "layout.twig" %}
-
-{% block nav %}{% endblock %}
+{% extends 'general/layout.twig' %}
 
 {% block body %}
-	<div class="container">
-      <div class="jumbotron centered">
-        <h1>Maintenance</h1>
-        <p>Coming soon!</p>
-      </div>
 
+    <div class="container">
+        <h1 class="margin-top margin-bottom">
+            {{ ('maintenance-text')|t|raw }}
+        </h1>
     </div>
-{%  endblock %}
+
+{% endblock %}

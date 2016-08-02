@@ -1,7 +1,33 @@
-ajax.log
-script_errors.log
-files/
-cache/
-vendor/
-composer.lock
-Plugins.yml
+# Config and databases
+.htpasswd
+[Cc]onfig/*
+/App/Config.yml
+/files/mail.lck
+*.sql
+*.sqlite
+
+# Sessions
+/[Ss]essions/*
+
+# Logs, cache
+/public/Resources/*
+[Ll]ogs/*
+[Cc]ache/*
+*.log
+
+# Keep empty folders trick
+!.gitkeep
+
+# Composer and vendors
+/composer.lock
+/vendor/
+/public/vendor/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

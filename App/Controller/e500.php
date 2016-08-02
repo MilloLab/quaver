@@ -11,12 +11,12 @@ use Quaver\Core\Config;
 
 $url = $this->getCurrentRoute();
 
-header('HTTP/1.0 404 Not Found');
-trigger_error("[404] $url", E_USER_WARNING);
+header('HTTP/1.0 500 Internal Server Error');
+trigger_error("[500] $url", E_USER_ERROR);
 
 if (!defined('AJAX_METHOD')) {
-    $this->addTwigVars('siteTitle', $_lang->l('title-404').' - '.Config::get('app.BRAND_NAME'));
-    $this->addTwigVars('e404', true);
+    $this->addTwigVars('siteTitle', 'Error 500 - '.Config::get('app.BRAND_NAME'));
+    $this->addTwigVars('e500', true);
     $this->setView('http-errors');
     $this->render();
 }

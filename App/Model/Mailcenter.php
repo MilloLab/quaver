@@ -7,6 +7,6 @@
 
 namespace Quaver\App\Model;
 
-class User extends \Quaver\Model\User
+class Mailcenter extends \Quaver\Model\Mailcenter
 {
 }

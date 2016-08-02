@@ -1,58 +1,84 @@
-{% set langCurrent = qv.language.locale|split('_') %}
+{% set langCurrent = language.locale|split('_') %}
 <!DOCTYPE html>
 <html lang="{{ langCurrent[0] }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" type="image" href="//millolab.com/Quaver/App/Theme/Default/Resources/img/favicon.ico.png">
+    <meta name="description" content="Hello World demo">
+    <meta name="author" content="Quaver"> 
 
-    <title>{% block title %}{{ ('welcome')|t }}{% endblock %}</title>
+    <title>Hello World | Quaver</title>
 
-    <!-- CSS -->
-    <link href="{{ qv.r.map('bootstrap.css', 'css') }}" rel="stylesheet">
-    <link href="{{ qv.r.map('style.css', 'css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- Bootstrap core CSS -->
+    <link href="{{ (qv.config.core.DEV_MODE is not same as(true)? 'css/bootstrap.min.css' : 'css/bootstrap.css') | r(qv.randomVar) }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <style type="text/css" media="screen">
+        body {
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+
+        .navbar {
+          margin-bottom: 20px;
+        }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-
-
-    {% block head %}{% endblock %}
-
+    {% block debugBarHead %}
+        {% if qv.config.core.DEBUG_BAR %}
+          {{ qv.config.debugbarRenderer.renderHead()|raw }}
+        {% endif %}
+    {% endblock %}
   </head>
 
   <body>
 
-	{% block nav %}
+    <div class="container">
 
-		{% include 'nav.twig' %}
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">{{qv.config.app.BRAND_NAME}}</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a id="testAjax" href="#">Test Ajax</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
 
-	{% endblock %}
+      {% block body %}{% endblock %}
 
-	<div class="container">
+    </div> <!-- /container -->
 
-	{% block body %}{% endblock %}
-	</div>
-
-	{% block footer %}
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">Made with love by <a href="http://millolab.com" target="_blank"><i class="fa fa-millolab fa-2x"></i></a></p>
-      </div>
-    </footer>
-
-  {% endblock %}
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="{{ qv.r.map('bootstrap.js', 'js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{{ (qv.config.core.DEV_MODE is not same as(true)? 'js/bootstrap.min.js' : 'js/bootstrap.js') | r(qv.randomVar) }}"></script>
+    <script>
+        $.ajaxPrefilter(function(options) {
+            if (!options.crossDomain) {
+                options.headers = options.headers || {};
+                options.headers['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+            }
+        });
+    </script>
     <script>
       $('#testAjax').on('click', function (e) {
         e.preventDefault();
@@ -63,16 +89,20 @@
           id: id
         };
 
-        $.post('/Ajax/testAjax.php', postData, function(data) {
+        $.post('/testAjax/', postData, function(data) {
 
-          var success = data['success'];
+          var success = data;
           console.log(success);
           alert(success);
-  
+    
         },"json");
       });
       </script>
 
-    {% block footerJS %}{% endblock %}
+    {% block debugBar %}
+        {% if qv.config.core.DEBUG_BAR %}
+            {{ qv.config.debugbarRenderer.render()|raw }}
+        {% endif %}
+    {% endblock %}
   </body>
 </html>

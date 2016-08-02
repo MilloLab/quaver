@@ -1,0 +1,40 @@
+home:
+    url: /
+    controller: home
+    view: home
+
+testAjax:
+    url: /testAjax/
+    controller: testAjax
+    view: none
+    type: ajax
+
+401:
+    url: /401/
+    controller: e401
+    view: http-errors
+
+404:
+    url: /404/
+    controller: e404
+    view: http-errors
+
+408:
+    url: /408/
+    controller: e408
+    view: http-errors
+    
+500:
+    url: /500/
+    controller: e500
+    view: http-errors
+
+language:
+    url: /language/([a-zA-Z0-9-_]+)?[/]?
+    controller: language
+    view: none
+
+maintenance:
+    url: /maintenance/
+    controller: maintenance
+    view: maintenance

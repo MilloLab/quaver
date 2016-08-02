@@ -1,20 +1,17 @@
 What is Quaver?
 ===============
+[![Latest Stable Version](https://img.shields.io/packagist/v/millolab/quaver.svg?style=flat-square)](https://packagist.org/packages/millolab/quaver) [![License](https://img.shields.io/packagist/l/millolab/quaver.svg?style=flat-square)](https://packagist.org/packages/millolab/quaver)
+
 It is a framework designed to develop a website, applications, platforms or whatever you want. Lightweight and simple to use, modular and robust. Made for Web Artisans.
 
-Quaver Framework is developed by [Alberto González](https://github.com/albertogcatalan) & [MilloLab](http://millolab.com), and distributed under MIT license.
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/millolab/quaver.svg?style=flat-square)](https://packagist.org/packages/millolab/quaver) [![Travis](https://img.shields.io/travis/MilloLab/quaver.svg?branch=master&style=flat-square)](https://travis-ci.org/MilloLab/quaver) [![License](https://img.shields.io/packagist/l/millolab/quaver.svg?style=flat-square)](https://packagist.org/packages/millolab/quaver)
-
-**This version has been paused to develop the next steps. We are working on version 0.20 and will be launch coming soon!**
+Quaver Framework is developed by [MilloLab](http://millolab.com), and distributed under MIT license.
 
 Installation
 ------------
-* Download latest version with composer: `composer create-project millolab/quaver path/`
-* Import `quaver.sql` to your database
-* Check your `Config.yml` and `Routes.yml` to start!
-
+* Download latest version with composer: `composer create-project millolab/quaver myproject/`
+* Use Quaver CLI to start 
+* Check your `App/Config.yml` and `App/Theme/Default/Routes.yml` to customize
 
 Requeriments
 ------------
-* PHP >= 5.4
+* PHP >= 5.5

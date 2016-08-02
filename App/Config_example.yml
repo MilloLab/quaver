@@ -1,0 +1,67 @@
+core:
+    MODEL_PATH: /App/Model
+    CONTROLLER_PATH: /App/Controller
+    LIB_PATH: /Lib
+    FILES_PATH: ./files
+    SPOOL_PATH: /Cache/spool
+    MAINTENANCE_MODE: false
+    DEV_MODE: true
+    DEBUG_BAR: true
+    TEMPLATE_CACHE: false
+    CACHE_AUTO_RELOAD: true
+    LANG: 2
+    LANG_FORCE: false
+
+app:
+    THEME_QUAVER: /App/Theme/Default
+    THEME_BASE_QUAVER: /App/Theme/Default
+    BRAND_NAME: Brand name
+    RANDOM_VAR: 20160801
+    CURRENCY: EUR
+    CURRENCYSYMBOL: €
+    STABLE_VERSION: '1.0.0'
+    BETA_VERSION: '1.0.0'
+
+cookies:
+    COOKIE_NAME: cookie_name
+    COOKIE_DOMAIN: domain.com
+    COOKIE_PATH: /
+
+session:
+    SESSION_PATH: /sessions
+    cookie_lifetime: 3600
+    gc_probability: 1
+    gc_divisor: 100
+    gc_maxlifetime: 3600
+    cookie_httponly: true
+
+db:
+    HOSTNAME: localhost
+    USERNAME: user
+    PASSWORD: pass
+    DATABASE: database
+    PORT: 3306
+    CIPHER_KEY: random_key
+
+slack:
+    HOOK: https://hooks.slack.com/services/...
+    SLACK_CHANNEL: slack-channel
+    NOTIFY_ALL_ERRORS: true
+
+mail:
+    MANDRILL: true
+    MANDRILL_APIKEY: mandrill_api_key
+    ADMIN_EMAIL: admin@domain.com
+    CONTACT_EMAIL: contact@domain.com
+    CONTACT_NAME: Contact name
+    DEV_CONTACT_NAME: Dev contact name
+    DEV_CONTACT_MAIL: dev_contact@millolab.com
+
+modules:
+    USER_VERIFY_ACCOUNT: true
+
+folders:
+    - Cache
+    - files
+    - logs
+    - sessions

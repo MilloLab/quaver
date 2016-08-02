@@ -7,6 +7,6 @@
 
 namespace Quaver\App\Model;
 
-class User extends \Quaver\Model\User
+class LangStrings extends \Quaver\Model\LangStrings
 {
 }

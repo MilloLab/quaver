@@ -1,0 +1,17 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1>
+            {% if e500 %}
+                {{ ('error500-text')|t|raw }}
+            {% elseif e401 %}
+                {{ ('error401-text')|t|raw }}
+            {% elseif e408 %}
+                {{ ('error408-text')|t|raw }}
+            {% else %}
+                {{ ('error404-text')|t|raw }}
+            {% endif %}
+        </h1>
+    </div>
+{% endblock %}
