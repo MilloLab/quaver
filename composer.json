@@ -13,8 +13,8 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "millolab/quaver-core": "0.20.1",
-        "millolab/quaver-cli": "1.0.5"
+        "millolab/quaver-core": "^0.20.2",
+        "millolab/quaver-cli": "^1.0.5"
     },
     "autoload": {
         "psr-4": { "Quaver\\App\\": "App/", "Quaver\\Cli\\Commands\\": "Commands/" }
