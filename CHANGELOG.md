@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.20.4] - 2016-08-04
+## [0.21] - 2016-08-04
 ## Added
  - New app.RESOURCES config variable
 
