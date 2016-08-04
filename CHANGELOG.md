@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.20.4] - 2016-08-04
+## Added
+ - New app.RESOURCES config variable
+
 ## [0.20.3] - 2016-08-03
 ## Changes
  - Composer updated
