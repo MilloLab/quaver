@@ -6,6 +6,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## Added
  - New app.RESOURCES config variable
 
+## Changes
+ - Controllers improvements
+
+ 
 ## [0.20.3] - 2016-08-03
 ## Changes
  - Composer updated
