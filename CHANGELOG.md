@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.21.1] - 2016-08-05
+## Fixes
+ - Cast Home controller to CamelCase
+
 ## [0.21] - 2016-08-04
 ## Added
  - New app.RESOURCES config variable

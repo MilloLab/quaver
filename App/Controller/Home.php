@@ -10,9 +10,10 @@ namespace Quaver\App\Controller;
 use Quaver\Core\Controller;
 use Quaver\Core\Config;
 
-class home extends Controller
+class Home extends Controller
 {
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->addTwigVars('helloWorld', 'Mi first page class -> '.Config::get('app.STABLE_VERSION'));
         $this->render();
     }

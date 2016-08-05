@@ -1,6 +1,6 @@
 home:
     url: /
-    controller: home
+    controller: Home
     view: home
 
 testAjax:
