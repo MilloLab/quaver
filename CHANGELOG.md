@@ -2,25 +2,33 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [0.30] - 2016-12-05
+### Added
+ - Mailcenter: manage the entire transactional mailing
+
+### Changes
+ - Added support to Quaver-Core v0.30
+ 
 ## [0.21.1] - 2016-08-05
-## Fixes
+### Fixes
  - Cast Home controller to CamelCase
 
+
 ## [0.21] - 2016-08-04
-## Added
+### Added
  - New app.RESOURCES config variable
 
-## Changes
+### Changes
  - Controllers improvements
 
  
 ## [0.20.3] - 2016-08-03
-## Changes
+### Changes
  - Composer updated
 
 
 ## [0.20.2] - 2016-08-02
-## Fixes
+### Fixes
  - Fix launching bugs
 
 

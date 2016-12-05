@@ -58,7 +58,8 @@ mail:
     CONTACT_NAME: Contact name
     DEV_CONTACT_NAME: Dev contact name
     DEV_CONTACT_MAIL: dev_contact@millolab.com
-
+    URL_HOST: www.domain.com
+    URL_PROTOCOL: 'http://'
 modules:
     USER_VERIFY_ACCOUNT: true
 
