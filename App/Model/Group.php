@@ -7,7 +7,11 @@
 
 namespace Quaver\App\Model;
 
-class User extends \Quaver\Model\GuardUser
+/**
+ * Class Group
+ * @package Quaver\App\Model
+ */
+class Group extends \Quaver\Model\Group
 {
     /**
      * {@inheritdoc}
@@ -16,7 +20,7 @@ class User extends \Quaver\Model\GuardUser
     {
         $this->fields['level']['type'] = 'enum';
         $this->fields['level']['values'] = ['user', 'admin'];
-
+        
         parent::__construct();
     }
 }

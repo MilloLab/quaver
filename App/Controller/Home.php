@@ -8,16 +8,19 @@
 namespace Quaver\App\Controller;
 
 use Quaver\Core\Controller;
-use Quaver\Core\Config;
 
+/**
+ * Class Home
+ * @package Quaver\App\Controller
+ */
 class Home extends Controller
 {
+    /**
+     *
+     */
     public function indexAction()
     {
-        $this->addTwigVars('helloWorld', 'Mi first page class -> '.Config::get('app.STABLE_VERSION'));
+        $this->addTwigVars('helloWorld', 'Mi first page class -> '.$this->getContainer()->get('config')->val('app.STABLE_VERSION'));
         $this->render();
     }
 }
-
-// $this->addTwigVars('helloWorld', 'Mi first page controller -> '.Config::get('app.STABLE_VERSION'));
-// $this->render();

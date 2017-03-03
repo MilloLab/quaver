@@ -7,8 +7,6 @@
 
 namespace Quaver\App\Controller;
 
-use Quaver\Core\Config;
-
 $result = array(
     'success' => false,
 );

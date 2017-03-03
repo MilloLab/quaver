@@ -5,6 +5,7 @@
 /files/mail.lck
 *.sql
 *.sqlite
+.idea/*
 
 # Sessions
 /[Ss]essions/*
