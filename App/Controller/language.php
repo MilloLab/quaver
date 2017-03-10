@@ -7,12 +7,12 @@
 
 namespace Quaver\App\Controller;
 
-use Quaver\Model\Lang;
+use Quaver\App\Model\Lang;
 
 $language = new Lang();
-$language->getFromSlug($this->getUrlPart(0));
+$language = $language->getFromSlug($this->getUrlPart(0));
 
-if ($language) {
+if ($language && $language->exists()) {
     $language->setCookie();
     $user = $this->getContainer()->get('user');
     if ($user->isLogged()) {
