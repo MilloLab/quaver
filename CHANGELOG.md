@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [1.0] - 2017-09-19
+### Changes
+ - First stable release
+
 ## [0.30] - 2016-12-05
 ### Added
  - Mailcenter: manage the entire transactional mailing

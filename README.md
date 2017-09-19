@@ -14,4 +14,4 @@ Installation
 
 Requeriments
 ------------
-* PHP >= 5.5
+* PHP >= 5.6
