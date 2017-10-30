@@ -37,7 +37,7 @@ session:
     gc_maxlifetime: 3600
     cookie_httponly: true
 
-db:
+db_test:
     HOSTNAME: localhost
     USERNAME: user
     PASSWORD: pass
