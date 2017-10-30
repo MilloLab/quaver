@@ -21,7 +21,7 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "./quaver welcome"
+            "quaver welcome"
         ]
     },
     "minimum-stability": "dev"
