@@ -11,6 +11,6 @@ namespace Quaver\App\Mail;
  * Class BaseMail
  * @package Quaver\App\Mail
  */
-class BaseMail implements \Quaver\Mail\BaseMail
+class BaseMail extends \Quaver\Mail\BaseMail
 {
 }
