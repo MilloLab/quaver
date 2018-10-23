@@ -13,7 +13,7 @@ define('GLOBAL_PATH', dirname(__FILE__));
 chdir(GLOBAL_PATH);
 
 if (defined('LOG_FILENAME') && LOG_FILENAME === 'cli.log') {
-    ini_set('display_errors', 0);    
+    ini_set('display_errors', 0);
 } else {
     ini_set('display_errors', 1);
 }

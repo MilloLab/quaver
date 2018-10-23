@@ -13,5 +13,4 @@ namespace Quaver\App\Core;
  */
 class App extends \Quaver\Core\App
 {
-
 }
